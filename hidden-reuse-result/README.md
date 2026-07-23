@@ -186,29 +186,18 @@ and vocabulary once, derives all four results in sequence, explains what the
 code solves, and states the combined contribution and limitations. It is the
 publication draft and cold-reader entry point.
 
-The four earlier drafts remain available as optional chapter extracts:
-[bilateral contracting](WEBSITE-DRAFT.md),
-[homogeneous firm size](FIRM-SIZE-DRAFT.md),
-[platform versus rollup](OWNERSHIP-ACCESS-DRAFT.md), and
-[value appropriation](APPROPRIATION-DRAFT.md). A reader no longer needs to
-assemble them to understand the work. The interactive HTML files are
-supplements, not reader entry points.
+The interactive HTML files are supplements, not reader entry points.
 
 The remaining files serve narrower audiences:
 
 | Audience | Read |
 |---|---|
 | New reader or website visitor | [FULL-EXPOSITION.md](FULL-EXPOSITION.md) |
-| Reader of the bilateral argument | [WEBSITE-DRAFT.md](WEBSITE-DRAFT.md) |
-| Reader of the firm-size chapter | [FIRM-SIZE-DRAFT.md](FIRM-SIZE-DRAFT.md) |
-| Reader of the platform-versus-rollup chapter | [OWNERSHIP-ACCESS-DRAFT.md](OWNERSHIP-ACCESS-DRAFT.md) |
-| Reader of the value-capture chapter | [APPROPRIATION-DRAFT.md](APPROPRIATION-DRAFT.md) |
 | Researcher checking the bilateral claim | [RESULT.md](RESULT.md), then [MODEL.md](MODEL.md) |
 | Researcher checking the size theorem | [FIRM-SIZE-RESULT.md](FIRM-SIZE-RESULT.md) |
 | Researcher checking the network theorem | [OWNERSHIP-ACCESS-RESULT.md](OWNERSHIP-ACCESS-RESULT.md) |
 | Researcher checking the appropriation theorem | [APPROPRIATION-RESULT.md](APPROPRIATION-RESULT.md) |
-| Collaborator or AI challenging scenarios | [INTERROGATE.md](INTERROGATE.md) |
-| Editor preparing the website | [PUBLISHING.md](PUBLISHING.md) and [FIGURE.md](FIGURE.md) |
+| Editor preparing figures | [FIGURE.md](FIGURE.md) |
 | Reader tracing the intellectual lineage | [REFERENCES.md](REFERENCES.md) |
 
 The contracting game is in
@@ -410,8 +399,6 @@ plus
 [OWNERSHIP-ACCESS-RESULT.md](OWNERSHIP-ACCESS-RESULT.md#10-limits-and-next-tests)
 and [APPROPRIATION-RESULT.md](APPROPRIATION-RESULT.md#11-limits).
 
-## Citation and license
+## Citation
 
-Citation metadata is in [CITATION.cff](CITATION.cff). The current
-[license](LICENSE.md) reserves all rights; choose an open-source or Creative
-Commons license before inviting third-party reuse.
+Citation metadata is in [CITATION.cff](CITATION.cff).

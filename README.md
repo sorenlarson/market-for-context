@@ -1,49 +1,37 @@
-# Hayek–Arrow–Coase context game
+# The Market for Context
 
-This repository contains a first-pass analytical and Monte Carlo model of the
-choice among:
+The canonical, self-contained publication package is
+[`hidden-reuse-result/`](hidden-reuse-result/README.md). The single
+reader-facing exposition is
+[**The Market for Context**](hidden-reuse-result/FULL-EXPOSITION.md).
 
-1. modular context sharing,
-2. strategic withholding, and
-3. ownership of the context-generating asset.
+It introduces the bilateral hidden-reuse result and then develops firm size,
+platform-versus-rollup boundaries, heterogeneous learning networks, and value
+appropriation as one argument.
 
-The baseline model is deliberately small. It isolates three forces:
-
-- information leakage, which erodes the context owner's future exclusivity;
-- contractual protection, which reduces effective leakage; and
-- integration cost, which makes ownership an expensive substitute for market
-  contracting.
-
-The analytical characterization is in
-[`notes/first-result.md`](notes/first-result.md). The implementation lives in
-[`src/context_game`](src/context_game), with boundary tests in
-[`tests/test_model.py`](tests/test_model.py).
-
-## Run the first experiment
+## Reproduce
 
 ```bash
+cd hidden-reuse-result
 python3 -m pip install -e .
-python3 scripts/generate_phase_diagrams.py
 python3 -m pytest
 ```
 
-This writes a deterministic regime map, Monte Carlo regime probabilities, and
-the underlying grid to `outputs/`.
+See [`hidden-reuse-result/README.md`](hidden-reuse-result/README.md) for the
+full reproduction guide, figure regeneration, and package checks.
 
-## Baseline interpretation
+## Earlier exploratory models
 
-Let `s` be the fraction of context disclosed to an external model/application
-counterparty. The context owner receives a concave current benefit from
-disclosure but loses future exclusivity in proportion to effective Arrow
-friction:
+The rest of the repository preserves earlier stages of the research for
+provenance. None of it is required to understand or reproduce the
+hidden-reuse result.
 
-```text
-effective friction = context rent × leakage × (1 − contractual protection)
-```
-
-The owner can instead integrate and use the full context internally, paying a
-fixed integration cost. Monte Carlo draws vary initial context rent, application
-value, and integration capability around the analytical benchmark. They do not
-replace the equilibrium calculation; they estimate how frequently each regime
-is selected across heterogeneous initial conditions.
-
+- **Hayek–Arrow–Coase context game** — the first-pass analytical and Monte
+  Carlo model of modular sharing, strategic withholding, and ownership. The
+  analytical note is [`notes/first-result.md`](notes/first-result.md), the
+  implementation is in [`src/`](src), and
+  `scripts/generate_phase_diagrams.py` regenerates `outputs/`.
+- **Endogenous contracting extension** —
+  [`ENDOGENOUS-CONTRACTING.md`](ENDOGENOUS-CONTRACTING.md), with code in
+  `endogenous_scripts/` and tests in `endogenous_tests/`.
+- **Hidden-reuse working notes** — [`HIDDEN-REUSE.md`](HIDDEN-REUSE.md).

@@ -5,3 +5,10 @@
 __pycache__/
 *.pyc
 .pytest_cache/
+
+# Internal working docs (kept locally, not published)
+START-HERE.md
+hidden-reuse-result/AGENTS.md
+hidden-reuse-result/INTERROGATE.md
+hidden-reuse-result/PUBLISHING.md
+hidden-reuse-result/*-DRAFT.md

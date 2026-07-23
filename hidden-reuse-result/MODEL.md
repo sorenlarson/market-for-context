@@ -612,8 +612,7 @@ half. See the derivation section of
 `derive_capture_shares` in the source module.
 
 The complete public exposition is in
-[FULL-EXPOSITION.md](FULL-EXPOSITION.md), the focused chapter extract is
-[APPROPRIATION-DRAFT.md](APPROPRIATION-DRAFT.md), the derivation and proofs are
+[FULL-EXPOSITION.md](FULL-EXPOSITION.md), the derivation and proofs are
 in [APPROPRIATION-RESULT.md](APPROPRIATION-RESULT.md), and the computational
 source of truth is
 [src/hidden_reuse/appropriation.py](src/hidden_reuse/appropriation.py).

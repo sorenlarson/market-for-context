@@ -9,23 +9,15 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 
 REQUIRED = [
-    "AGENTS.md",
     "README.md",
     "FULL-EXPOSITION.md",
-    "INTERROGATE.md",
     "MODEL.md",
     "RESULT.md",
     "FIRM-SIZE-RESULT.md",
-    "FIRM-SIZE-DRAFT.md",
     "OWNERSHIP-ACCESS-RESULT.md",
-    "OWNERSHIP-ACCESS-DRAFT.md",
     "APPROPRIATION-RESULT.md",
-    "APPROPRIATION-DRAFT.md",
     "REFERENCES.md",
-    "WEBSITE-DRAFT.md",
-    "PUBLISHING.md",
     "FIGURE.md",
-    "LICENSE.md",
     "CITATION.cff",
     "pyproject.toml",
     "requirements-lock.txt",
@@ -90,18 +82,12 @@ REQUIRED = [
 MARKDOWN_FILES = [
     "README.md",
     "FULL-EXPOSITION.md",
-    "INTERROGATE.md",
     "MODEL.md",
     "RESULT.md",
     "FIRM-SIZE-RESULT.md",
-    "FIRM-SIZE-DRAFT.md",
     "OWNERSHIP-ACCESS-RESULT.md",
-    "OWNERSHIP-ACCESS-DRAFT.md",
     "APPROPRIATION-RESULT.md",
-    "APPROPRIATION-DRAFT.md",
     "REFERENCES.md",
-    "WEBSITE-DRAFT.md",
-    "PUBLISHING.md",
     "FIGURE.md",
 ]
 

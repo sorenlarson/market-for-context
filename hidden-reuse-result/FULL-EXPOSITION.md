@@ -971,8 +971,3 @@ For readers who want proofs or implementation details:
 - figure captions and alt text: [FIGURE.md](FIGURE.md); and
 - reproduction and package guide: [README.md](README.md).
 
-The four narrower drafts—[WEBSITE-DRAFT.md](WEBSITE-DRAFT.md),
-[FIRM-SIZE-DRAFT.md](FIRM-SIZE-DRAFT.md),
-[OWNERSHIP-ACCESS-DRAFT.md](OWNERSHIP-ACCESS-DRAFT.md), and
-[APPROPRIATION-DRAFT.md](APPROPRIATION-DRAFT.md)—are retained as chapter
-extracts. They are no longer the reading path a new reader must assemble.
