@@ -1,0 +1,102 @@
+{
+  "model_version": "0.6.0",
+  "result_status": "calibrated theoretical computation; not empirical evidence",
+  "examples": [
+    {
+      "name": "weak_enforcement_unpriced",
+      "bilateral_bridge": {
+        "internalization_advantage": 0.7779864553081139,
+        "gross_internal_owner_value": 1.3330000000000002,
+        "best_modular_owner_value": 0.5550135446918862,
+        "modular_regime": "strategic_withholding",
+        "modular_agreement": true,
+        "modular_disclosure": 0.8154613466334164,
+        "modular_reuse": 0.8154613466334164,
+        "applied_context_payment_cap": null
+      },
+      "firm_size_inputs": {
+        "internalization_advantage": 0.7779864553081139,
+        "shared_fixed_cost": 1.5,
+        "cross_node_learning": 0.35,
+        "learning_saturation": 4.0,
+        "organization_cost_scale": 0.05,
+        "organization_cost_elasticity": 1.4,
+        "advantage_dilution_elasticity": 0.0,
+        "max_firm_size": 60
+      },
+      "firm_size_outcome": {
+        "regime": "finite_rollup",
+        "integrates": true,
+        "equilibrium_firm_size": 4,
+        "conditional_target_size": 4,
+        "continuous_target_size": 4.006622972123189,
+        "integration_threshold": 0.5732202253184496,
+        "per_node_surplus_at_target": 0.20476622998966432
+      }
+    },
+    {
+      "name": "weak_enforcement_priced",
+      "bilateral_bridge": {
+        "internalization_advantage": 0.6565000000000001,
+        "gross_internal_owner_value": 1.3330000000000002,
+        "best_modular_owner_value": 0.6765000000000001,
+        "modular_regime": "priced_reuse",
+        "modular_agreement": true,
+        "modular_disclosure": 1.0,
+        "modular_reuse": 1.0,
+        "applied_context_payment_cap": 0.17700000000000002
+      },
+      "firm_size_inputs": {
+        "internalization_advantage": 0.6565000000000001,
+        "shared_fixed_cost": 1.5,
+        "cross_node_learning": 0.35,
+        "learning_saturation": 4.0,
+        "organization_cost_scale": 0.05,
+        "organization_cost_elasticity": 1.4,
+        "advantage_dilution_elasticity": 0.0,
+        "max_firm_size": 60
+      },
+      "firm_size_outcome": {
+        "regime": "finite_rollup",
+        "integrates": true,
+        "equilibrium_firm_size": 4,
+        "conditional_target_size": 4,
+        "continuous_target_size": 4.006622972123189,
+        "integration_threshold": 0.5732202253184496,
+        "per_node_surplus_at_target": 0.08327977468155046
+      }
+    },
+    {
+      "name": "strong_enforcement",
+      "bilateral_bridge": {
+        "internalization_advantage": 0.4299985351562501,
+        "gross_internal_owner_value": 1.3330000000000002,
+        "best_modular_owner_value": 0.9030014648437501,
+        "modular_regime": "secure_modularity",
+        "modular_agreement": true,
+        "modular_disclosure": 1.0,
+        "modular_reuse": 0.0,
+        "applied_context_payment_cap": null
+      },
+      "firm_size_inputs": {
+        "internalization_advantage": 0.4299985351562501,
+        "shared_fixed_cost": 1.5,
+        "cross_node_learning": 0.35,
+        "learning_saturation": 4.0,
+        "organization_cost_scale": 0.05,
+        "organization_cost_elasticity": 1.4,
+        "advantage_dilution_elasticity": 0.0,
+        "max_firm_size": 60
+      },
+      "firm_size_outcome": {
+        "regime": "modular_market",
+        "integrates": false,
+        "equilibrium_firm_size": 0,
+        "conditional_target_size": 4,
+        "continuous_target_size": 4.006622972123189,
+        "integration_threshold": 0.5732202253184496,
+        "per_node_surplus_at_target": -0.14322169016219954
+      }
+    }
+  ]
+}

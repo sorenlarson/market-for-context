@@ -1,0 +1,130 @@
+{
+  "examples": {
+    "platform": {
+      "external_learning_efficiency": 0.8,
+      "neutrality_penalty": 0.8,
+      "regime": "neutral_platform",
+      "owned_names": [],
+      "ownership_size": 0,
+      "incremental_value": 0.0,
+      "selection_margin": 0.22519186545315512,
+      "maximum_deviation_gain": 0.0,
+      "value_decomposition": {
+        "owned_indices": [],
+        "owned_names": [],
+        "regime": "neutral_platform",
+        "internalization_value": 0,
+        "learning_upgrade": 0.0,
+        "fixed_cost": 0.0,
+        "organization_cost": 0.0,
+        "coordination_cost": 0,
+        "boundary_customer_exposure": 0.0,
+        "neutrality_loss": 0.0,
+        "incremental_value": 0.0,
+        "total_private_value": 2.3416000000000006
+      }
+    },
+    "partial_complementary_rollup": {
+      "external_learning_efficiency": 0.6,
+      "neutrality_penalty": 0.1,
+      "regime": "cross_type_partial_rollup",
+      "owned_names": [
+        "clinic_east",
+        "clinic_west",
+        "lab_east",
+        "lab_west"
+      ],
+      "ownership_size": 4,
+      "incremental_value": 0.20030490506064383,
+      "selection_margin": 0.0971585491265173,
+      "maximum_deviation_gain": 0.0,
+      "value_decomposition": {
+        "owned_indices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "owned_names": [
+          "clinic_east",
+          "clinic_west",
+          "lab_east",
+          "lab_west"
+        ],
+        "regime": "cross_type_partial_rollup",
+        "internalization_value": 0.6,
+        "learning_upgrade": 0.5624000000000001,
+        "fixed_cost": 0.16,
+        "organization_cost": 0.6401950949393563,
+        "coordination_cost": 0.11600000000000002,
+        "boundary_customer_exposure": 0.4589999999999999,
+        "neutrality_loss": 0.045899999999999996,
+        "incremental_value": 0.20030490506064383,
+        "total_private_value": 1.956504905060644
+      }
+    },
+    "full_rollup": {
+      "external_learning_efficiency": 0.4,
+      "neutrality_penalty": 0.8,
+      "regime": "full_network_rollup",
+      "owned_names": [
+        "clinic_east",
+        "clinic_west",
+        "lab_east",
+        "lab_west",
+        "payer_east",
+        "payer_west"
+      ],
+      "ownership_size": 6,
+      "incremental_value": 0.5423355378692867,
+      "selection_margin": 0.17348918193516027,
+      "maximum_deviation_gain": 0.0,
+      "value_decomposition": {
+        "owned_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "owned_names": [
+          "clinic_east",
+          "clinic_west",
+          "lab_east",
+          "lab_west",
+          "payer_east",
+          "payer_west"
+        ],
+        "regime": "full_network_rollup",
+        "internalization_value": 0.5199999999999999,
+        "learning_upgrade": 1.7562,
+        "fixed_cost": 0.16,
+        "organization_cost": 1.249864462130713,
+        "coordination_cost": 0.32400000000000007,
+        "boundary_customer_exposure": 0.0,
+        "neutrality_loss": 0.0,
+        "incremental_value": 0.5423355378692867,
+        "total_private_value": 1.713135537869287
+      }
+    }
+  },
+  "topology_counterfactual": {
+    "external_learning_efficiency": 0.85,
+    "neutrality_penalty": 0.1,
+    "aggregate_learning_weight": 2.9270000000000005,
+    "complementary": {
+      "regime": "neutral_platform",
+      "owned_names": [],
+      "incremental_value": 0.0
+    },
+    "within_type": {
+      "regime": "specialized_partial_rollup",
+      "owned_names": [
+        "clinic_east",
+        "clinic_west"
+      ],
+      "incremental_value": 0.06305813454684484
+    }
+  }
+}

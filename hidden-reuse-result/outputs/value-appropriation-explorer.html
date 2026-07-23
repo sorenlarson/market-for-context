@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Access versus appropriation explorer</title>
+<style>
+:root{color-scheme:light dark;font-family:ui-sans-serif,system-ui,sans-serif}
+body{margin:0;padding:1.25rem;background:Canvas;color:CanvasText}
+main{max-width:900px;margin:auto}fieldset{border:1px solid color-mix(in srgb,CanvasText 25%,transparent);border-radius:.5rem;margin:1rem 0;padding:1rem}
+.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem}label{display:grid;gap:.35rem}input{width:100%}
+svg{display:block;width:100%;height:auto}.axis{stroke:CanvasText;stroke-width:1}.boundary{stroke:CanvasText;stroke-width:2;fill:none;stroke-dasharray:6 4}.platform{fill:#6f9fb7;fill-opacity:.38}.rollup{fill:#c9584c;fill-opacity:.42}.marker{fill:CanvasText}.muted{opacity:.7}.result{font-weight:600}
+</style>
+</head>
+<body><main>
+<h1>Access versus appropriation</h1>
+<p>This explorer compares a neutral AI platform with a full six-asset rollup. Partial ownership is suppressed so the pure boundary remains visible.</p>
+<fieldset><legend>Assumptions</legend><div class="controls">
+<label>External learning efficiency q <output id="qv">0.55</output><input id="q" type="range" min="0" max="1" step="0.01" value="0.55"></label>
+<label>Platform capture share p <output id="pv">0.25</output><input id="p" type="range" min="0" max="0.5" step="0.01" value="0.25"></label>
+<label>Owner retained share o <output id="ov">0.45</output><input id="o" type="range" min="0" max="1" step="0.01" value="0.45"></label>
+</div></fieldset>
+<svg viewBox="0 0 760 420" role="img" aria-labelledby="title desc"><title id="title">Platform and rollup boundary</title><desc id="desc">The selected point moves over a map of external learning efficiency and platform value capture.</desc>
+<path id="rollup" class="rollup"></path><path id="platform" class="platform"></path><path id="boundary" class="boundary"></path><path class="axis" d="M70 25V360H720"></path>
+<g font-size="13" fill="currentColor"><text x="395" y="405" text-anchor="middle">Learning available without ownership, q</text><text x="16" y="192" transform="rotate(-90 16 192)" text-anchor="middle">Platform capture share</text><text x="92" y="325">Full rollup</text><text x="570" y="70">Neutral platform</text></g><circle id="marker" class="marker" r="6"></circle>
+</svg>
+<p id="result" class="result"></p><p id="detail" class="muted"></p>
+<script>
+(()=>{const q=document.getElementById('q'),p=document.getElementById('p'),o=document.getElementById('o');const qv=document.getElementById('qv'),pv=document.getElementById('pv'),ov=document.getElementById('ov'),marker=document.getElementById('marker'),boundary=document.getElementById('boundary'),rollup=document.getElementById('rollup'),platform=document.getElementById('platform'),result=document.getElementById('result'),detail=document.getElementById('detail');const X=x=>70+650*x,Y=y=>360-670*y;const n=6,a=.215,b=.8,g=.105,K=.15,c=.1,rho=1.7,h=.027;const learning=g*n*(n-1),operating=b*n,cost=K+c*n**rho+h*n*(n-1)/2;
+function threshold(x,owner){return(n*a+owner*(operating+learning)-cost)/(operating+x*learning)}
+function render(){const Q=+q.value,P=+p.value,O=+o.value;qv.value=Q.toFixed(2);pv.value=P.toFixed(2);ov.value=O.toFixed(2);let pts=[];for(let i=0;i<=100;i++){const x=i/100;pts.push([X(x),Y(Math.max(0,Math.min(.5,threshold(x,O))))])}const line=pts.map((z,i)=>(i?'L':'M')+z[0].toFixed(2)+' '+z[1].toFixed(2)).join(' '),reverse=[...pts].reverse().map(z=>z[0].toFixed(2)+' '+z[1].toFixed(2)).join('L');boundary.setAttribute('d',line);rollup.setAttribute('d','M70 360L720 360L'+reverse+'Z');platform.setAttribute('d','M70 25L720 25L'+reverse+'Z');marker.setAttribute('cx',X(Q));marker.setAttribute('cy',Y(P));const platformValue=P*(operating+Q*learning),rollupValue=n*a+O*(operating+learning)-cost;const owns=rollupValue>platformValue;result.textContent=owns?'Full rollup is privately preferred.':'Neutral platform is privately preferred.';detail.textContent=`Platform value ${platformValue.toFixed(2)}; rollup value ${rollupValue.toFixed(2)}; difference ${(rollupValue-platformValue).toFixed(2)}.`}
+[q,p,o].forEach(x=>x.addEventListener('input',render));render()})();
+</script>
+</main></body></html>

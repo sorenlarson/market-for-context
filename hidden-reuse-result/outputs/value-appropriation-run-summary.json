@@ -1,0 +1,119 @@
+{
+  "model_version": "0.6.0",
+  "result_status": "Calibrated theoretical computation; synthetic sensitivity evidence, not empirical evidence.",
+  "proposed_result": "A platform requires both learning access and value appropriation. When service prices cannot capture AI-created operating value, ownership can dominate even if learning travels perfectly; at partial boundaries, outside customer learning can feed owned operations.",
+  "grid_points_per_axis": 81,
+  "robustness_draws": 600,
+  "seed": 20260722,
+  "python": "3.9.6",
+  "baseline": {
+    "asset_count": 6,
+    "owner_capture_share": 0.45,
+    "per_asset_operating_surplus": 0.8,
+    "directed_pair_learning": 0.105,
+    "platform_capture_share": 0.25,
+    "external_learning_efficiency": 0.55
+  },
+  "pareto_alpha_1_5": {
+    "provider_capture_share": 0.25,
+    "provider_profit": 0.38490017945975047,
+    "customer_surplus": 1.1547005383792515,
+    "pricing_deadweight_loss": 0.4603992821609981
+  },
+  "examples": {
+    "learning_driven_rollup": {
+      "name": "learning_driven_rollup",
+      "external_learning_efficiency": 0.05,
+      "platform_capture_share": 0.4,
+      "owner_capture_share": 0.45,
+      "neutrality_penalty": 5.0,
+      "regime": "full_network_rollup",
+      "ownership_size": 6,
+      "incremental_private_value": 0.22641354815568449,
+      "capture_upgrade": 0.24787499999999993,
+      "productive_learning_upgrade": 1.346625,
+      "external_access_slope": -1.26,
+      "selection_margin": 0.22641354815568449,
+      "maximum_deviation_gain": 0.0
+    },
+    "capture_driven_rollup_at_full_access": {
+      "name": "capture_driven_rollup_at_full_access",
+      "external_learning_efficiency": 1.0,
+      "platform_capture_share": 0.25,
+      "owner_capture_share": 0.45,
+      "neutrality_penalty": 5.0,
+      "regime": "full_network_rollup",
+      "ownership_size": 6,
+      "incremental_private_value": 0.22191354815568431,
+      "capture_upgrade": 1.5899999999999999,
+      "productive_learning_upgrade": 0.0,
+      "external_access_slope": -0.7875,
+      "selection_margin": 0.22191354815568431,
+      "maximum_deviation_gain": 0.0
+    },
+    "neutral_platform": {
+      "name": "neutral_platform",
+      "external_learning_efficiency": 0.9,
+      "platform_capture_share": 0.4,
+      "owner_capture_share": 0.45,
+      "neutrality_penalty": 5.0,
+      "regime": "neutral_platform",
+      "ownership_size": 0,
+      "incremental_private_value": 0.0,
+      "capture_upgrade": 0.0,
+      "productive_learning_upgrade": 0.0,
+      "external_access_slope": 0.0,
+      "selection_margin": 0.47137499999999993,
+      "maximum_deviation_gain": 0.0
+    },
+    "platform_fed_partial_owner": {
+      "name": "platform_fed_partial_owner",
+      "external_learning_efficiency": 0.97,
+      "platform_capture_share": 0.17,
+      "owner_capture_share": 0.45,
+      "neutrality_penalty": 0.0,
+      "regime": "specialized_partial_rollup",
+      "ownership_size": 4,
+      "incremental_private_value": 0.9757636713816847,
+      "capture_upgrade": 1.46636,
+      "productive_learning_upgrade": 0.017010000000000015,
+      "external_access_slope": 0.02099999999999999,
+      "selection_margin": 0.0,
+      "maximum_deviation_gain": 0.0
+    }
+  },
+  "robustness": {
+    "learning_driven_rollup": {
+      "frequencies": {
+        "neutral_platform": 0.345,
+        "specialized_partial_rollup": 0.0,
+        "full_network_rollup": 0.655
+      },
+      "mean_ownership_size": 3.93
+    },
+    "capture_driven_rollup_at_full_access": {
+      "frequencies": {
+        "neutral_platform": 0.325,
+        "specialized_partial_rollup": 0.0,
+        "full_network_rollup": 0.675
+      },
+      "mean_ownership_size": 4.05
+    },
+    "neutral_platform": {
+      "frequencies": {
+        "neutral_platform": 0.9816666666666667,
+        "specialized_partial_rollup": 0.0,
+        "full_network_rollup": 0.018333333333333333
+      },
+      "mean_ownership_size": 0.11
+    },
+    "platform_fed_partial_owner": {
+      "frequencies": {
+        "neutral_platform": 0.0,
+        "specialized_partial_rollup": 0.8366666666666667,
+        "full_network_rollup": 0.16333333333333333
+      },
+      "mean_ownership_size": 4.4783333333333335
+    }
+  }
+}

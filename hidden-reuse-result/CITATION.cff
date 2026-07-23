@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "If you use this model, please cite it using the metadata below."
+title: "The Market for Context: AI Learning, Firm Boundaries, and Value Capture"
+type: software
+version: 0.6.0
+date-released: 2026-07-22
+authors:
+  - family-names: "Larson"
+    given-names: "Soren"
+    website: "https://hypersoren.xyz"
+abstract: >-
+  A two-period computational model showing when hidden provider learning moves
+  AI context governance from secure modular contracting to priced reuse,
+  strategic withholding, or ownership, with an endogenous limit on how much
+  uncertain future capability value can be pledged as payment, plus a
+  free-formation extension separating the decision to integrate from the
+  equilibrium number of context-generating assets per firm, and a heterogeneous
+  network extension showing when customer access supports a platform rather
+  than a rollup, plus a value-appropriation extension showing why ownership can
+  dominate even when independent customer relationships transmit all useful
+  learning.
+keywords:
+  - artificial intelligence
+  - information economics
+  - incomplete contracts
+  - industrial organization
+url: "https://hypersoren.xyz"

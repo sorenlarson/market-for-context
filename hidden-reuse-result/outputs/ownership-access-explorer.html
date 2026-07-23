@@ -1,0 +1,1342 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'unsafe-inline' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Ownership Access Lab</title>
+<style>:root{color-scheme:light dark;background:light-dark(rgb(255 255 255), rgb(24 24 24))}html,body{margin:0}body{box-sizing:border-box;padding:1rem;background:inherit}iframe{display:block;width:100%;max-width:736px;height:calc(100vh - 2rem);margin:0 auto;border:0}</style>
+</head>
+<body>
+<iframe sandbox="allow-scripts" referrerpolicy="no-referrer" title="Ownership Access Lab" srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;meta name=&quot;referrer&quot; content=&quot;no-referrer&quot;&gt;
+&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &#x27;none&#x27;; script-src &#x27;unsafe-inline&#x27; &#x27;unsafe-eval&#x27; &#x27;wasm-unsafe-eval&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src &#x27;unsafe-inline&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src &#x27;none&#x27;; object-src &#x27;none&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;&quot;&gt;
+&lt;title&gt;Ownership Access Lab&lt;/title&gt;
+&lt;style&gt;:root {
+  color-scheme: light dark;
+  background-color: var(--background) !important;
+
+  /* Agent-facing contract; keep in sync with SKILL.md. */
+  --background: light-dark(rgb(255 255 255), rgb(24 24 24));
+  --foreground: light-dark(rgb(26 28 31), rgb(255 255 255));
+  --card: color-mix(in oklab, var(--foreground) 5%, transparent);
+  --card-foreground: var(--foreground);
+  --popover: light-dark(rgb(255 255 255), rgb(45 45 45));
+  --popover-foreground: var(--foreground);
+  --primary: light-dark(rgb(51 156 255), rgb(131 195 255));
+  --primary-foreground: light-dark(rgb(255 255 255), rgb(13 13 13));
+  --secondary: light-dark(rgb(255 255 255 / 96%), rgb(54 54 54 / 96%));
+  --secondary-foreground: var(--foreground);
+  --muted: color-mix(in srgb, var(--foreground) 10%, transparent);
+  --muted-foreground: light-dark(
+    rgb(26 28 31 / 49.4%),
+    rgb(255 255 255 / 49.8%)
+  );
+  --accent: light-dark(rgb(229 242 255), rgb(13 39 63));
+  --accent-foreground: var(--primary);
+  --destructive: light-dark(rgb(226 85 7), rgb(255 133 73));
+  --border: light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%));
+  --input: light-dark(
+    rgb(26 28 31 / 11.8%),
+    color-mix(in oklab, rgb(0 0 0) 10%, transparent)
+  );
+  --ring: light-dark(rgb(51 156 255), rgb(131 195 255 / 76%));
+  --font-size-base: 14px;
+  --viz-series-1: var(--primary);
+  --viz-series-2: light-dark(rgb(243 136 59), rgb(245 154 86));
+  --viz-series-3: light-dark(rgb(93 201 119), rgb(116 213 139));
+  --viz-series-4: light-dark(rgb(235 119 177), rgb(240 143 192));
+  --viz-series-5: light-dark(rgb(155 121 236), rgb(170 145 239));
+  --viz-series-6: light-dark(rgb(58 185 177), rgb(90 203 194));
+
+  /* Internal implementation variables; not part of the agent contract. */
+  --font-sans: -apple-system, system-ui, &quot;Segoe UI&quot;, sans-serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, &quot;SF Mono&quot;, Menlo, Consolas, &quot;Liberation Mono&quot;,
+    monospace;
+  --font-size-normal: max(11px, var(--font-size-base));
+  --font-size-tooltip: calc(var(--font-size-base) - 1px);
+  --font-size-small: max(11px, calc(var(--font-size-base) - 2px));
+  --font-size-h1: calc(var(--font-size-normal) * 1.7142857143);
+  --font-size-h2: calc(var(--font-size-normal) * 1.4285714286);
+  --font-size-h3: calc(var(--font-size-normal) * 1.2857142857);
+  --font-weight-normal: 430;
+  --font-weight-medium: 500;
+  --line-height-normal: calc(var(--font-size-normal) * 1.5);
+  --line-height-tooltip: calc(var(--font-size-tooltip) * 1.4285714286);
+  --line-height-small: calc(var(--font-size-small) + 4px);
+  --radius: 12.5px;
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-2xl: calc(var(--radius) * 1.6);
+  --radius-full: 9999px;
+  --shadow-sm: 0 1px 2px -1px rgb(0 0 0 / 8%);
+  --checkmark-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; viewBox=&#x27;0 0 17 17&#x27;%3E%3Cpath d=&#x27;M12.8961 3.64101C13.1297 3.41418 13.4984 3.37523 13.7779 3.56581C14.0571 3.75635 14.1554 4.11331 14.0299 4.41347L13.9615 4.53847L7.71151 13.7045C7.59411 13.8767 7.4063 13.9877 7.19881 14.0072C6.99136 14.0267 6.78564 13.9533 6.63826 13.806L2.88826 10.056L2.79842 9.9457C2.6192 9.67407 2.64927 9.30496 2.88826 9.06581C3.12738 8.82669 3.49647 8.79676 3.76815 8.97597L3.8785 9.06581L7.03084 12.2182L12.8053 3.74941L12.8961 3.64101Z&#x27;/%3E%3C/svg%3E&quot;);
+
+  /* Legacy aliases; not part of the current agent contract. */
+  --viz-bg: transparent;
+  --viz-panel: var(--card);
+  --viz-border: var(--border);
+  --viz-text: var(--foreground);
+  --viz-muted: var(--muted-foreground);
+  --viz-accent: var(--primary);
+  --viz-accent-text: var(--primary-foreground);
+  --viz-accent-bg: var(--accent);
+  --viz-font-size: var(--font-size-base);
+  --viz-warning: var(--destructive);
+  --color-background-primary: var(--background);
+  --color-text-primary: var(--foreground);
+  --color-border-secondary: var(--border);
+}
+
+:root[data-theme=&quot;light&quot;] {
+  color-scheme: light;
+}
+
+:root[data-theme=&quot;dark&quot;] {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html &gt; body {
+  margin: 0;
+  padding: 5px;
+  color: var(--foreground);
+  background: transparent !important;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-normal);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+}
+
+a {
+  color: color-mix(in srgb, var(--viz-accent) 80%, var(--viz-text) 20%);
+  cursor: pointer;
+  font-weight: var(--viz-font-weight-medium);
+  text-decoration: none;
+  text-underline-offset: 2px;
+}
+
+a:is(:hover, :focus-visible) {
+  text-decoration-line: underline;
+  text-decoration-style: dashed;
+  text-decoration-thickness: 0.5px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin-block: 0;
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.3;
+}
+
+b,
+strong,
+th {
+  font-weight: var(--font-weight-medium);
+}
+
+code:not(pre code) {
+  display: inline;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  corner-shape: superellipse(1.5);
+  background: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  word-break: break-word;
+}
+
+#widget {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 0;
+  background: transparent !important;
+}
+
+.card {
+  min-width: 0;
+  padding: 12px;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  border-radius: var(--radius-2xl);
+  corner-shape: superellipse(1.5);
+  color: var(--card-foreground);
+  background: var(--card);
+}
+
+#widget &gt; :not(.card) {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.tooltip {
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  left: 0;
+  width: max-content;
+  max-width: min(
+    20rem,
+    var(--tooltip-available-width, calc(100vw - 10px)),
+    calc(100vw - 10px)
+  );
+  max-height: min(
+    var(--tooltip-available-height, calc(100vh - 10px)),
+    calc(100vh - 10px)
+  );
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--popover-foreground);
+  background: var(--popover);
+  box-shadow: none;
+  font-size: var(--font-size-tooltip);
+  line-height: var(--line-height-tooltip);
+  overflow-wrap: break-word;
+  white-space: normal;
+  pointer-events: none;
+  user-select: none;
+}
+
+.viz-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(max(180px, 24%), 1fr));
+  gap: 10px;
+}
+
+.viz-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.viz-stat-value {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+.viz-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.viz-badge {
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  color: var(--accent-foreground);
+  background: var(--accent);
+  font-weight: var(--font-weight-medium);
+}
+
+small,
+.text-small,
+.viz-badge {
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-small);
+}
+
+.text-muted {
+  color: var(--muted-foreground);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.viz-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.viz-controls &gt; .form-label {
+  display: grid;
+  min-width: min(100%, 260px);
+  flex: 1 1 280px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 2px 12px;
+  margin-bottom: 0;
+}
+
+.viz-controls &gt; .form-label &gt; :is(.form-control, .form-range, .form-select) {
+  grid-column: 1 / -1;
+}
+
+.btn,
+.form-check-input,
+.form-control,
+.form-range,
+.form-select {
+  font: inherit;
+}
+
+.btn {
+  appearance: button;
+  display: inline-flex;
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  min-height: 28px;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0 8px;
+  -webkit-app-region: no-drag;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: var(--cursor-interaction, pointer);
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.btn:is(.btn-block, .viz-tile) {
+  inline-size: 100%;
+}
+
+.btn.viz-tile {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+a.btn {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn-primary {
+  border-color: transparent;
+  color: var(--primary-foreground);
+  background: var(--foreground);
+  background-clip: padding-box;
+}
+
+.btn-primary .text-muted {
+  color: color-mix(in srgb, var(--primary-foreground) 50%, transparent);
+}
+
+.btn-primary:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 80%, transparent);
+  background-clip: padding-box;
+}
+
+.btn-ghost {
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.btn-ghost:not(:disabled):hover {
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+[data-lucide] {
+  stroke-width: 1.6;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--foreground);
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  padding: 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--foreground);
+  background: var(--secondary);
+}
+
+.form-control::placeholder {
+  color: var(--muted-foreground);
+}
+
+.form-control[type=&quot;file&quot;] {
+  padding: 0;
+  overflow: hidden;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control[type=&quot;file&quot;]::file-selector-button {
+  min-height: 26px;
+  margin-right: 8px;
+  padding: 0 8px;
+  border: 0;
+  border-right: 1px solid var(--input);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: inherit;
+  font: inherit;
+}
+
+.form-control[type=&quot;file&quot;]:not(:disabled):hover::file-selector-button {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-control-color[type=&quot;color&quot;] {
+  width: 40px;
+  height: 28px;
+  padding: 3px;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch {
+  border: 0;
+  border-radius: calc(var(--radius-lg) - 4px);
+  corner-shape: superellipse(1.5);
+}
+
+textarea.form-control {
+  height: auto;
+  min-height: 72px;
+  padding: 8px 10px;
+  resize: vertical;
+}
+
+.form-control:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-control:disabled,
+.form-select:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.form-select {
+  appearance: none;
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  margin: 0;
+  padding: 0 32px 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--foreground);
+  background-color: var(--secondary);
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--muted-foreground) 50%),
+    linear-gradient(135deg, var(--muted-foreground) 50%, transparent 50%);
+  background-position:
+    calc(100% - 14px) 50%,
+    calc(100% - 10px) 50%;
+  background-repeat: no-repeat;
+  background-size: 4px 4px;
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-select:not(:disabled):hover {
+  background-color: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-select:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-check {
+  display: flex;
+  min-height: 20px;
+  align-items: center;
+  gap: 6px;
+}
+
+.form-check-input {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  margin: 0;
+  border: 1px solid var(--input);
+  color: var(--primary-foreground);
+  background-color: transparent;
+  cursor: var(--cursor-interaction, default);
+  transition:
+    background-color 150ms,
+    border-color 150ms,
+    box-shadow 150ms;
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;] {
+  border-color: var(--input);
+  border-radius: var(--radius-sm);
+  corner-shape: superellipse(1.5);
+  background-color: var(--secondary);
+  box-shadow: var(--shadow-sm);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input:not(:disabled):not(:checked):hover {
+  background-color: var(--card);
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;]:checked {
+  border-color: var(--primary);
+  background-color: var(--primary);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input[type=&quot;checkbox&quot;]:checked::before {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--primary-foreground);
+  content: &quot;&quot;;
+  mask: var(--checkmark-image) center / 12px 12px no-repeat;
+}
+
+.form-check-input[type=&quot;radio&quot;] {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
+}
+
+.form-check-input[type=&quot;radio&quot;]:checked {
+  border: 2px solid var(--primary);
+  background:
+    radial-gradient(circle, var(--primary-foreground) 0 2.5px, transparent 3px),
+    var(--primary);
+}
+
+.form-check:not(.form-switch) .form-check-input:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+}
+
+.form-switch .form-check-input:disabled,
+.form-switch .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.form-check-label {
+  color: var(--foreground);
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-switch .form-check-input {
+  position: relative;
+  width: 32px;
+  height: 20px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+  box-shadow: none;
+  transition: background-color 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  border: 1px solid light-dark(var(--primary-foreground), var(--foreground));
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+  box-shadow: var(--shadow-sm);
+  content: &quot;&quot;;
+  transform: translate(2px, -50%);
+  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input:checked {
+  background: var(--primary);
+}
+
+.form-switch .form-check-input:checked::before {
+  transform: translate(14px, -50%);
+}
+
+.form-switch .form-check-input:focus-visible {
+  box-shadow: 0 0 0 2px var(--ring);
+}
+
+.form-range {
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 28px;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border: 0;
+  accent-color: var(--primary);
+  background: linear-gradient(
+      color-mix(in srgb, var(--foreground) 7%, transparent),
+      color-mix(in srgb, var(--foreground) 7%, transparent)
+    )
+    center / 100% 2px no-repeat;
+}
+
+.form-range::-webkit-slider-runnable-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-webkit-slider-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range::-moz-range-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-moz-range-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.btn:not(.btn-primary, .viz-tile):is(
+    [aria-pressed=&quot;true&quot;],
+    [aria-selected=&quot;true&quot;],
+    .is-selected
+  ) {
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+  background: var(--primary);
+}
+
+.btn.viz-tile:is([aria-pressed=&quot;true&quot;], [aria-selected=&quot;true&quot;], .is-selected) {
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+#widget &gt; svg {
+  width: 100%;
+}
+
+.text-warning,
+.text-destructive {
+  color: var(--destructive);
+}
+
+html&gt;body{padding:0}&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id=&quot;ownership-access-lab&quot;&gt;
+  &lt;style&gt;
+    #ownership-access-lab .oal-chart {
+      display: block;
+      width: 100%;
+      height: auto;
+      color: var(--muted-foreground);
+    }
+    #ownership-access-lab .oal-learning {
+      fill: none;
+      stroke: var(--muted-foreground);
+      stroke-linecap: round;
+    }
+    #ownership-access-lab .oal-customer-cut {
+      fill: none;
+      stroke: var(--destructive);
+      stroke-width: 2;
+      stroke-dasharray: 6 4;
+      opacity: 0.78;
+    }
+    #ownership-access-lab .oal-node circle {
+      stroke-width: 2;
+    }
+    #ownership-access-lab .oal-node.is-owned circle {
+      stroke-width: 4;
+    }
+    #ownership-access-lab .oal-clinic circle {
+      stroke: var(--viz-series-1);
+      fill: var(--background);
+    }
+    #ownership-access-lab .oal-clinic.is-owned circle {
+      fill: var(--viz-series-1);
+      fill-opacity: 0.55;
+    }
+    #ownership-access-lab .oal-lab circle {
+      stroke: var(--viz-series-2);
+      fill: var(--background);
+    }
+    #ownership-access-lab .oal-lab.is-owned circle {
+      fill: var(--viz-series-2);
+      fill-opacity: 0.55;
+    }
+    #ownership-access-lab .oal-payer circle {
+      stroke: var(--viz-series-3);
+      fill: var(--background);
+    }
+    #ownership-access-lab .oal-payer.is-owned circle {
+      fill: var(--viz-series-3);
+      fill-opacity: 0.55;
+    }
+    #ownership-access-lab .oal-node text {
+      fill: var(--foreground);
+      text-anchor: middle;
+      font-weight: 500;
+      paint-order: stroke;
+      stroke: var(--background);
+      stroke-width: 3px;
+      stroke-linejoin: round;
+    }
+    #ownership-access-lab .oal-swatch {
+      display: inline-block;
+      width: 0.8em;
+      height: 0.8em;
+      margin-inline-end: 0.3em;
+      vertical-align: -0.04em;
+    }
+    #ownership-access-lab .oal-clinic-swatch { background: var(--viz-series-1); }
+    #ownership-access-lab .oal-lab-swatch { background: var(--viz-series-2); }
+    #ownership-access-lab .oal-payer-swatch { background: var(--viz-series-3); }
+    #ownership-access-lab .oal-cut-swatch {
+      width: 1.4em;
+      height: 0;
+      border-top: 2px dashed var(--destructive);
+      vertical-align: 0.25em;
+    }
+  &lt;/style&gt;
+
+  &lt;div class=&quot;viz-controls&quot;&gt;
+    &lt;label class=&quot;form-label&quot; for=&quot;oal-access&quot;&gt;
+      Learning available without ownership, q:
+      &lt;span id=&quot;oal-access-value&quot;&gt;0.60&lt;/span&gt;
+      &lt;input id=&quot;oal-access&quot; class=&quot;form-range&quot; type=&quot;range&quot; min=&quot;0&quot; max=&quot;1&quot; step=&quot;0.01&quot; value=&quot;0.60&quot;&gt;
+    &lt;/label&gt;
+    &lt;label class=&quot;form-label&quot; for=&quot;oal-conflict&quot;&gt;
+      Cross-boundary customer value at risk, χ:
+      &lt;span id=&quot;oal-conflict-value&quot;&gt;0.10&lt;/span&gt;
+      &lt;input id=&quot;oal-conflict&quot; class=&quot;form-range&quot; type=&quot;range&quot; min=&quot;0&quot; max=&quot;1&quot; step=&quot;0.01&quot; value=&quot;0.10&quot;&gt;
+    &lt;/label&gt;
+    &lt;label class=&quot;form-label&quot; for=&quot;oal-topology&quot;&gt;
+      Learning topology
+      &lt;select id=&quot;oal-topology&quot; class=&quot;form-select&quot;&gt;
+        &lt;option value=&quot;complementary&quot;&gt;Complementary across types&lt;/option&gt;
+        &lt;option value=&quot;within_type&quot;&gt;Concentrated within types&lt;/option&gt;
+      &lt;/select&gt;
+    &lt;/label&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;viz-grid&quot;&gt;
+    &lt;div class=&quot;card viz-stat&quot;&gt;
+      &lt;span class=&quot;text-small text-muted&quot;&gt;Selected form&lt;/span&gt;
+      &lt;span id=&quot;oal-regime&quot; class=&quot;viz-stat-value&quot;&gt;Cross-type partial rollup&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;card viz-stat&quot;&gt;
+      &lt;span class=&quot;text-small text-muted&quot;&gt;Assets acquired&lt;/span&gt;
+      &lt;span id=&quot;oal-size&quot; class=&quot;viz-stat-value&quot;&gt;4 / 6&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;card viz-stat&quot;&gt;
+      &lt;span class=&quot;text-small text-muted&quot;&gt;Gain over neutral platform&lt;/span&gt;
+      &lt;span id=&quot;oal-value&quot; class=&quot;viz-stat-value&quot;&gt;0.200&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;svg class=&quot;oal-chart&quot; viewBox=&quot;0 0 720 350&quot; role=&quot;img&quot; aria-labelledby=&quot;oal-title oal-desc&quot;&gt;
+    &lt;title id=&quot;oal-title&quot;&gt;Ownership and customer access in a directed learning network&lt;/title&gt;
+    &lt;desc id=&quot;oal-desc&quot;&gt;Adjustable six-node network showing which clinics, laboratories, and payers a common AI intermediary acquires.&lt;/desc&gt;
+    &lt;defs&gt;
+      &lt;marker id=&quot;oal-learning-arrow&quot; markerWidth=&quot;7&quot; markerHeight=&quot;7&quot; refX=&quot;6&quot; refY=&quot;3.5&quot; orient=&quot;auto&quot; markerUnits=&quot;strokeWidth&quot;&gt;
+        &lt;path d=&quot;M0,0 L7,3.5 L0,7 Z&quot; fill=&quot;var(--muted-foreground)&quot;&gt;&lt;/path&gt;
+      &lt;/marker&gt;
+      &lt;marker id=&quot;oal-cut-arrow&quot; markerWidth=&quot;7&quot; markerHeight=&quot;7&quot; refX=&quot;6&quot; refY=&quot;3.5&quot; orient=&quot;auto&quot; markerUnits=&quot;strokeWidth&quot;&gt;
+        &lt;path d=&quot;M0,0 L7,3.5 L0,7 Z&quot; fill=&quot;var(--destructive)&quot;&gt;&lt;/path&gt;
+      &lt;/marker&gt;
+    &lt;/defs&gt;
+    &lt;g id=&quot;oal-learning-edges&quot;&gt;&lt;/g&gt;
+    &lt;g id=&quot;oal-customer-edges&quot;&gt;&lt;/g&gt;
+    &lt;g id=&quot;oal-nodes&quot;&gt;&lt;/g&gt;
+  &lt;/svg&gt;
+
+  &lt;div class=&quot;viz-row text-small&quot; aria-label=&quot;Network legend&quot;&gt;
+    &lt;span&gt;&lt;span class=&quot;oal-swatch oal-clinic-swatch&quot;&gt;&lt;/span&gt;Clinic&lt;/span&gt;
+    &lt;span&gt;&lt;span class=&quot;oal-swatch oal-lab-swatch&quot;&gt;&lt;/span&gt;Laboratory&lt;/span&gt;
+    &lt;span&gt;&lt;span class=&quot;oal-swatch oal-payer-swatch&quot;&gt;&lt;/span&gt;Payer&lt;/span&gt;
+    &lt;span&gt;&lt;span class=&quot;oal-swatch oal-cut-swatch&quot;&gt;&lt;/span&gt;Customer tie cut by ownership&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;p id=&quot;oal-detail&quot; class=&quot;text-small text-muted&quot; aria-live=&quot;polite&quot;&gt;&lt;/p&gt;
+
+  &lt;script&gt;
+    (() =&gt; {
+      const root = document.getElementById(&#x27;ownership-access-lab&#x27;);
+      const access = root.querySelector(&#x27;#oal-access&#x27;);
+      const conflict = root.querySelector(&#x27;#oal-conflict&#x27;);
+      const topology = root.querySelector(&#x27;#oal-topology&#x27;);
+      const accessValue = root.querySelector(&#x27;#oal-access-value&#x27;);
+      const conflictValue = root.querySelector(&#x27;#oal-conflict-value&#x27;);
+      const regimeValue = root.querySelector(&#x27;#oal-regime&#x27;);
+      const sizeValue = root.querySelector(&#x27;#oal-size&#x27;);
+      const gainValue = root.querySelector(&#x27;#oal-value&#x27;);
+      const detail = root.querySelector(&#x27;#oal-detail&#x27;);
+      const learningLayer = root.querySelector(&#x27;#oal-learning-edges&#x27;);
+      const customerLayer = root.querySelector(&#x27;#oal-customer-edges&#x27;);
+      const nodeLayer = root.querySelector(&#x27;#oal-nodes&#x27;);
+      const svgNS = &#x27;http://www.w3.org/2000/svg&#x27;;
+
+      const nodes = [
+        { name: &#x27;clinic_east&#x27;, label: &#x27;Clinic east&#x27;, kind: &#x27;clinic&#x27;, advantage: 0.18, x: 100, y: 95 },
+        { name: &#x27;clinic_west&#x27;, label: &#x27;Clinic west&#x27;, kind: &#x27;clinic&#x27;, advantage: 0.16, x: 100, y: 255 },
+        { name: &#x27;lab_east&#x27;, label: &#x27;Lab east&#x27;, kind: &#x27;lab&#x27;, advantage: 0.14, x: 360, y: 95 },
+        { name: &#x27;lab_west&#x27;, label: &#x27;Lab west&#x27;, kind: &#x27;lab&#x27;, advantage: 0.12, x: 360, y: 255 },
+        { name: &#x27;payer_east&#x27;, label: &#x27;Payer east&#x27;, kind: &#x27;payer&#x27;, advantage: -0.03, x: 620, y: 95 },
+        { name: &#x27;payer_west&#x27;, label: &#x27;Payer west&#x27;, kind: &#x27;payer&#x27;, advantage: -0.05, x: 620, y: 255 }
+      ];
+      const typeLearning = {
+        &#x27;clinic:clinic&#x27;: 0.04, &#x27;lab:lab&#x27;: 0.05, &#x27;payer:payer&#x27;: 0.03,
+        &#x27;clinic:lab&#x27;: 0.13, &#x27;lab:clinic&#x27;: 0.18,
+        &#x27;clinic:payer&#x27;: 0.12, &#x27;payer:clinic&#x27;: 0.10,
+        &#x27;lab:payer&#x27;: 0.08, &#x27;payer:lab&#x27;: 0.06
+      };
+      const customerBase = {
+        &#x27;clinic:lab&#x27;: 0.08,
+        &#x27;payer:clinic&#x27;: 0.10,
+        &#x27;lab:payer&#x27;: 0.06
+      };
+
+      function zeroMatrix() {
+        return nodes.map(() =&gt; nodes.map(() =&gt; 0));
+      }
+
+      function matrices(mode) {
+        const complementary = zeroMatrix();
+        for (let i = 0; i &lt; nodes.length; i += 1) {
+          for (let j = 0; j &lt; nodes.length; j += 1) {
+            if (i === j) continue;
+            const multiplier = i % 2 === j % 2 ? 1.30 : 0.75;
+            complementary[i][j] = typeLearning[`${nodes[i].kind}:${nodes[j].kind}`] * multiplier;
+          }
+        }
+        let learning = complementary;
+        if (mode === &#x27;within_type&#x27;) {
+          const total = complementary.flat().reduce((sum, value) =&gt; sum + value, 0);
+          const withinCount = nodes.reduce((count, source, i) =&gt; count + nodes.filter((target, j) =&gt; i !== j &amp;&amp; source.kind === target.kind).length, 0);
+          learning = zeroMatrix();
+          for (let i = 0; i &lt; nodes.length; i += 1) {
+            for (let j = 0; j &lt; nodes.length; j += 1) {
+              if (i !== j &amp;&amp; nodes[i].kind === nodes[j].kind) learning[i][j] = total / withinCount;
+            }
+          }
+        }
+        const customer = zeroMatrix();
+        const coordination = zeroMatrix();
+        for (let i = 0; i &lt; nodes.length; i += 1) {
+          for (let j = 0; j &lt; nodes.length; j += 1) {
+            if (i === j) continue;
+            const multiplier = i % 2 === j % 2 ? 1.0 : 0.35;
+            customer[i][j] = (customerBase[`${nodes[i].kind}:${nodes[j].kind}`] || 0.005) * multiplier;
+            coordination[i][j] = nodes[i].kind === nodes[j].kind ? 0.008 : 0.025;
+          }
+        }
+        return { learning, customer, coordination };
+      }
+
+      function candidate(mask, q, chi, data) {
+        const owned = nodes.map((_, index) =&gt; Boolean(mask &amp; (1 &lt;&lt; index)));
+        const size = owned.filter(Boolean).length;
+        let direct = 0;
+        let internalLearning = 0;
+        let coordination = 0;
+        let exposure = 0;
+        for (let i = 0; i &lt; nodes.length; i += 1) {
+          if (owned[i]) direct += nodes[i].advantage;
+          for (let j = 0; j &lt; nodes.length; j += 1) {
+            if (i !== j &amp;&amp; owned[i] &amp;&amp; owned[j]) internalLearning += data.learning[i][j];
+            if (owned[i] !== owned[j]) exposure += data.customer[i][j];
+            if (i &lt; j &amp;&amp; owned[i] &amp;&amp; owned[j]) coordination += data.coordination[i][j];
+          }
+        }
+        const learningUpgrade = (1 - q) * internalLearning;
+        const fixed = size ? 0.16 : 0;
+        const organization = size ? 0.065 * Math.pow(size, 1.65) : 0;
+        const customerLoss = chi * exposure;
+        const incremental = direct + learningUpgrade - fixed - organization - coordination - customerLoss;
+        return { mask, owned, size, direct, learningUpgrade, fixed, organization, coordination, exposure, customerLoss, incremental };
+      }
+
+      function solve(q, chi, data) {
+        const candidates = [];
+        for (let mask = 0; mask &lt; (1 &lt;&lt; nodes.length); mask += 1) candidates.push(candidate(mask, q, chi, data));
+        candidates.sort((a, b) =&gt; {
+          if (Math.abs(a.incremental - b.incremental) &gt; 1e-10) return b.incremental - a.incremental;
+          if (a.size !== b.size) return a.size - b.size;
+          return a.mask - b.mask;
+        });
+        return { best: candidates[0], margin: candidates[0].incremental - candidates[1].incremental };
+      }
+
+      function regime(candidate) {
+        if (candidate.size === 0) return &#x27;Neutral platform&#x27;;
+        if (candidate.size === nodes.length) return &#x27;Full-network rollup&#x27;;
+        if (candidate.size === 1) return &#x27;One acquired asset&#x27;;
+        const kinds = new Set(nodes.filter((_, index) =&gt; candidate.owned[index]).map(node =&gt; node.kind));
+        return kinds.size === 1 ? &#x27;Specialized partial rollup&#x27; : &#x27;Cross-type partial rollup&#x27;;
+      }
+
+      function edgePath(source, target, bend) {
+        const dx = target.x - source.x;
+        const dy = target.y - source.y;
+        const length = Math.hypot(dx, dy);
+        const ux = dx / length;
+        const uy = dy / length;
+        const startX = source.x + ux * 31;
+        const startY = source.y + uy * 31;
+        const endX = target.x - ux * 34;
+        const endY = target.y - uy * 34;
+        const midX = (startX + endX) / 2 - uy * bend;
+        const midY = (startY + endY) / 2 + ux * bend;
+        return `M${startX.toFixed(1)},${startY.toFixed(1)} Q${midX.toFixed(1)},${midY.toFixed(1)} ${endX.toFixed(1)},${endY.toFixed(1)}`;
+      }
+
+      function appendPath(layer, className, source, target, bend, width, opacity, marker) {
+        const path = document.createElementNS(svgNS, &#x27;path&#x27;);
+        path.setAttribute(&#x27;class&#x27;, className);
+        path.setAttribute(&#x27;d&#x27;, edgePath(source, target, bend));
+        if (width) path.setAttribute(&#x27;stroke-width&#x27;, width);
+        if (opacity) path.setAttribute(&#x27;opacity&#x27;, opacity);
+        path.setAttribute(&#x27;marker-end&#x27;, `url(#${marker})`);
+        layer.appendChild(path);
+      }
+
+      function renderGraph(data, selected) {
+        learningLayer.replaceChildren();
+        customerLayer.replaceChildren();
+        nodeLayer.replaceChildren();
+        const maximum = Math.max(...data.learning.flat());
+        const cutoff = 0.20 * maximum;
+        for (let i = 0; i &lt; nodes.length; i += 1) {
+          for (let j = 0; j &lt; nodes.length; j += 1) {
+            const weight = data.learning[i][j];
+            if (weight &gt;= cutoff) {
+              const bend = i &lt; j ? 13 : -13;
+              appendPath(
+                learningLayer,
+                &#x27;oal-learning&#x27;,
+                nodes[i],
+                nodes[j],
+                bend,
+                (0.7 + 3.0 * weight / maximum).toFixed(2),
+                (0.20 + 0.55 * weight / maximum).toFixed(2),
+                &#x27;oal-learning-arrow&#x27;
+              );
+            }
+            if (selected.owned[i] !== selected.owned[j] &amp;&amp; data.customer[i][j] &gt;= 0.03) {
+              appendPath(customerLayer, &#x27;oal-customer-cut&#x27;, nodes[i], nodes[j], i &lt; j ? 20 : -20, null, null, &#x27;oal-cut-arrow&#x27;);
+            }
+          }
+        }
+        nodes.forEach((node, index) =&gt; {
+          const group = document.createElementNS(svgNS, &#x27;g&#x27;);
+          group.setAttribute(&#x27;class&#x27;, `oal-node oal-${node.kind}${selected.owned[index] ? &#x27; is-owned&#x27; : &#x27;&#x27;}`);
+          const title = document.createElementNS(svgNS, &#x27;title&#x27;);
+          title.textContent = `${node.label}: ${selected.owned[index] ? &#x27;owned&#x27; : &#x27;independent&#x27;}`;
+          const circle = document.createElementNS(svgNS, &#x27;circle&#x27;);
+          circle.setAttribute(&#x27;cx&#x27;, node.x);
+          circle.setAttribute(&#x27;cy&#x27;, node.y);
+          circle.setAttribute(&#x27;r&#x27;, 28);
+          const label = document.createElementNS(svgNS, &#x27;text&#x27;);
+          label.setAttribute(&#x27;x&#x27;, node.x);
+          label.setAttribute(&#x27;y&#x27;, node.y + 49);
+          label.setAttribute(&#x27;class&#x27;, &#x27;text-small&#x27;);
+          label.textContent = node.label;
+          group.append(title, circle, label);
+          nodeLayer.appendChild(group);
+        });
+      }
+
+      function render() {
+        const q = Number(access.value);
+        const chi = Number(conflict.value);
+        const data = matrices(topology.value);
+        const solution = solve(q, chi, data);
+        const best = solution.best;
+        accessValue.textContent = q.toFixed(2);
+        conflictValue.textContent = chi.toFixed(2);
+        regimeValue.textContent = regime(best);
+        sizeValue.textContent = `${best.size} / ${nodes.length}`;
+        gainValue.textContent = best.incremental.toFixed(3);
+        const ownedNames = nodes.filter((_, index) =&gt; best.owned[index]).map(node =&gt; node.label).join(&#x27;, &#x27;) || &#x27;none&#x27;;
+        const costs = best.fixed + best.organization + best.coordination;
+        detail.textContent = `Owned: ${ownedNames} · direct ${best.direct.toFixed(3)} · learning upgrade ${best.learningUpgrade.toFixed(3)} · ownership costs ${costs.toFixed(3)} · customer loss ${best.customerLoss.toFixed(3)} · lead over next subset ${solution.margin.toFixed(3)}`;
+        renderGraph(data, best);
+      }
+
+      access.addEventListener(&#x27;input&#x27;, render);
+      conflict.addEventListener(&#x27;input&#x27;, render);
+      topology.addEventListener(&#x27;change&#x27;, render);
+      render();
+    })();
+  &lt;/script&gt;
+&lt;/div&gt;
+
+&lt;script src=&quot;https://unpkg.com/@floating-ui/core@1.7.3/dist/floating-ui.core.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://unpkg.com/@floating-ui/dom@1.7.4/dist/floating-ui.dom.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  if (window.FloatingUIDOM == null) {
+    return;
+  }
+  const { autoUpdate, computePosition, flip, offset, shift, size } =
+    window.FloatingUIDOM;
+  const tooltipPlacements = new Set([&quot;top&quot;, &quot;right&quot;, &quot;bottom&quot;, &quot;left&quot;]);
+  const tooltipId = `codex-visualization-tooltip-${
+    window.crypto?.randomUUID?.() ?? Date.now().toString(36)
+  }`;
+  const tooltipGap = 5;
+  const hoverDelay = 700;
+  const skipDelay = 300;
+  let activeTrigger = null;
+  let pendingTrigger = null;
+  let tooltip = null;
+  let openTimeout = null;
+  let autoUpdateCleanup = null;
+  let positionRequest = 0;
+  let skipDelayUntil = 0;
+
+  const getTrigger = (target) =&gt;
+    target?.nodeType === Node.ELEMENT_NODE
+      ? target.closest(&quot;[data-tooltip]&quot;)
+      : null;
+  const containsTarget = (trigger, target) =&gt;
+    target?.nodeType != null &amp;&amp; trigger.contains(target);
+  const getContent = (trigger) =&gt;
+    trigger.getAttribute(&quot;data-tooltip&quot;)?.trim() ?? &quot;&quot;;
+  const getPlacement = (trigger) =&gt; {
+    const placement = trigger.getAttribute(&quot;data-tooltip-placement&quot;);
+    return tooltipPlacements.has(placement) ? placement : &quot;top&quot;;
+  };
+  const getTooltip = () =&gt; {
+    if (tooltip == null) {
+      tooltip = document.createElement(&quot;div&quot;);
+      tooltip.id = tooltipId;
+      tooltip.className = &quot;tooltip&quot;;
+      tooltip.setAttribute(&quot;role&quot;, &quot;tooltip&quot;);
+    }
+    return tooltip;
+  };
+  const setDescribedBy = (trigger, described) =&gt; {
+    const ids = new Set(
+      (trigger.getAttribute(&quot;aria-describedby&quot;) ?? &quot;&quot;)
+        .split(/\s+/)
+        .filter(Boolean),
+    );
+    if (described) {
+      ids.add(tooltipId);
+    } else {
+      ids.delete(tooltipId);
+    }
+    if (ids.size === 0) {
+      trigger.removeAttribute(&quot;aria-describedby&quot;);
+    } else {
+      trigger.setAttribute(&quot;aria-describedby&quot;, [...ids].join(&quot; &quot;));
+    }
+  };
+  const clearOpenTimeout = () =&gt; {
+    if (openTimeout != null) {
+      window.clearTimeout(openTimeout);
+      openTimeout = null;
+    }
+    pendingTrigger = null;
+  };
+  const closeTooltip = (activateSkipDelay = true) =&gt; {
+    clearOpenTimeout();
+    positionRequest += 1;
+    autoUpdateCleanup?.();
+    autoUpdateCleanup = null;
+    if (activeTrigger == null) {
+      return;
+    }
+    setDescribedBy(activeTrigger, false);
+    activeTrigger = null;
+    tooltip?.remove();
+    if (activateSkipDelay) {
+      skipDelayUntil = Date.now() + skipDelay;
+    }
+  };
+  const updatePosition = (trigger, floating) =&gt; {
+    const request = ++positionRequest;
+    void computePosition(trigger, floating, {
+      middleware: [
+        offset(tooltipGap),
+        flip({ padding: tooltipGap }),
+        shift({ padding: tooltipGap }),
+        size({
+          padding: tooltipGap,
+          apply({ availableHeight, availableWidth, elements }) {
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-width&quot;,
+              `${Math.max(0, availableWidth)}px`,
+            );
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-height&quot;,
+              `${Math.max(0, availableHeight)}px`,
+            );
+          },
+        }),
+      ],
+      placement: getPlacement(trigger),
+      strategy: &quot;fixed&quot;,
+    })
+      .then(({ x, y }) =&gt; {
+        if (activeTrigger !== trigger || request !== positionRequest) {
+          return;
+        }
+        const scale = window.devicePixelRatio || 1;
+        floating.style.transform = `translate(${Math.round(x * scale) / scale}px, ${Math.round(y * scale) / scale}px)`;
+        floating.style.visibility = &quot;visible&quot;;
+      })
+      .catch(() =&gt; {
+        if (activeTrigger === trigger &amp;&amp; request === positionRequest) {
+          closeTooltip(false);
+        }
+      });
+  };
+  const openTooltip = (trigger) =&gt; {
+    const content = getContent(trigger);
+    if (!trigger.isConnected || content.length === 0) {
+      return;
+    }
+    clearOpenTimeout();
+    if (activeTrigger === trigger) {
+      return;
+    }
+    closeTooltip();
+    const floating = getTooltip();
+    floating.textContent = content;
+    floating.style.visibility = &quot;hidden&quot;;
+    floating.style.transform = &quot;translate(0, 0)&quot;;
+    document.body.appendChild(floating);
+    activeTrigger = trigger;
+    setDescribedBy(trigger, true);
+    autoUpdateCleanup = autoUpdate(trigger, floating, () =&gt; {
+      updatePosition(trigger, floating);
+    });
+  };
+  const requestOpen = (trigger, immediate = false) =&gt; {
+    if (
+      getContent(trigger).length === 0 ||
+      activeTrigger === trigger ||
+      pendingTrigger === trigger
+    ) {
+      return;
+    }
+    clearOpenTimeout();
+    pendingTrigger = trigger;
+    const delay =
+      immediate || activeTrigger != null || Date.now() &lt; skipDelayUntil
+        ? 0
+        : hoverDelay;
+    if (delay === 0) {
+      openTooltip(trigger);
+      return;
+    }
+    openTimeout = window.setTimeout(() =&gt; {
+      openTimeout = null;
+      pendingTrigger = null;
+      openTooltip(trigger);
+    }, delay);
+  };
+  const handlePointerOpen = (event) =&gt; {
+    if (event.pointerType === &quot;touch&quot;) {
+      return;
+    }
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    requestOpen(trigger);
+  };
+  const handleLeave = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const handleFocusIn = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (trigger?.matches(&quot;:focus-visible&quot;)) {
+      requestOpen(trigger, true);
+    }
+  };
+  const handleKeyDown = (event) =&gt; {
+    if (event.key === &quot;Escape&quot;) {
+      closeTooltip();
+    }
+  };
+  const handleContextMenu = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const destroy = () =&gt; {
+    closeTooltip(false);
+    document.removeEventListener(&quot;pointerover&quot;, handlePointerOpen);
+    document.removeEventListener(&quot;pointerout&quot;, handleLeave);
+    document.removeEventListener(&quot;focusin&quot;, handleFocusIn);
+    document.removeEventListener(&quot;focusout&quot;, handleLeave);
+    document.removeEventListener(&quot;keydown&quot;, handleKeyDown);
+    document.removeEventListener(&quot;contextmenu&quot;, handleContextMenu);
+    tooltip = null;
+  };
+
+  document.addEventListener(&quot;pointerover&quot;, handlePointerOpen);
+  document.addEventListener(&quot;pointerout&quot;, handleLeave);
+  document.addEventListener(&quot;focusin&quot;, handleFocusIn);
+  document.addEventListener(&quot;focusout&quot;, handleLeave);
+  document.addEventListener(&quot;keydown&quot;, handleKeyDown);
+  document.addEventListener(&quot;contextmenu&quot;, handleContextMenu);
+  window.addEventListener(&quot;pagehide&quot;, destroy, { once: true });
+})();
+&lt;/script&gt;
+&lt;script id=&quot;codex-visualization-lucide&quot; async src=&quot;https://unpkg.com/lucide@1.17.0/dist/umd/lucide.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  const initialize = () =&gt; {
+    globalThis.lucide?.createIcons({ attrs: { width: 16, height: 16 } });
+  };
+  if (globalThis.lucide != null) {
+    initialize();
+    return;
+  }
+  document
+    .getElementById(&quot;codex-visualization-lucide&quot;)
+    ?.addEventListener(&quot;load&quot;, initialize, { once: true });
+})();
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe>
+</body>
+</html>

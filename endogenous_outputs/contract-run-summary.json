@@ -1,0 +1,20 @@
+{
+  "draws": 5000,
+  "seed": 19,
+  "grid_points_per_axis": 61,
+  "protectability": 0.8,
+  "protection_cost": 1.2,
+  "provider_learning_share": 0.25,
+  "owner_bargaining_weight": 0.5,
+  "baseline": {
+    "marginal_value_at_full": 0.55,
+    "curvature": 0.45,
+    "context_rent": 1.0
+  },
+  "heterogeneity": {
+    "value_sigma": 0.2,
+    "context_sigma": 0.3,
+    "integration_sigma": 0.25,
+    "protection_cost_sigma": 0.2
+  }
+}

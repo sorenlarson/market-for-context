@@ -1,0 +1,1355 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'unsafe-inline' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Hidden Reuse Game</title>
+<style>:root{color-scheme:light dark;background:light-dark(rgb(255 255 255), rgb(24 24 24))}html,body{margin:0}body{box-sizing:border-box;padding:1rem;background:inherit}iframe{display:block;width:100%;max-width:736px;height:calc(100vh - 2rem);margin:0 auto;border:0}</style>
+</head>
+<body>
+<iframe sandbox="allow-scripts" referrerpolicy="no-referrer" title="Hidden Reuse Game" srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;meta name=&quot;referrer&quot; content=&quot;no-referrer&quot;&gt;
+&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &#x27;none&#x27;; script-src &#x27;unsafe-inline&#x27; &#x27;unsafe-eval&#x27; &#x27;wasm-unsafe-eval&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src &#x27;unsafe-inline&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src &#x27;none&#x27;; object-src &#x27;none&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;&quot;&gt;
+&lt;title&gt;Hidden Reuse Game&lt;/title&gt;
+&lt;style&gt;:root {
+  color-scheme: light dark;
+  background-color: var(--background) !important;
+
+  /* Agent-facing contract; keep in sync with SKILL.md. */
+  --background: light-dark(rgb(255 255 255), rgb(24 24 24));
+  --foreground: light-dark(rgb(26 28 31), rgb(255 255 255));
+  --card: color-mix(in oklab, var(--foreground) 5%, transparent);
+  --card-foreground: var(--foreground);
+  --popover: light-dark(rgb(255 255 255), rgb(45 45 45));
+  --popover-foreground: var(--foreground);
+  --primary: light-dark(rgb(51 156 255), rgb(131 195 255));
+  --primary-foreground: light-dark(rgb(255 255 255), rgb(13 13 13));
+  --secondary: light-dark(rgb(255 255 255 / 96%), rgb(54 54 54 / 96%));
+  --secondary-foreground: var(--foreground);
+  --muted: color-mix(in srgb, var(--foreground) 10%, transparent);
+  --muted-foreground: light-dark(
+    rgb(26 28 31 / 49.4%),
+    rgb(255 255 255 / 49.8%)
+  );
+  --accent: light-dark(rgb(229 242 255), rgb(13 39 63));
+  --accent-foreground: var(--primary);
+  --destructive: light-dark(rgb(226 85 7), rgb(255 133 73));
+  --border: light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%));
+  --input: light-dark(
+    rgb(26 28 31 / 11.8%),
+    color-mix(in oklab, rgb(0 0 0) 10%, transparent)
+  );
+  --ring: light-dark(rgb(51 156 255), rgb(131 195 255 / 76%));
+  --font-size-base: 14px;
+  --viz-series-1: var(--primary);
+  --viz-series-2: light-dark(rgb(243 136 59), rgb(245 154 86));
+  --viz-series-3: light-dark(rgb(93 201 119), rgb(116 213 139));
+  --viz-series-4: light-dark(rgb(235 119 177), rgb(240 143 192));
+  --viz-series-5: light-dark(rgb(155 121 236), rgb(170 145 239));
+  --viz-series-6: light-dark(rgb(58 185 177), rgb(90 203 194));
+
+  /* Internal implementation variables; not part of the agent contract. */
+  --font-sans: -apple-system, system-ui, &quot;Segoe UI&quot;, sans-serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, &quot;SF Mono&quot;, Menlo, Consolas, &quot;Liberation Mono&quot;,
+    monospace;
+  --font-size-normal: max(11px, var(--font-size-base));
+  --font-size-tooltip: calc(var(--font-size-base) - 1px);
+  --font-size-small: max(11px, calc(var(--font-size-base) - 2px));
+  --font-size-h1: calc(var(--font-size-normal) * 1.7142857143);
+  --font-size-h2: calc(var(--font-size-normal) * 1.4285714286);
+  --font-size-h3: calc(var(--font-size-normal) * 1.2857142857);
+  --font-weight-normal: 430;
+  --font-weight-medium: 500;
+  --line-height-normal: calc(var(--font-size-normal) * 1.5);
+  --line-height-tooltip: calc(var(--font-size-tooltip) * 1.4285714286);
+  --line-height-small: calc(var(--font-size-small) + 4px);
+  --radius: 12.5px;
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-2xl: calc(var(--radius) * 1.6);
+  --radius-full: 9999px;
+  --shadow-sm: 0 1px 2px -1px rgb(0 0 0 / 8%);
+  --checkmark-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; viewBox=&#x27;0 0 17 17&#x27;%3E%3Cpath d=&#x27;M12.8961 3.64101C13.1297 3.41418 13.4984 3.37523 13.7779 3.56581C14.0571 3.75635 14.1554 4.11331 14.0299 4.41347L13.9615 4.53847L7.71151 13.7045C7.59411 13.8767 7.4063 13.9877 7.19881 14.0072C6.99136 14.0267 6.78564 13.9533 6.63826 13.806L2.88826 10.056L2.79842 9.9457C2.6192 9.67407 2.64927 9.30496 2.88826 9.06581C3.12738 8.82669 3.49647 8.79676 3.76815 8.97597L3.8785 9.06581L7.03084 12.2182L12.8053 3.74941L12.8961 3.64101Z&#x27;/%3E%3C/svg%3E&quot;);
+
+  /* Legacy aliases; not part of the current agent contract. */
+  --viz-bg: transparent;
+  --viz-panel: var(--card);
+  --viz-border: var(--border);
+  --viz-text: var(--foreground);
+  --viz-muted: var(--muted-foreground);
+  --viz-accent: var(--primary);
+  --viz-accent-text: var(--primary-foreground);
+  --viz-accent-bg: var(--accent);
+  --viz-font-size: var(--font-size-base);
+  --viz-warning: var(--destructive);
+  --color-background-primary: var(--background);
+  --color-text-primary: var(--foreground);
+  --color-border-secondary: var(--border);
+}
+
+:root[data-theme=&quot;light&quot;] {
+  color-scheme: light;
+}
+
+:root[data-theme=&quot;dark&quot;] {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html &gt; body {
+  margin: 0;
+  padding: 5px;
+  color: var(--foreground);
+  background: transparent !important;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-normal);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+}
+
+a {
+  color: color-mix(in srgb, var(--viz-accent) 80%, var(--viz-text) 20%);
+  cursor: pointer;
+  font-weight: var(--viz-font-weight-medium);
+  text-decoration: none;
+  text-underline-offset: 2px;
+}
+
+a:is(:hover, :focus-visible) {
+  text-decoration-line: underline;
+  text-decoration-style: dashed;
+  text-decoration-thickness: 0.5px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin-block: 0;
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.3;
+}
+
+b,
+strong,
+th {
+  font-weight: var(--font-weight-medium);
+}
+
+code:not(pre code) {
+  display: inline;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  corner-shape: superellipse(1.5);
+  background: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  word-break: break-word;
+}
+
+#widget {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 0;
+  background: transparent !important;
+}
+
+.card {
+  min-width: 0;
+  padding: 12px;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  border-radius: var(--radius-2xl);
+  corner-shape: superellipse(1.5);
+  color: var(--card-foreground);
+  background: var(--card);
+}
+
+#widget &gt; :not(.card) {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.tooltip {
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  left: 0;
+  width: max-content;
+  max-width: min(
+    20rem,
+    var(--tooltip-available-width, calc(100vw - 10px)),
+    calc(100vw - 10px)
+  );
+  max-height: min(
+    var(--tooltip-available-height, calc(100vh - 10px)),
+    calc(100vh - 10px)
+  );
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--popover-foreground);
+  background: var(--popover);
+  box-shadow: none;
+  font-size: var(--font-size-tooltip);
+  line-height: var(--line-height-tooltip);
+  overflow-wrap: break-word;
+  white-space: normal;
+  pointer-events: none;
+  user-select: none;
+}
+
+.viz-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(max(180px, 24%), 1fr));
+  gap: 10px;
+}
+
+.viz-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.viz-stat-value {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+.viz-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.viz-badge {
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  color: var(--accent-foreground);
+  background: var(--accent);
+  font-weight: var(--font-weight-medium);
+}
+
+small,
+.text-small,
+.viz-badge {
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-small);
+}
+
+.text-muted {
+  color: var(--muted-foreground);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.viz-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.viz-controls &gt; .form-label {
+  display: grid;
+  min-width: min(100%, 260px);
+  flex: 1 1 280px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 2px 12px;
+  margin-bottom: 0;
+}
+
+.viz-controls &gt; .form-label &gt; :is(.form-control, .form-range, .form-select) {
+  grid-column: 1 / -1;
+}
+
+.btn,
+.form-check-input,
+.form-control,
+.form-range,
+.form-select {
+  font: inherit;
+}
+
+.btn {
+  appearance: button;
+  display: inline-flex;
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  min-height: 28px;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0 8px;
+  -webkit-app-region: no-drag;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: var(--cursor-interaction, pointer);
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.btn:is(.btn-block, .viz-tile) {
+  inline-size: 100%;
+}
+
+.btn.viz-tile {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+a.btn {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn-primary {
+  border-color: transparent;
+  color: var(--primary-foreground);
+  background: var(--foreground);
+  background-clip: padding-box;
+}
+
+.btn-primary .text-muted {
+  color: color-mix(in srgb, var(--primary-foreground) 50%, transparent);
+}
+
+.btn-primary:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 80%, transparent);
+  background-clip: padding-box;
+}
+
+.btn-ghost {
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.btn-ghost:not(:disabled):hover {
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+[data-lucide] {
+  stroke-width: 1.6;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--foreground);
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  padding: 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--foreground);
+  background: var(--secondary);
+}
+
+.form-control::placeholder {
+  color: var(--muted-foreground);
+}
+
+.form-control[type=&quot;file&quot;] {
+  padding: 0;
+  overflow: hidden;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control[type=&quot;file&quot;]::file-selector-button {
+  min-height: 26px;
+  margin-right: 8px;
+  padding: 0 8px;
+  border: 0;
+  border-right: 1px solid var(--input);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: inherit;
+  font: inherit;
+}
+
+.form-control[type=&quot;file&quot;]:not(:disabled):hover::file-selector-button {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-control-color[type=&quot;color&quot;] {
+  width: 40px;
+  height: 28px;
+  padding: 3px;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch {
+  border: 0;
+  border-radius: calc(var(--radius-lg) - 4px);
+  corner-shape: superellipse(1.5);
+}
+
+textarea.form-control {
+  height: auto;
+  min-height: 72px;
+  padding: 8px 10px;
+  resize: vertical;
+}
+
+.form-control:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-control:disabled,
+.form-select:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.form-select {
+  appearance: none;
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  margin: 0;
+  padding: 0 32px 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--foreground);
+  background-color: var(--secondary);
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--muted-foreground) 50%),
+    linear-gradient(135deg, var(--muted-foreground) 50%, transparent 50%);
+  background-position:
+    calc(100% - 14px) 50%,
+    calc(100% - 10px) 50%;
+  background-repeat: no-repeat;
+  background-size: 4px 4px;
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-select:not(:disabled):hover {
+  background-color: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-select:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-check {
+  display: flex;
+  min-height: 20px;
+  align-items: center;
+  gap: 6px;
+}
+
+.form-check-input {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  margin: 0;
+  border: 1px solid var(--input);
+  color: var(--primary-foreground);
+  background-color: transparent;
+  cursor: var(--cursor-interaction, default);
+  transition:
+    background-color 150ms,
+    border-color 150ms,
+    box-shadow 150ms;
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;] {
+  border-color: var(--input);
+  border-radius: var(--radius-sm);
+  corner-shape: superellipse(1.5);
+  background-color: var(--secondary);
+  box-shadow: var(--shadow-sm);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input:not(:disabled):not(:checked):hover {
+  background-color: var(--card);
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;]:checked {
+  border-color: var(--primary);
+  background-color: var(--primary);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input[type=&quot;checkbox&quot;]:checked::before {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--primary-foreground);
+  content: &quot;&quot;;
+  mask: var(--checkmark-image) center / 12px 12px no-repeat;
+}
+
+.form-check-input[type=&quot;radio&quot;] {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
+}
+
+.form-check-input[type=&quot;radio&quot;]:checked {
+  border: 2px solid var(--primary);
+  background:
+    radial-gradient(circle, var(--primary-foreground) 0 2.5px, transparent 3px),
+    var(--primary);
+}
+
+.form-check:not(.form-switch) .form-check-input:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+}
+
+.form-switch .form-check-input:disabled,
+.form-switch .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.form-check-label {
+  color: var(--foreground);
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-switch .form-check-input {
+  position: relative;
+  width: 32px;
+  height: 20px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+  box-shadow: none;
+  transition: background-color 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  border: 1px solid light-dark(var(--primary-foreground), var(--foreground));
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+  box-shadow: var(--shadow-sm);
+  content: &quot;&quot;;
+  transform: translate(2px, -50%);
+  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input:checked {
+  background: var(--primary);
+}
+
+.form-switch .form-check-input:checked::before {
+  transform: translate(14px, -50%);
+}
+
+.form-switch .form-check-input:focus-visible {
+  box-shadow: 0 0 0 2px var(--ring);
+}
+
+.form-range {
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 28px;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border: 0;
+  accent-color: var(--primary);
+  background: linear-gradient(
+      color-mix(in srgb, var(--foreground) 7%, transparent),
+      color-mix(in srgb, var(--foreground) 7%, transparent)
+    )
+    center / 100% 2px no-repeat;
+}
+
+.form-range::-webkit-slider-runnable-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-webkit-slider-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range::-moz-range-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-moz-range-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.btn:not(.btn-primary, .viz-tile):is(
+    [aria-pressed=&quot;true&quot;],
+    [aria-selected=&quot;true&quot;],
+    .is-selected
+  ) {
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+  background: var(--primary);
+}
+
+.btn.viz-tile:is([aria-pressed=&quot;true&quot;], [aria-selected=&quot;true&quot;], .is-selected) {
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+#widget &gt; svg {
+  width: 100%;
+}
+
+.text-warning,
+.text-destructive {
+  color: var(--destructive);
+}
+
+html&gt;body{padding:0}&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id=&quot;hidden-reuse-game&quot;&gt;
+  &lt;style&gt;
+    #hidden-reuse-game .hidden-reuse-chart {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    #hidden-reuse-game .hidden-reuse-cell-path {
+      shape-rendering: crispEdges;
+      transition: d 180ms ease;
+    }
+    #hidden-reuse-game .hidden-reuse-secure {
+      fill: var(--viz-series-1);
+      fill-opacity: 0.76;
+    }
+    #hidden-reuse-game .hidden-reuse-leaky {
+      fill: var(--viz-series-2);
+      fill-opacity: 0.76;
+    }
+    #hidden-reuse-game .hidden-reuse-withholding {
+      fill: var(--viz-series-3);
+      fill-opacity: 0.76;
+    }
+    #hidden-reuse-game .hidden-reuse-ownership {
+      fill: var(--viz-series-4);
+      fill-opacity: 0.76;
+    }
+    #hidden-reuse-game .hidden-reuse-axis {
+      fill: none;
+      stroke: var(--foreground);
+      stroke-width: 1.5;
+    }
+    #hidden-reuse-game .hidden-reuse-gridline {
+      stroke: var(--border);
+      stroke-width: 1;
+    }
+    #hidden-reuse-game .hidden-reuse-reference {
+      fill: var(--background);
+      stroke: var(--foreground);
+      stroke-width: 2;
+    }
+    #hidden-reuse-game .hidden-reuse-tick,
+    #hidden-reuse-game .hidden-reuse-axis-label {
+      fill: var(--foreground);
+    }
+    #hidden-reuse-game .hidden-reuse-tick {
+      text-anchor: middle;
+    }
+    #hidden-reuse-game .hidden-reuse-y-tick {
+      text-anchor: end;
+    }
+    #hidden-reuse-game .hidden-reuse-axis-label {
+      text-anchor: middle;
+      font-weight: 500;
+    }
+    #hidden-reuse-game .hidden-reuse-swatch {
+      display: inline-block;
+      width: 0.8em;
+      height: 0.8em;
+      margin-inline-end: 0.35em;
+      vertical-align: -0.05em;
+    }
+    #hidden-reuse-game .hidden-reuse-swatch-secure {
+      background: var(--viz-series-1);
+    }
+    #hidden-reuse-game .hidden-reuse-swatch-leaky {
+      background: var(--viz-series-2);
+    }
+    #hidden-reuse-game .hidden-reuse-swatch-withholding {
+      background: var(--viz-series-3);
+    }
+    #hidden-reuse-game .hidden-reuse-swatch-ownership {
+      background: var(--viz-series-4);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #hidden-reuse-game .hidden-reuse-cell-path {
+        transition: none;
+      }
+    }
+  &lt;/style&gt;
+
+  &lt;div class=&quot;viz-controls&quot;&gt;
+    &lt;label class=&quot;form-label&quot; for=&quot;hidden-reuse-payment-cap&quot;&gt;
+      Context payment cap T̄: &lt;span id=&quot;hidden-reuse-payment-cap-value&quot;&gt;0.15&lt;/span&gt;
+      &lt;input id=&quot;hidden-reuse-payment-cap&quot; class=&quot;form-range&quot; type=&quot;range&quot; min=&quot;0&quot; max=&quot;0.50&quot; step=&quot;0.01&quot; value=&quot;0.15&quot;&gt;
+    &lt;/label&gt;
+    &lt;label class=&quot;form-label&quot; for=&quot;hidden-reuse-provider-gain&quot;&gt;
+      Provider future leverage g: &lt;span id=&quot;hidden-reuse-provider-gain-value&quot;&gt;0.45&lt;/span&gt;
+      &lt;input id=&quot;hidden-reuse-provider-gain&quot; class=&quot;form-range&quot; type=&quot;range&quot; min=&quot;0.10&quot; max=&quot;0.80&quot; step=&quot;0.01&quot; value=&quot;0.45&quot;&gt;
+    &lt;/label&gt;
+    &lt;label class=&quot;form-label&quot; for=&quot;hidden-reuse-monitor-cost&quot;&gt;
+      Monitoring cost p: &lt;span id=&quot;hidden-reuse-monitor-cost-value&quot;&gt;0.25&lt;/span&gt;
+      &lt;input id=&quot;hidden-reuse-monitor-cost&quot; class=&quot;form-range&quot; type=&quot;range&quot; min=&quot;0.05&quot; max=&quot;0.80&quot; step=&quot;0.01&quot; value=&quot;0.25&quot;&gt;
+    &lt;/label&gt;
+  &lt;/div&gt;
+
+  &lt;svg class=&quot;hidden-reuse-chart&quot; viewBox=&quot;0 0 720 430&quot; role=&quot;img&quot; aria-labelledby=&quot;hidden-reuse-svg-title hidden-reuse-svg-description&quot;&gt;
+    &lt;title id=&quot;hidden-reuse-svg-title&quot;&gt;Hidden reuse governance regimes&lt;/title&gt;
+    &lt;desc id=&quot;hidden-reuse-svg-description&quot;&gt;A phase map showing secure modularity, priced reuse, strategic withholding, and ownership as enforceable sanctions and integration costs vary.&lt;/desc&gt;
+    &lt;g id=&quot;hidden-reuse-grid&quot;&gt;&lt;/g&gt;
+    &lt;path id=&quot;hidden-reuse-secure-area&quot; class=&quot;hidden-reuse-cell-path hidden-reuse-secure&quot;&gt;&lt;/path&gt;
+    &lt;path id=&quot;hidden-reuse-leaky-area&quot; class=&quot;hidden-reuse-cell-path hidden-reuse-leaky&quot;&gt;&lt;/path&gt;
+    &lt;path id=&quot;hidden-reuse-withholding-area&quot; class=&quot;hidden-reuse-cell-path hidden-reuse-withholding&quot;&gt;&lt;/path&gt;
+    &lt;path id=&quot;hidden-reuse-ownership-area&quot; class=&quot;hidden-reuse-cell-path hidden-reuse-ownership&quot;&gt;&lt;/path&gt;
+    &lt;path class=&quot;hidden-reuse-axis&quot; d=&quot;M70 20V370H680&quot;&gt;&lt;/path&gt;
+    &lt;g id=&quot;hidden-reuse-ticks&quot;&gt;&lt;/g&gt;
+    &lt;circle class=&quot;hidden-reuse-reference&quot; cx=&quot;222.5&quot; cy=&quot;115.45&quot; r=&quot;5&quot;&gt;&lt;/circle&gt;
+    &lt;text class=&quot;hidden-reuse-axis-label&quot; x=&quot;375&quot; y=&quot;418&quot;&gt;Maximum enforceable sanction, E&lt;/text&gt;
+    &lt;text class=&quot;hidden-reuse-axis-label&quot; x=&quot;18&quot; y=&quot;195&quot; transform=&quot;rotate(-90 18 195)&quot;&gt;Integration cost, F&lt;/text&gt;
+  &lt;/svg&gt;
+
+  &lt;div class=&quot;viz-row text-small&quot; aria-label=&quot;Regime legend&quot;&gt;
+    &lt;span&gt;&lt;span class=&quot;hidden-reuse-swatch hidden-reuse-swatch-secure&quot;&gt;&lt;/span&gt;Secure modularity&lt;/span&gt;
+    &lt;span&gt;&lt;span class=&quot;hidden-reuse-swatch hidden-reuse-swatch-leaky&quot;&gt;&lt;/span&gt;Priced reuse&lt;/span&gt;
+    &lt;span&gt;&lt;span class=&quot;hidden-reuse-swatch hidden-reuse-swatch-withholding&quot;&gt;&lt;/span&gt;Strategic withholding&lt;/span&gt;
+    &lt;span&gt;&lt;span class=&quot;hidden-reuse-swatch hidden-reuse-swatch-ownership&quot;&gt;&lt;/span&gt;Ownership&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;p id=&quot;hidden-reuse-detail&quot; class=&quot;text-small text-muted&quot; aria-live=&quot;polite&quot;&gt;&lt;/p&gt;
+
+  &lt;script&gt;
+    (() =&gt; {
+      const root = document.getElementById(&#x27;hidden-reuse-game&#x27;);
+      const paymentCapInput = root.querySelector(&#x27;#hidden-reuse-payment-cap&#x27;);
+      const providerGainInput = root.querySelector(&#x27;#hidden-reuse-provider-gain&#x27;);
+      const monitorCostInput = root.querySelector(&#x27;#hidden-reuse-monitor-cost&#x27;);
+      const paymentCapValue = root.querySelector(&#x27;#hidden-reuse-payment-cap-value&#x27;);
+      const providerGainValue = root.querySelector(&#x27;#hidden-reuse-provider-gain-value&#x27;);
+      const monitorCostValue = root.querySelector(&#x27;#hidden-reuse-monitor-cost-value&#x27;);
+      const secureArea = root.querySelector(&#x27;#hidden-reuse-secure-area&#x27;);
+      const leakyArea = root.querySelector(&#x27;#hidden-reuse-leaky-area&#x27;);
+      const withholdingArea = root.querySelector(&#x27;#hidden-reuse-withholding-area&#x27;);
+      const ownershipArea = root.querySelector(&#x27;#hidden-reuse-ownership-area&#x27;);
+      const detail = root.querySelector(&#x27;#hidden-reuse-detail&#x27;);
+      const grid = root.querySelector(&#x27;#hidden-reuse-grid&#x27;);
+      const ticks = root.querySelector(&#x27;#hidden-reuse-ticks&#x27;);
+      const svgNS = &#x27;http://www.w3.org/2000/svg&#x27;;
+      const plot = { x: 70, y: 20, width: 610, height: 350 };
+      const maxEnforcement = 0.8;
+      const maxIntegrationCost = 1.1;
+      const gridSize = 31;
+      const disclosureGrid = 61;
+
+      const constants = {
+        marginalAtFull: 0.55,
+        curvature: 0.45,
+        discount: 0.90,
+        renewalSurplus: 0.80,
+        multihomeValue: 0.42,
+        integrationValue: 0.62,
+        ownerReuseLoss: 0.75,
+        capabilityGain: 0.25,
+        providerOutsideBase: 0.08,
+        reuseCost: 0.02,
+        providerInitialOutside: 0.05,
+        betaOne: 0.50,
+        betaTwo: 0.50
+      };
+
+      const xScale = value =&gt; plot.x + value / maxEnforcement * plot.width;
+      const yScale = value =&gt; plot.y + plot.height - value / maxIntegrationCost * plot.height;
+
+      function benefit(disclosure) {
+        return (constants.marginalAtFull + constants.curvature) * disclosure
+          - 0.5 * constants.curvature * disclosure * disclosure;
+      }
+
+      function periodTwo(reuse, integrationCost, providerOutsideGain) {
+        const ownerOutside = Math.max(0, constants.multihomeValue, constants.integrationValue - integrationCost);
+        const providerOutside = constants.providerOutsideBase + providerOutsideGain * reuse;
+        const renewal = constants.renewalSurplus + constants.capabilityGain * reuse;
+        const surplus = renewal - ownerOutside - providerOutside;
+        let ownerOperating;
+        let provider;
+        let route;
+        if (surplus &gt;= 0) {
+          ownerOperating = ownerOutside + constants.betaTwo * surplus;
+          provider = providerOutside + (1 - constants.betaTwo) * surplus;
+          route = &#x27;renew&#x27;;
+        } else {
+          ownerOperating = ownerOutside;
+          provider = providerOutside;
+          route = constants.integrationValue - integrationCost &gt;= Math.max(0, constants.multihomeValue)
+            ? &#x27;integrate&#x27;
+            : &#x27;multi-home&#x27;;
+        }
+        return {
+          owner: ownerOperating - constants.ownerReuseLoss * reuse,
+          provider,
+          route
+        };
+      }
+
+      function initialOutside(integrationCost) {
+        const integrateNow = benefit(1) + constants.discount * constants.integrationValue - integrationCost;
+        const wait = constants.discount * Math.max(0, constants.multihomeValue, constants.integrationValue - integrationCost);
+        return {
+          owner: Math.max(0, integrateNow, wait),
+          integrateNow,
+          wait
+        };
+      }
+
+      function reuseGain(disclosure, integrationCost, providerOutsideGain) {
+        const clean = periodTwo(0, integrationCost, providerOutsideGain);
+        const reused = periodTwo(disclosure, integrationCost, providerOutsideGain);
+        return constants.discount * (reused.provider - clean.provider)
+          - constants.reuseCost * disclosure;
+      }
+
+      function candidate(disclosure, monitoring, reuse, integrationCost, parameters) {
+        const continuation = periodTwo(reuse, integrationCost, parameters.providerOutsideGain);
+        const monitoringCost = 0.5 * parameters.monitorCost * monitoring * monitoring * disclosure;
+        const ownerPre = benefit(disclosure) + constants.discount * continuation.owner;
+        const providerPre = constants.discount * continuation.provider
+          - constants.reuseCost * reuse - monitoringCost;
+        const outside = initialOutside(integrationCost);
+        const lower = Math.max(
+          constants.providerInitialOutside - providerPre,
+          -parameters.paymentCap * disclosure
+        );
+        const upper = ownerPre - outside.owner;
+        if (lower &gt; upper) return null;
+        const totalGain = ownerPre + providerPre - outside.owner - constants.providerInitialOutside;
+        if (totalGain &lt;= 1e-10) return null;
+        const desiredOwner = outside.owner + constants.betaOne * totalGain;
+        const unconstrainedTransfer = ownerPre - desiredOwner;
+        const transfer = Math.min(upper, Math.max(lower, unconstrainedTransfer));
+        const owner = ownerPre - transfer;
+        const provider = providerPre + transfer;
+        const ownerGain = owner - outside.owner;
+        const providerGain = provider - constants.providerInitialOutside;
+        if (ownerGain &lt;= 1e-10 || providerGain &lt;= 1e-10) return null;
+        return {
+          disclosure,
+          monitoring,
+          reuse,
+          transfer,
+          owner,
+          provider,
+          total: owner + provider,
+          score: 0.5 * Math.log(ownerGain) + 0.5 * Math.log(providerGain),
+          route: continuation.route
+        };
+      }
+
+      function solve(enforcement, integrationCost, parameters) {
+        const outside = initialOutside(integrationCost);
+        let best = null;
+        for (let index = 1; index &lt;= disclosureGrid; index += 1) {
+          const disclosure = index / disclosureGrid;
+          const gain = reuseGain(disclosure, integrationCost, parameters.providerOutsideGain);
+          const options = [];
+          if (gain &gt; 1e-10) {
+            options.push(candidate(disclosure, 0, disclosure, integrationCost, parameters));
+            if (enforcement &gt; 0) {
+              const required = gain / (enforcement * disclosure);
+              if (required &lt;= 1 + 1e-10) {
+                options.push(candidate(disclosure, Math.min(1, required), 0, integrationCost, parameters));
+              }
+            }
+          } else {
+            options.push(candidate(disclosure, 0, 0, integrationCost, parameters));
+          }
+          options.filter(Boolean).forEach(option =&gt; {
+            if (!best || option.score &gt; best.score + 1e-12
+              || (Math.abs(option.score - best.score) &lt;= 1e-12 &amp;&amp; option.total &gt; best.total)) {
+              best = option;
+            }
+          });
+        }
+        if (!best) {
+          return {
+            regime: outside.integrateNow &gt;= Math.max(0, outside.wait) &amp;&amp; outside.integrateNow &gt; 0
+              ? &#x27;ownership&#x27;
+              : &#x27;withholding&#x27;,
+            disclosure: 0,
+            monitoring: 0,
+            reuse: 0,
+            transfer: 0,
+            route: &#x27;none&#x27;
+          };
+        }
+        const full = best.disclosure &gt;= 1 - 1 / disclosureGrid - 1e-10;
+        return {
+          ...best,
+          regime: full ? (best.reuse &gt; 1e-10 ? &#x27;leaky&#x27; : &#x27;secure&#x27;) : &#x27;withholding&#x27;
+        };
+      }
+
+      function addLine(x1, y1, x2, y2) {
+        const line = document.createElementNS(svgNS, &#x27;line&#x27;);
+        line.setAttribute(&#x27;x1&#x27;, x1);
+        line.setAttribute(&#x27;y1&#x27;, y1);
+        line.setAttribute(&#x27;x2&#x27;, x2);
+        line.setAttribute(&#x27;y2&#x27;, y2);
+        line.setAttribute(&#x27;class&#x27;, &#x27;hidden-reuse-gridline&#x27;);
+        grid.appendChild(line);
+      }
+
+      function addText(x, y, value, className) {
+        const text = document.createElementNS(svgNS, &#x27;text&#x27;);
+        text.setAttribute(&#x27;x&#x27;, x);
+        text.setAttribute(&#x27;y&#x27;, y);
+        text.setAttribute(&#x27;class&#x27;, className);
+        text.textContent = value;
+        ticks.appendChild(text);
+      }
+
+      [0.2, 0.4, 0.6].forEach(value =&gt; addLine(xScale(value), plot.y, xScale(value), plot.y + plot.height));
+      [0.275, 0.55, 0.825].forEach(value =&gt; addLine(plot.x, yScale(value), plot.x + plot.width, yScale(value)));
+      [0, 0.2, 0.4, 0.6, 0.8].forEach(value =&gt; addText(xScale(value), 391, value.toFixed(1), &#x27;hidden-reuse-tick text-small&#x27;));
+      [0, 0.275, 0.55, 0.825, 1.1].forEach(value =&gt; addText(60, yScale(value) + 4, value.toFixed(value === 1.1 ? 1 : 2).replace(/0$/, &#x27;&#x27;), &#x27;hidden-reuse-tick hidden-reuse-y-tick text-small&#x27;));
+
+      function rectanglePath(x0, y0, x1, y1) {
+        return `M${x0.toFixed(2)} ${y1.toFixed(2)}H${x1.toFixed(2)}V${y0.toFixed(2)}H${x0.toFixed(2)}Z`;
+      }
+
+      function render() {
+        const parameters = {
+          paymentCap: Number(paymentCapInput.value),
+          providerOutsideGain: Number(providerGainInput.value),
+          monitorCost: Number(monitorCostInput.value)
+        };
+        paymentCapValue.textContent = parameters.paymentCap.toFixed(2);
+        providerGainValue.textContent = parameters.providerOutsideGain.toFixed(2);
+        monitorCostValue.textContent = parameters.monitorCost.toFixed(2);
+        const paths = { secure: [], leaky: [], withholding: [], ownership: [] };
+
+        for (let row = 0; row &lt; gridSize; row += 1) {
+          const f0 = row / gridSize * maxIntegrationCost;
+          const f1 = (row + 1) / gridSize * maxIntegrationCost;
+          const integrationCost = (f0 + f1) / 2;
+          for (let column = 0; column &lt; gridSize; column += 1) {
+            const e0 = column / gridSize * maxEnforcement;
+            const e1 = (column + 1) / gridSize * maxEnforcement;
+            const enforcement = (e0 + e1) / 2;
+            const outcome = solve(enforcement, integrationCost, parameters);
+            paths[outcome.regime].push(rectanglePath(xScale(e0), yScale(f0), xScale(e1), yScale(f1)));
+          }
+        }
+        secureArea.setAttribute(&#x27;d&#x27;, paths.secure.join(&#x27;&#x27;));
+        leakyArea.setAttribute(&#x27;d&#x27;, paths.leaky.join(&#x27;&#x27;));
+        withholdingArea.setAttribute(&#x27;d&#x27;, paths.withholding.join(&#x27;&#x27;));
+        ownershipArea.setAttribute(&#x27;d&#x27;, paths.ownership.join(&#x27;&#x27;));
+
+        const reference = solve(0.2, 0.8, parameters);
+        const names = {
+          secure: &#x27;secure modularity&#x27;,
+          leaky: &#x27;priced reuse&#x27;,
+          withholding: &#x27;strategic withholding&#x27;,
+          ownership: &#x27;ownership&#x27;
+        };
+        detail.textContent = `At E = 0.20 and F = 0.80: ${names[reference.regime]}, disclosure s = ${reference.disclosure.toFixed(2)}, monitoring k = ${reference.monitoring.toFixed(2)}, reuse r = ${reference.reuse.toFixed(2)}.`;
+      }
+
+      [paymentCapInput, providerGainInput, monitorCostInput].forEach(input =&gt; input.addEventListener(&#x27;input&#x27;, render));
+      render();
+    })();
+  &lt;/script&gt;
+&lt;/div&gt;
+
+&lt;script src=&quot;https://unpkg.com/@floating-ui/core@1.7.3/dist/floating-ui.core.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://unpkg.com/@floating-ui/dom@1.7.4/dist/floating-ui.dom.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  if (window.FloatingUIDOM == null) {
+    return;
+  }
+  const { autoUpdate, computePosition, flip, offset, shift, size } =
+    window.FloatingUIDOM;
+  const tooltipPlacements = new Set([&quot;top&quot;, &quot;right&quot;, &quot;bottom&quot;, &quot;left&quot;]);
+  const tooltipId = `codex-visualization-tooltip-${
+    window.crypto?.randomUUID?.() ?? Date.now().toString(36)
+  }`;
+  const tooltipGap = 5;
+  const hoverDelay = 700;
+  const skipDelay = 300;
+  let activeTrigger = null;
+  let pendingTrigger = null;
+  let tooltip = null;
+  let openTimeout = null;
+  let autoUpdateCleanup = null;
+  let positionRequest = 0;
+  let skipDelayUntil = 0;
+
+  const getTrigger = (target) =&gt;
+    target?.nodeType === Node.ELEMENT_NODE
+      ? target.closest(&quot;[data-tooltip]&quot;)
+      : null;
+  const containsTarget = (trigger, target) =&gt;
+    target?.nodeType != null &amp;&amp; trigger.contains(target);
+  const getContent = (trigger) =&gt;
+    trigger.getAttribute(&quot;data-tooltip&quot;)?.trim() ?? &quot;&quot;;
+  const getPlacement = (trigger) =&gt; {
+    const placement = trigger.getAttribute(&quot;data-tooltip-placement&quot;);
+    return tooltipPlacements.has(placement) ? placement : &quot;top&quot;;
+  };
+  const getTooltip = () =&gt; {
+    if (tooltip == null) {
+      tooltip = document.createElement(&quot;div&quot;);
+      tooltip.id = tooltipId;
+      tooltip.className = &quot;tooltip&quot;;
+      tooltip.setAttribute(&quot;role&quot;, &quot;tooltip&quot;);
+    }
+    return tooltip;
+  };
+  const setDescribedBy = (trigger, described) =&gt; {
+    const ids = new Set(
+      (trigger.getAttribute(&quot;aria-describedby&quot;) ?? &quot;&quot;)
+        .split(/\s+/)
+        .filter(Boolean),
+    );
+    if (described) {
+      ids.add(tooltipId);
+    } else {
+      ids.delete(tooltipId);
+    }
+    if (ids.size === 0) {
+      trigger.removeAttribute(&quot;aria-describedby&quot;);
+    } else {
+      trigger.setAttribute(&quot;aria-describedby&quot;, [...ids].join(&quot; &quot;));
+    }
+  };
+  const clearOpenTimeout = () =&gt; {
+    if (openTimeout != null) {
+      window.clearTimeout(openTimeout);
+      openTimeout = null;
+    }
+    pendingTrigger = null;
+  };
+  const closeTooltip = (activateSkipDelay = true) =&gt; {
+    clearOpenTimeout();
+    positionRequest += 1;
+    autoUpdateCleanup?.();
+    autoUpdateCleanup = null;
+    if (activeTrigger == null) {
+      return;
+    }
+    setDescribedBy(activeTrigger, false);
+    activeTrigger = null;
+    tooltip?.remove();
+    if (activateSkipDelay) {
+      skipDelayUntil = Date.now() + skipDelay;
+    }
+  };
+  const updatePosition = (trigger, floating) =&gt; {
+    const request = ++positionRequest;
+    void computePosition(trigger, floating, {
+      middleware: [
+        offset(tooltipGap),
+        flip({ padding: tooltipGap }),
+        shift({ padding: tooltipGap }),
+        size({
+          padding: tooltipGap,
+          apply({ availableHeight, availableWidth, elements }) {
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-width&quot;,
+              `${Math.max(0, availableWidth)}px`,
+            );
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-height&quot;,
+              `${Math.max(0, availableHeight)}px`,
+            );
+          },
+        }),
+      ],
+      placement: getPlacement(trigger),
+      strategy: &quot;fixed&quot;,
+    })
+      .then(({ x, y }) =&gt; {
+        if (activeTrigger !== trigger || request !== positionRequest) {
+          return;
+        }
+        const scale = window.devicePixelRatio || 1;
+        floating.style.transform = `translate(${Math.round(x * scale) / scale}px, ${Math.round(y * scale) / scale}px)`;
+        floating.style.visibility = &quot;visible&quot;;
+      })
+      .catch(() =&gt; {
+        if (activeTrigger === trigger &amp;&amp; request === positionRequest) {
+          closeTooltip(false);
+        }
+      });
+  };
+  const openTooltip = (trigger) =&gt; {
+    const content = getContent(trigger);
+    if (!trigger.isConnected || content.length === 0) {
+      return;
+    }
+    clearOpenTimeout();
+    if (activeTrigger === trigger) {
+      return;
+    }
+    closeTooltip();
+    const floating = getTooltip();
+    floating.textContent = content;
+    floating.style.visibility = &quot;hidden&quot;;
+    floating.style.transform = &quot;translate(0, 0)&quot;;
+    document.body.appendChild(floating);
+    activeTrigger = trigger;
+    setDescribedBy(trigger, true);
+    autoUpdateCleanup = autoUpdate(trigger, floating, () =&gt; {
+      updatePosition(trigger, floating);
+    });
+  };
+  const requestOpen = (trigger, immediate = false) =&gt; {
+    if (
+      getContent(trigger).length === 0 ||
+      activeTrigger === trigger ||
+      pendingTrigger === trigger
+    ) {
+      return;
+    }
+    clearOpenTimeout();
+    pendingTrigger = trigger;
+    const delay =
+      immediate || activeTrigger != null || Date.now() &lt; skipDelayUntil
+        ? 0
+        : hoverDelay;
+    if (delay === 0) {
+      openTooltip(trigger);
+      return;
+    }
+    openTimeout = window.setTimeout(() =&gt; {
+      openTimeout = null;
+      pendingTrigger = null;
+      openTooltip(trigger);
+    }, delay);
+  };
+  const handlePointerOpen = (event) =&gt; {
+    if (event.pointerType === &quot;touch&quot;) {
+      return;
+    }
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    requestOpen(trigger);
+  };
+  const handleLeave = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const handleFocusIn = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (trigger?.matches(&quot;:focus-visible&quot;)) {
+      requestOpen(trigger, true);
+    }
+  };
+  const handleKeyDown = (event) =&gt; {
+    if (event.key === &quot;Escape&quot;) {
+      closeTooltip();
+    }
+  };
+  const handleContextMenu = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const destroy = () =&gt; {
+    closeTooltip(false);
+    document.removeEventListener(&quot;pointerover&quot;, handlePointerOpen);
+    document.removeEventListener(&quot;pointerout&quot;, handleLeave);
+    document.removeEventListener(&quot;focusin&quot;, handleFocusIn);
+    document.removeEventListener(&quot;focusout&quot;, handleLeave);
+    document.removeEventListener(&quot;keydown&quot;, handleKeyDown);
+    document.removeEventListener(&quot;contextmenu&quot;, handleContextMenu);
+    tooltip = null;
+  };
+
+  document.addEventListener(&quot;pointerover&quot;, handlePointerOpen);
+  document.addEventListener(&quot;pointerout&quot;, handleLeave);
+  document.addEventListener(&quot;focusin&quot;, handleFocusIn);
+  document.addEventListener(&quot;focusout&quot;, handleLeave);
+  document.addEventListener(&quot;keydown&quot;, handleKeyDown);
+  document.addEventListener(&quot;contextmenu&quot;, handleContextMenu);
+  window.addEventListener(&quot;pagehide&quot;, destroy, { once: true });
+})();
+&lt;/script&gt;
+&lt;script id=&quot;codex-visualization-lucide&quot; async src=&quot;https://unpkg.com/lucide@1.17.0/dist/umd/lucide.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  const initialize = () =&gt; {
+    globalThis.lucide?.createIcons({ attrs: { width: 16, height: 16 } });
+  };
+  if (globalThis.lucide != null) {
+    initialize();
+    return;
+  }
+  document
+    .getElementById(&quot;codex-visualization-lucide&quot;)
+    ?.addEventListener(&quot;load&quot;, initialize, { once: true });
+})();
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe>
+</body>
+</html>

@@ -1,0 +1,40 @@
+{
+  "model_version": "0.6.0",
+  "result_status": "calibrated theoretical computation; not empirical evidence",
+  "grid_points_per_axis": 61,
+  "disclosure_grid_size": 201,
+  "formula": "P* = min(E[V], W + phi * E[V])",
+  "expected_net_capability_value": 0.29500000000000004,
+  "value_log_sigma": 0.8,
+  "hidden_reuse_baseline": {
+    "current_marginal_value_at_full": 0.55,
+    "current_curvature": 0.45,
+    "discount_factor": 0.9,
+    "future_renewal_surplus": 0.8,
+    "future_multihome_value": 0.42,
+    "future_integration_value": 0.62,
+    "integration_cost": 0.8,
+    "owner_reuse_loss": 0.75,
+    "incumbent_capability_gain": 0.25,
+    "provider_outside_base": 0.08,
+    "provider_outside_gain": 0.45,
+    "reuse_cost": 0.02,
+    "enforcement_capacity": 0.2,
+    "monitoring_cost": 0.25,
+    "context_payment_cap": 0.0,
+    "period_one_owner_bargaining_weight": 0.5,
+    "period_two_owner_bargaining_weight": 0.5,
+    "provider_initial_outside_option": 0.05
+  },
+  "regime_cell_counts": {
+    "Secure modularity": 0,
+    "Priced reuse": 3256,
+    "Strategic withholding": 465,
+    "Ownership": 0
+  },
+  "environment": {
+    "python": "3.9.6",
+    "numpy": "2.0.2",
+    "matplotlib": "3.9.4"
+  }
+}

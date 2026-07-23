@@ -1,0 +1,281 @@
+<div id="arrow-coase-regime-map">
+  <style>
+    #arrow-coase-regime-map .regime-chart-wrap {
+      position: relative;
+      width: 100%;
+    }
+    #arrow-coase-regime-map .regime-chart {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    #arrow-coase-regime-map .regime-modular {
+      fill: var(--viz-series-1);
+      fill-opacity: 0.36;
+    }
+    #arrow-coase-regime-map .regime-withholding {
+      fill: var(--viz-series-2);
+      fill-opacity: 0.36;
+    }
+    #arrow-coase-regime-map .regime-ownership {
+      fill: var(--viz-series-3);
+      fill-opacity: 0.42;
+    }
+    #arrow-coase-regime-map .regime-gridline {
+      stroke: var(--border);
+      stroke-width: 1;
+    }
+    #arrow-coase-regime-map .regime-axis,
+    #arrow-coase-regime-map .regime-boundary {
+      fill: none;
+      stroke: var(--foreground);
+      stroke-width: 1.5;
+    }
+    #arrow-coase-regime-map .regime-cutoff {
+      fill: none;
+      stroke: var(--foreground);
+      stroke-width: 1.25;
+      stroke-dasharray: 5 4;
+    }
+    #arrow-coase-regime-map .regime-label,
+    #arrow-coase-regime-map .regime-tick,
+    #arrow-coase-regime-map .regime-axis-label {
+      fill: var(--foreground);
+    }
+    #arrow-coase-regime-map .regime-label {
+      font-weight: 500;
+      text-anchor: middle;
+      paint-order: stroke;
+      stroke: var(--background);
+      stroke-width: 4px;
+      stroke-linejoin: round;
+    }
+    #arrow-coase-regime-map .regime-tick {
+      text-anchor: middle;
+    }
+    #arrow-coase-regime-map .regime-y-tick {
+      text-anchor: end;
+    }
+    #arrow-coase-regime-map .regime-axis-label {
+      text-anchor: middle;
+      font-weight: 500;
+    }
+    #arrow-coase-regime-map .regime-swatch {
+      display: inline-block;
+      width: 0.8em;
+      height: 0.8em;
+      margin-inline-end: 0.35em;
+      vertical-align: -0.05em;
+    }
+    #arrow-coase-regime-map .regime-swatch-modular {
+      background: var(--viz-series-1);
+    }
+    #arrow-coase-regime-map .regime-swatch-withholding {
+      background: var(--viz-series-2);
+    }
+    #arrow-coase-regime-map .regime-swatch-ownership {
+      background: var(--viz-series-3);
+    }
+  </style>
+
+  <div class="viz-controls">
+    <label class="form-label" for="regime-protection">
+      Contractual protection κ: <span id="regime-protection-value">0.20</span>
+      <input
+        id="regime-protection"
+        class="form-range"
+        type="range"
+        min="0"
+        max="1"
+        step="0.01"
+        value="0.20"
+      >
+    </label>
+  </div>
+
+  <div class="regime-chart-wrap">
+    <svg
+      class="regime-chart"
+      viewBox="0 0 720 430"
+      role="img"
+      aria-labelledby="regime-svg-title regime-svg-description"
+    >
+      <title id="regime-svg-title">Context governance equilibrium map</title>
+      <desc id="regime-svg-description">
+        A phase diagram showing modular context sharing, strategic withholding,
+        and ownership as information leakage and integration cost vary. A slider
+        changes contractual protection.
+      </desc>
+      <g id="regime-grid"></g>
+      <path id="regime-modular-area" class="regime-modular"></path>
+      <path id="regime-withholding-area" class="regime-withholding"></path>
+      <path id="regime-ownership-area" class="regime-ownership"></path>
+      <path id="regime-ownership-boundary" class="regime-boundary"></path>
+      <path id="regime-sharing-cutoff" class="regime-cutoff"></path>
+      <path class="regime-axis" d="M70 20V370H680"></path>
+      <g id="regime-ticks"></g>
+      <text class="regime-axis-label" x="375" y="418">Information leakage, ω</text>
+      <text
+        class="regime-axis-label"
+        x="18"
+        y="195"
+        transform="rotate(-90 18 195)"
+      >Integration cost, F</text>
+      <text id="regime-modular-label" class="regime-label">Modular sharing</text>
+      <text id="regime-withholding-label" class="regime-label">Strategic withholding</text>
+      <text id="regime-ownership-label" class="regime-label">Ownership</text>
+    </svg>
+  </div>
+
+  <div class="viz-row text-small" aria-label="Regime legend">
+    <span><span class="regime-swatch regime-swatch-modular"></span>Modular sharing</span>
+    <span><span class="regime-swatch regime-swatch-withholding"></span>Strategic withholding</span>
+    <span><span class="regime-swatch regime-swatch-ownership"></span>Ownership</span>
+  </div>
+  <p id="regime-detail" class="text-small text-muted" aria-live="polite"></p>
+
+  <script>
+    (() => {
+      const root = document.getElementById('arrow-coase-regime-map');
+      const slider = root.querySelector('#regime-protection');
+      const sliderValue = root.querySelector('#regime-protection-value');
+      const modularArea = root.querySelector('#regime-modular-area');
+      const withholdingArea = root.querySelector('#regime-withholding-area');
+      const ownershipArea = root.querySelector('#regime-ownership-area');
+      const ownershipBoundary = root.querySelector('#regime-ownership-boundary');
+      const sharingCutoff = root.querySelector('#regime-sharing-cutoff');
+      const modularLabel = root.querySelector('#regime-modular-label');
+      const withholdingLabel = root.querySelector('#regime-withholding-label');
+      const ownershipLabel = root.querySelector('#regime-ownership-label');
+      const detail = root.querySelector('#regime-detail');
+      const grid = root.querySelector('#regime-grid');
+      const ticks = root.querySelector('#regime-ticks');
+
+      const plot = { x: 70, y: 20, width: 610, height: 350 };
+      const maxCost = 0.9;
+      const marginalAtFull = 0.55;
+      const curvature = 0.45;
+      const contextRent = 1.0;
+      const fullInternalValue = marginalAtFull + 0.5 * curvature;
+      const svgNS = 'http://www.w3.org/2000/svg';
+
+      const xScale = leakage => plot.x + leakage * plot.width;
+      const yScale = cost => plot.y + plot.height - (cost / maxCost) * plot.height;
+
+      function friction(leakage, protection) {
+        return contextRent * leakage * (1 - protection);
+      }
+
+      function disclosure(leakage, protection) {
+        const a = friction(leakage, protection);
+        return Math.max(0, Math.min(1, (marginalAtFull + curvature - a) / curvature));
+      }
+
+      function separateValue(leakage, protection) {
+        const s = disclosure(leakage, protection);
+        const benefit = (marginalAtFull + curvature) * s - 0.5 * curvature * s * s;
+        return Math.max(0, benefit - friction(leakage, protection) * s);
+      }
+
+      function ownershipThreshold(leakage, protection) {
+        return Math.max(0, fullInternalValue - separateValue(leakage, protection));
+      }
+
+      function boundaryPoints(protection, from, to, count = 100) {
+        const points = [];
+        for (let i = 0; i <= count; i += 1) {
+          const leakage = from + (to - from) * (i / count);
+          points.push([xScale(leakage), yScale(ownershipThreshold(leakage, protection))]);
+        }
+        return points;
+      }
+
+      function linePath(points) {
+        return points.map((point, index) => `${index === 0 ? 'M' : 'L'}${point[0].toFixed(2)} ${point[1].toFixed(2)}`).join(' ');
+      }
+
+      function upperRegion(points, from, to) {
+        if (to <= from) return '';
+        const reversed = [...points].reverse();
+        return `M${xScale(from).toFixed(2)} ${plot.y} L${xScale(to).toFixed(2)} ${plot.y} ${linePath(reversed).replace(/^M/, 'L')} Z`;
+      }
+
+      function addLine(x1, y1, x2, y2, className) {
+        const line = document.createElementNS(svgNS, 'line');
+        line.setAttribute('x1', x1);
+        line.setAttribute('y1', y1);
+        line.setAttribute('x2', x2);
+        line.setAttribute('y2', y2);
+        line.setAttribute('class', className);
+        grid.appendChild(line);
+      }
+
+      function addText(x, y, value, className) {
+        const text = document.createElementNS(svgNS, 'text');
+        text.setAttribute('x', x);
+        text.setAttribute('y', y);
+        text.setAttribute('class', className);
+        text.textContent = value;
+        ticks.appendChild(text);
+      }
+
+      [0.25, 0.5, 0.75].forEach(value => {
+        addLine(xScale(value), plot.y, xScale(value), plot.y + plot.height, 'regime-gridline');
+      });
+      [0.225, 0.45, 0.675].forEach(value => {
+        addLine(plot.x, yScale(value), plot.x + plot.width, yScale(value), 'regime-gridline');
+      });
+      [0, 0.25, 0.5, 0.75, 1].forEach(value => {
+        addText(xScale(value), 391, value.toFixed(2).replace(/0$/, ''), 'regime-tick text-small');
+      });
+      [0, 0.225, 0.45, 0.675, 0.9].forEach(value => {
+        addText(60, yScale(value) + 4, value.toFixed(2).replace(/0$/, ''), 'regime-tick regime-y-tick text-small');
+      });
+
+      function render() {
+        const protection = Number(slider.value);
+        sliderValue.textContent = protection.toFixed(2);
+        const rawCutoff = marginalAtFull / Math.max(1e-9, contextRent * (1 - protection));
+        const cutoff = Math.max(0, Math.min(1, rawCutoff));
+        const allBoundary = boundaryPoints(protection, 0, 1);
+        const modularBoundary = boundaryPoints(protection, 0, cutoff);
+        const withholdingBoundary = boundaryPoints(protection, cutoff, 1);
+
+        const ownershipPath = `M${plot.x} ${plot.y + plot.height} L${plot.x + plot.width} ${plot.y + plot.height} ${linePath([...allBoundary].reverse()).replace(/^M/, 'L')} Z`;
+        ownershipArea.setAttribute('d', ownershipPath);
+        modularArea.setAttribute('d', upperRegion(modularBoundary, 0, cutoff));
+        withholdingArea.setAttribute('d', upperRegion(withholdingBoundary, cutoff, 1));
+        ownershipBoundary.setAttribute('d', linePath(allBoundary));
+
+        if (rawCutoff > 0 && rawCutoff < 1) {
+          const x = xScale(rawCutoff);
+          sharingCutoff.setAttribute('d', `M${x} ${plot.y}V${plot.y + plot.height}`);
+        } else {
+          sharingCutoff.setAttribute('d', '');
+        }
+
+        const modularX = Math.max(0.08, cutoff * 0.5);
+        modularLabel.setAttribute('x', xScale(modularX));
+        modularLabel.setAttribute('y', yScale(0.78));
+        modularLabel.style.display = cutoff > 0.13 ? '' : 'none';
+
+        const withholdingX = cutoff + (1 - cutoff) * 0.5;
+        withholdingLabel.setAttribute('x', xScale(withholdingX));
+        withholdingLabel.setAttribute('y', yScale(0.82));
+        withholdingLabel.style.display = cutoff < 0.87 ? '' : 'none';
+
+        const ownershipX = 0.52;
+        const ownershipY = Math.max(0.07, ownershipThreshold(ownershipX, protection) * 0.48);
+        ownershipLabel.setAttribute('x', xScale(ownershipX));
+        ownershipLabel.setAttribute('y', yScale(ownershipY));
+
+        const sampleLeakage = 0.75;
+        const sampleThreshold = ownershipThreshold(sampleLeakage, protection);
+        detail.textContent = `At ω = 0.75, ownership is preferred below F = ${sampleThreshold.toFixed(2)}; arm's-length disclosure is s = ${disclosure(sampleLeakage, protection).toFixed(2)} above that boundary.`;
+      }
+
+      slider.addEventListener('input', render);
+      render();
+    })();
+  </script>
+</div>

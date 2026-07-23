@@ -1,0 +1,227 @@
+{
+  "model_version": "0.6.0",
+  "result_status": "calibrated theoretical computation; not empirical evidence",
+  "formula": "P* = min(E[V], W + phi * E[V])",
+  "examples": [
+    {
+      "name": "unpledgeable",
+      "verifiable_share": 0.0,
+      "collateral": 0.0,
+      "pricing": {
+        "expected_net_capability_value": 0.29500000000000004,
+        "participation_ceiling": 0.29500000000000004,
+        "enforceability_ceiling": 0.0,
+        "maximum_pledgeable_payment": 0.0,
+        "pledgeable_share": 0.0,
+        "unpledgeable_expected_value": 0.29500000000000004,
+        "secured_upfront_payment": 0.0,
+        "royalty_share": 0.0,
+        "bilateral_benchmark_payment": 0.0,
+        "competitive_benchmark_payment": 0.0,
+        "median_realized_value": 0.21421396593673883,
+        "p90_realized_value": 0.5971788255209625,
+        "p99_realized_value": 1.3775387283307323
+      },
+      "governance": {
+        "regime": "strategic_withholding",
+        "disclosure": 0.600997506234414,
+        "reuse": 0.600997506234414,
+        "transfer_to_provider": -0.0
+      }
+    },
+    {
+      "name": "partly_pledgeable",
+      "verifiable_share": 0.1,
+      "collateral": 0.02,
+      "pricing": {
+        "expected_net_capability_value": 0.29500000000000004,
+        "participation_ceiling": 0.29500000000000004,
+        "enforceability_ceiling": 0.0495,
+        "maximum_pledgeable_payment": 0.0495,
+        "pledgeable_share": 0.16779661016949152,
+        "unpledgeable_expected_value": 0.24550000000000005,
+        "secured_upfront_payment": 0.02,
+        "royalty_share": 0.1,
+        "bilateral_benchmark_payment": 0.02475,
+        "competitive_benchmark_payment": 0.0495,
+        "median_realized_value": 0.21421396593673883,
+        "p90_realized_value": 0.5971788255209625,
+        "p99_realized_value": 1.3775387283307323
+      },
+      "governance": {
+        "regime": "strategic_withholding",
+        "disclosure": 0.7406483790523691,
+        "reuse": 0.7406483790523691,
+        "transfer_to_provider": -0.036662094763092276
+      }
+    },
+    {
+      "name": "priced_reuse_boundary",
+      "verifiable_share": 0.5,
+      "collateral": 0.0,
+      "pricing": {
+        "expected_net_capability_value": 0.29500000000000004,
+        "participation_ceiling": 0.29500000000000004,
+        "enforceability_ceiling": 0.14750000000000002,
+        "maximum_pledgeable_payment": 0.14750000000000002,
+        "pledgeable_share": 0.5,
+        "unpledgeable_expected_value": 0.14750000000000002,
+        "secured_upfront_payment": 0.0,
+        "royalty_share": 0.5,
+        "bilateral_benchmark_payment": 0.07375000000000001,
+        "competitive_benchmark_payment": 0.14750000000000002,
+        "median_realized_value": 0.21421396593673883,
+        "p90_realized_value": 0.5971788255209625,
+        "p99_realized_value": 1.3775387283307323
+      },
+      "governance": {
+        "regime": "strategic_withholding",
+        "disclosure": 0.9975062344139651,
+        "reuse": 0.9975062344139651,
+        "transfer_to_provider": -0.14713216957605987
+      }
+    },
+    {
+      "name": "fully_pledgeable",
+      "verifiable_share": 0.8,
+      "collateral": 0.2,
+      "pricing": {
+        "expected_net_capability_value": 0.29500000000000004,
+        "participation_ceiling": 0.29500000000000004,
+        "enforceability_ceiling": 0.43600000000000005,
+        "maximum_pledgeable_payment": 0.29500000000000004,
+        "pledgeable_share": 1.0,
+        "unpledgeable_expected_value": 0.0,
+        "secured_upfront_payment": 0.059,
+        "royalty_share": 0.8,
+        "bilateral_benchmark_payment": 0.14750000000000002,
+        "competitive_benchmark_payment": 0.29500000000000004,
+        "median_realized_value": 0.21421396593673883,
+        "p90_realized_value": 0.5971788255209625,
+        "p99_realized_value": 1.3775387283307323
+      },
+      "governance": {
+        "regime": "priced_reuse",
+        "disclosure": 1.0,
+        "reuse": 1.0,
+        "transfer_to_provider": -0.2310000000000001
+      }
+    }
+  ],
+  "private_signal_examples": [
+    {
+      "name": "pool_private_signals",
+      "inputs": {
+        "low_expected_value": 0.15,
+        "high_expected_value": 0.45,
+        "high_type_probability": 0.3,
+        "verifiable_share": 0.1,
+        "collateral": 0.02,
+        "owner_access_cost": 0.0,
+        "value_log_sigma": 0.8
+      },
+      "outcome": {
+        "policy": "pool_both_types",
+        "low_type_pricing": {
+          "expected_net_capability_value": 0.15,
+          "participation_ceiling": 0.15,
+          "enforceability_ceiling": 0.035,
+          "maximum_pledgeable_payment": 0.035,
+          "pledgeable_share": 0.23333333333333336,
+          "unpledgeable_expected_value": 0.11499999999999999,
+          "secured_upfront_payment": 0.02,
+          "royalty_share": 0.1,
+          "bilateral_benchmark_payment": 0.0175,
+          "competitive_benchmark_payment": 0.035,
+          "median_realized_value": 0.10892235556105362,
+          "p90_realized_value": 0.3036502502648961,
+          "p99_realized_value": 0.7004434211851179
+        },
+        "high_type_pricing": {
+          "expected_net_capability_value": 0.45,
+          "participation_ceiling": 0.45,
+          "enforceability_ceiling": 0.065,
+          "maximum_pledgeable_payment": 0.065,
+          "pledgeable_share": 0.14444444444444446,
+          "unpledgeable_expected_value": 0.385,
+          "secured_upfront_payment": 0.02,
+          "royalty_share": 0.1,
+          "bilateral_benchmark_payment": 0.0325,
+          "competitive_benchmark_payment": 0.065,
+          "median_realized_value": 0.32676706668316086,
+          "p90_realized_value": 0.9109507507946885,
+          "p99_realized_value": 2.101330263555354
+        },
+        "pooling_price": 0.035,
+        "screening_price": 0.065,
+        "pooling_expected_profit": 0.035,
+        "screening_expected_profit": 0.0195,
+        "offered_price": 0.035,
+        "trade_probability": 1.0,
+        "expected_owner_payment": 0.035,
+        "expected_owner_profit": 0.035,
+        "expected_provider_surplus": 0.205,
+        "low_type_accepts": true,
+        "high_type_accepts": true,
+        "high_type_rent_if_served": 0.41500000000000004
+      }
+    },
+    {
+      "name": "screen_high_private_signal",
+      "inputs": {
+        "low_expected_value": 0.15,
+        "high_expected_value": 0.45,
+        "high_type_probability": 0.9,
+        "verifiable_share": 0.1,
+        "collateral": 0.02,
+        "owner_access_cost": 0.0,
+        "value_log_sigma": 0.8
+      },
+      "outcome": {
+        "policy": "screen_high_type",
+        "low_type_pricing": {
+          "expected_net_capability_value": 0.15,
+          "participation_ceiling": 0.15,
+          "enforceability_ceiling": 0.035,
+          "maximum_pledgeable_payment": 0.035,
+          "pledgeable_share": 0.23333333333333336,
+          "unpledgeable_expected_value": 0.11499999999999999,
+          "secured_upfront_payment": 0.02,
+          "royalty_share": 0.1,
+          "bilateral_benchmark_payment": 0.0175,
+          "competitive_benchmark_payment": 0.035,
+          "median_realized_value": 0.10892235556105362,
+          "p90_realized_value": 0.3036502502648961,
+          "p99_realized_value": 0.7004434211851179
+        },
+        "high_type_pricing": {
+          "expected_net_capability_value": 0.45,
+          "participation_ceiling": 0.45,
+          "enforceability_ceiling": 0.065,
+          "maximum_pledgeable_payment": 0.065,
+          "pledgeable_share": 0.14444444444444446,
+          "unpledgeable_expected_value": 0.385,
+          "secured_upfront_payment": 0.02,
+          "royalty_share": 0.1,
+          "bilateral_benchmark_payment": 0.0325,
+          "competitive_benchmark_payment": 0.065,
+          "median_realized_value": 0.32676706668316086,
+          "p90_realized_value": 0.9109507507946885,
+          "p99_realized_value": 2.101330263555354
+        },
+        "pooling_price": 0.035,
+        "screening_price": 0.065,
+        "pooling_expected_profit": 0.035,
+        "screening_expected_profit": 0.0585,
+        "offered_price": 0.065,
+        "trade_probability": 0.9,
+        "expected_owner_payment": 0.0585,
+        "expected_owner_profit": 0.0585,
+        "expected_provider_surplus": 0.34650000000000003,
+        "low_type_accepts": false,
+        "high_type_accepts": true,
+        "high_type_rent_if_served": 0.385
+      }
+    }
+  ]
+}

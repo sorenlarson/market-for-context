@@ -1,0 +1,13 @@
+scenario,draws,regime,frequency,mean_ownership_size,seed
+learning_driven_rollup,600,neutral_platform,0.34500000,3.93000000,20260722
+learning_driven_rollup,600,specialized_partial_rollup,0.00000000,3.93000000,20260722
+learning_driven_rollup,600,full_network_rollup,0.65500000,3.93000000,20260722
+capture_driven_rollup_at_full_access,600,neutral_platform,0.32500000,4.05000000,20260722
+capture_driven_rollup_at_full_access,600,specialized_partial_rollup,0.00000000,4.05000000,20260722
+capture_driven_rollup_at_full_access,600,full_network_rollup,0.67500000,4.05000000,20260722
+neutral_platform,600,neutral_platform,0.98166667,0.11000000,20260722
+neutral_platform,600,specialized_partial_rollup,0.00000000,0.11000000,20260722
+neutral_platform,600,full_network_rollup,0.01833333,0.11000000,20260722
+platform_fed_partial_owner,600,neutral_platform,0.00000000,4.47833333,20260722
+platform_fed_partial_owner,600,specialized_partial_rollup,0.83666667,4.47833333,20260722
+platform_fed_partial_owner,600,full_network_rollup,0.16333333,4.47833333,20260722

@@ -1,0 +1,25 @@
+{
+  "grid_points_per_axis": 61,
+  "disclosure_grid_size": 101,
+  "enforcement_range": [
+    0.0,
+    0.8
+  ],
+  "integration_cost_range": [
+    0.0,
+    1.1
+  ],
+  "context_payment_caps": [
+    0.0,
+    0.15,
+    0.5
+  ],
+  "full_disclosure_provider_reuse_gain": 0.29500000000000004,
+  "baseline": {
+    "discount_factor": 0.9,
+    "owner_reuse_loss": 0.75,
+    "incumbent_capability_gain": 0.25,
+    "provider_outside_gain": 0.45,
+    "monitoring_cost": 0.25
+  }
+}

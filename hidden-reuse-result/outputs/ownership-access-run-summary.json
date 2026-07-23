@@ -1,0 +1,69 @@
+{
+  "model_version": "0.6.0",
+  "result_status": "Calibrated theoretical computation and synthetic robustness exercise; not empirical evidence about current AI markets.",
+  "solver": "exact enumeration of all 2^6 ownership subsets",
+  "grid_points_per_axis": 61,
+  "robustness_draws": 600,
+  "seed": 20260721,
+  "homogeneous_primitives": {
+    "asset_count": 6,
+    "internalization_advantage": 0.215,
+    "directed_pair_learning": 0.105,
+    "external_learning_efficiency": 0.55,
+    "fixed_ownership_cost": 0.15,
+    "organization_cost_scale": 0.1,
+    "organization_cost_elasticity": 1.7,
+    "pair_coordination_cost": 0.027,
+    "neutrality_penalty": 0.25,
+    "boundary_customer_value_per_unordered_pair": 0.02,
+    "fringe_customer_value_per_owned_asset": 0.0,
+    "learning_saturation": null
+  },
+  "homogeneous_platform_rollup_indifference_efficiency": 0.5656868406843443,
+  "homogeneous_hybrid_suppression_at_q_0_55": 0.08001795044291826,
+  "homogeneous_hybrid_suppression_at_q_0_60": 0.10388453337567773,
+  "heterogeneous_platform_rollup_indifference_efficiency": 0.5852871670205968,
+  "robustness": {
+    "low_access_high_conflict": {
+      "external_learning_efficiency": 0.4,
+      "neutrality_penalty": 0.8,
+      "mean_ownership_size": 5.955,
+      "regime_probabilities": {
+        "neutral_platform": 0.006666666666666667,
+        "single_asset_ownership": 0.0,
+        "specialized_partial_rollup": 0.0,
+        "cross_type_partial_rollup": 0.005,
+        "full_network_rollup": 0.9883333333333333
+      }
+    },
+    "intermediate_access_low_conflict": {
+      "external_learning_efficiency": 0.6,
+      "neutrality_penalty": 0.1,
+      "mean_ownership_size": 3.895,
+      "regime_probabilities": {
+        "neutral_platform": 0.02666666666666667,
+        "single_asset_ownership": 0.0,
+        "specialized_partial_rollup": 0.0,
+        "cross_type_partial_rollup": 0.9733333333333334,
+        "full_network_rollup": 0.0
+      }
+    },
+    "high_access_high_conflict": {
+      "external_learning_efficiency": 0.8,
+      "neutrality_penalty": 0.8,
+      "mean_ownership_size": 0.0,
+      "regime_probabilities": {
+        "neutral_platform": 1.0,
+        "single_asset_ownership": 0.0,
+        "specialized_partial_rollup": 0.0,
+        "cross_type_partial_rollup": 0.0,
+        "full_network_rollup": 0.0
+      }
+    }
+  },
+  "environment": {
+    "python": "3.9.6",
+    "numpy": "2.0.2",
+    "matplotlib": "3.9.4"
+  }
+}

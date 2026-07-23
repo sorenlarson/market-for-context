@@ -1,0 +1,91 @@
+{
+  "result_status": "calibrated theoretical computation; not empirical evidence",
+  "baseline": {
+    "current_marginal_value_at_full": 0.55,
+    "current_curvature": 0.45,
+    "discount_factor": 0.9,
+    "future_renewal_surplus": 0.8,
+    "future_multihome_value": 0.42,
+    "future_integration_value": 0.62,
+    "integration_cost": 0.7,
+    "owner_reuse_loss": 0.75,
+    "incumbent_capability_gain": 0.25,
+    "provider_outside_base": 0.08,
+    "provider_outside_gain": 0.45,
+    "reuse_cost": 0.02,
+    "enforcement_capacity": 0.45,
+    "monitoring_cost": 0.25,
+    "context_payment_cap": 0.0,
+    "period_one_owner_bargaining_weight": 0.5,
+    "period_two_owner_bargaining_weight": 0.5,
+    "provider_initial_outside_option": 0.05
+  },
+  "examples": [
+    {
+      "name": "withholding",
+      "description": "Weak enforcement, no market for learning rights, expensive integration",
+      "changed_primitives": {
+        "enforcement_capacity": 0.2,
+        "integration_cost": 0.8,
+        "context_payment_cap": 0.0
+      },
+      "outcome": {
+        "regime": "strategic_withholding",
+        "agreement": true,
+        "disclosure": 0.600997506234414,
+        "monitoring": 0.0,
+        "reuse": 0.600997506234414,
+        "transfer_to_provider": -0.0,
+        "owner_payoff": 0.5729648634025908,
+        "provider_payoff": 0.3842942643391522,
+        "provider_reuse_gain_before_enforcement": 0.17729426433915213,
+        "required_monitoring_to_deter": 1.475,
+        "period_two_route": "renew"
+      }
+    },
+    {
+      "name": "priced_reuse",
+      "description": "Weak enforcement, but the provider can pay for learning rights",
+      "changed_primitives": {
+        "enforcement_capacity": 0.2,
+        "integration_cost": 0.8,
+        "context_payment_cap": 0.15
+      },
+      "outcome": {
+        "regime": "priced_reuse",
+        "agreement": true,
+        "disclosure": 1.0,
+        "monitoring": 0.0,
+        "reuse": 1.0,
+        "transfer_to_provider": -0.15,
+        "owner_payoff": 0.673,
+        "provider_payoff": 0.3520000000000001,
+        "provider_reuse_gain_before_enforcement": 0.29500000000000004,
+        "required_monitoring_to_deter": 1.475,
+        "period_two_route": "renew"
+      }
+    },
+    {
+      "name": "secure_modularity",
+      "description": "Enforcement is strong enough to make non-reuse incentive compatible",
+      "changed_primitives": {
+        "enforcement_capacity": 0.4,
+        "integration_cost": 0.4,
+        "context_payment_cap": 0.0
+      },
+      "outcome": {
+        "regime": "secure_modularity",
+        "agreement": true,
+        "disclosure": 1.0,
+        "monitoring": 0.7375,
+        "reuse": 0.0,
+        "transfer_to_provider": 0.13299414062500015,
+        "owner_payoff": 1.155005859375,
+        "provider_payoff": 0.2720058593750002,
+        "provider_reuse_gain_before_enforcement": 0.29500000000000004,
+        "required_monitoring_to_deter": 0.7375,
+        "period_two_route": "renew"
+      }
+    }
+  ]
+}
