@@ -270,6 +270,8 @@ def main() -> None:
         ) as handle:
             firm_scale_header = set(next(csv.reader(handle)))
         firm_scale_columns = {
+            "integration_cost_scale",
+            "integration_cost_elasticity",
             "organization_cost_scale",
             "cross_node_learning",
             "integration_threshold",

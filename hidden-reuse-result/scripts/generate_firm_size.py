@@ -35,7 +35,8 @@ SVG_DESCRIPTION = (
     "The left panel shows whether homogeneous context-generating assets remain "
     "modular or form integrated firms as the per-asset ownership advantage and "
     "cross-asset learning vary. The right panel shows the target number of "
-    "assets per integrated firm as learning and organizational cost vary."
+    "assets per integrated firm as learning and ongoing coordination cost vary, "
+    "holding a declining-marginal-cost integration learning curve fixed."
 )
 
 
@@ -46,13 +47,15 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--advantage-min", type=float, default=0.30)
     parser.add_argument("--advantage-max", type=float, default=0.90)
     parser.add_argument("--learning-max", type=float, default=1.00)
-    parser.add_argument("--organization-cost-min", type=float, default=0.01)
-    parser.add_argument("--organization-cost-max", type=float, default=0.12)
+    parser.add_argument("--organization-cost-min", type=float, default=0.003)
+    parser.add_argument("--organization-cost-max", type=float, default=0.040)
     parser.add_argument("--shared-fixed-cost", type=float, default=1.50)
     parser.add_argument("--learning-saturation", type=float, default=4.00)
+    parser.add_argument("--integration-cost", type=float, default=0.50)
+    parser.add_argument("--integration-elasticity", type=float, default=0.65)
     parser.add_argument("--organization-elasticity", type=float, default=1.40)
     parser.add_argument("--baseline-learning", type=float, default=0.35)
-    parser.add_argument("--baseline-organization-cost", type=float, default=0.05)
+    parser.add_argument("--baseline-organization-cost", type=float, default=0.015)
     parser.add_argument("--output-dir", type=Path, default=REPO_ROOT / "outputs")
     return parser.parse_args()
 
@@ -86,6 +89,8 @@ def _baseline(args: argparse.Namespace) -> FirmSizePrimitives:
         shared_fixed_cost=args.shared_fixed_cost,
         cross_node_learning=args.baseline_learning,
         learning_saturation=args.learning_saturation,
+        integration_cost_scale=args.integration_cost,
+        integration_cost_elasticity=args.integration_elasticity,
         organization_cost_scale=args.baseline_organization_cost,
         organization_cost_elasticity=args.organization_elasticity,
         max_firm_size=args.max_firm_size,
@@ -290,8 +295,8 @@ def save_figure(
         fontsize=8,
     )
     axes[1].set(
-        title="2. Learning and organization decide how large",
-        xlabel="Per-asset organization-cost scale, c",
+        title="2. Integration economies and coordination set size",
+        xlabel="Ongoing coordination-cost scale, c",
         ylabel="Transferable cross-asset learning, L",
     )
     colorbar = fig.colorbar(
@@ -311,6 +316,8 @@ def save_figure(
     fig.suptitle(
         "Firm boundaries and firm size are different margins\n"
         f"K={baseline.shared_fixed_cost:.2f}, κ={baseline.learning_saturation:.1f}, "
+        f"d={baseline.integration_cost_scale:.2f}, "
+        f"ρ={baseline.integration_cost_elasticity:.2f}, "
         f"η={baseline.organization_cost_elasticity:.1f}"
     )
 
@@ -361,11 +368,14 @@ def write_scale_grid(
     organization_costs: np.ndarray,
     learning_values: np.ndarray,
     result: dict,
+    baseline: FirmSizePrimitives,
 ) -> None:
     with path.open("w", newline="", encoding="utf-8") as handle:
         writer = csv.writer(handle)
         writer.writerow(
             [
+                "integration_cost_scale",
+                "integration_cost_elasticity",
                 "organization_cost_scale",
                 "cross_node_learning",
                 "integration_threshold",
@@ -377,6 +387,8 @@ def write_scale_grid(
             for col, organization_cost in enumerate(organization_costs):
                 writer.writerow(
                     [
+                        f"{baseline.integration_cost_scale:.8f}",
+                        f"{baseline.integration_cost_elasticity:.8f}",
                         f"{organization_cost:.8f}",
                         f"{learning:.8f}",
                         f"{result['scale_threshold'][row, col]:.8f}",
@@ -441,6 +453,10 @@ def main() -> None:
         raise SystemExit("organization cost minimum cannot be negative")
     if args.organization_cost_max <= args.organization_cost_min:
         raise SystemExit("organization cost maximum must exceed its minimum")
+    if args.integration_cost < 0:
+        raise SystemExit("integration cost cannot be negative")
+    if not 0 < args.integration_elasticity <= 1:
+        raise SystemExit("integration elasticity must be in (0, 1]")
 
     args.output_dir.mkdir(parents=True, exist_ok=True)
     baseline = _baseline(args)
@@ -478,6 +494,7 @@ def main() -> None:
         organization_costs,
         learning_values,
         result,
+        baseline,
     )
     write_examples(args.output_dir, baseline, bridges)
 
@@ -487,10 +504,13 @@ def main() -> None:
         "result_status": "calibrated theoretical computation; not empirical evidence",
         "proposed_result": (
             "The per-node hidden-reuse advantage determines integration entry but "
-            "not conditional firm size; fixed costs, transferable learning, and "
-            "organization costs determine size."
+            "not conditional firm size; fixed costs, transferable learning, "
+            "declining marginal integration cost, and increasing ongoing "
+            "coordination costs determine size."
         ),
-        "per_node_surplus_formula": ("g(n) = A - K/n + L(n-1)/(kappa+n-1) - c*n^eta"),
+        "per_node_surplus_formula": (
+            "g(n) = A - K/n + L(n-1)/(kappa+n-1) - d*n^(rho-1) - c*n^eta"
+        ),
         "grid_points_per_axis": args.grid,
         "advantage_range": [args.advantage_min, args.advantage_max],
         "learning_range": [0.0, args.learning_max],

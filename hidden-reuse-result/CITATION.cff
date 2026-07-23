@@ -2,8 +2,8 @@ cff-version: 1.2.0
 message: "If you use this model, please cite it using the metadata below."
 title: "The Market for Context: AI Learning, Firm Boundaries, and Value Capture"
 type: software
-version: 0.6.0
-date-released: 2026-07-22
+version: 0.7.0
+date-released: 2026-07-23
 authors:
   - family-names: "Larson"
     given-names: "Soren"
@@ -14,11 +14,12 @@ abstract: >-
   strategic withholding, or ownership, with an endogenous limit on how much
   uncertain future capability value can be pledged as payment, plus a
   free-formation extension separating the decision to integrate from the
-  equilibrium number of context-generating assets per firm, and a heterogeneous
-  network extension showing when customer access supports a platform rather
-  than a rollup, plus a value-appropriation extension showing why ownership can
-  dominate even when independent customer relationships transmit all useful
-  learning.
+  equilibrium number of context-generating assets per firm while distinguishing
+  declining marginal integration-execution cost from increasing ongoing
+  coordination cost, and a heterogeneous network extension showing when
+  customer access supports a platform rather than a rollup, plus a
+  value-appropriation extension showing why ownership can dominate even when
+  independent customer relationships transmit all useful learning.
 keywords:
   - artificial intelligence
   - information economics

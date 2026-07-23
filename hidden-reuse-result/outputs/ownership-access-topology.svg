@@ -8,7 +8,7 @@
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:date>2026-07-23T11:22:53.533919</dc:date>
+    <dc:date>2026-07-23T13:23:59.414295</dc:date>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
@@ -262,7 +262,7 @@ C 44.724597 83.38392 42.769224 88.104608 42.769224 93.026209
 C 42.769224 97.947809 44.724597 102.668497 48.204694 106.148594 
 C 51.684792 109.628692 56.405479 111.584065 61.32708 111.584065 
 z
-" clip-path="url(#p8a1217b987)" style="fill: #ffffff; stroke: #4c78a8; stroke-width: 1.7; stroke-linejoin: miter"/>
+" clip-path="url(#p822c03f9e4)" style="fill: #ffffff; stroke: #4c78a8; stroke-width: 1.7; stroke-linejoin: miter"/>
    </g>
    <g id="text_1">
     <!-- clinic east -->
@@ -464,7 +464,7 @@ C 44.724597 238.03272 42.769224 242.753408 42.769224 247.675008
 C 42.769224 252.596609 44.724597 257.317297 48.204694 260.797394 
 C 51.684792 264.277492 56.405479 266.232864 61.32708 266.232864 
 z
-" clip-path="url(#p8a1217b987)" style="fill: #ffffff; stroke: #4c78a8; stroke-width: 1.7; stroke-linejoin: miter"/>
+" clip-path="url(#p822c03f9e4)" style="fill: #ffffff; stroke: #4c78a8; stroke-width: 1.7; stroke-linejoin: miter"/>
    </g>
    <g id="text_2">
     <!-- clinic west -->
@@ -511,7 +511,7 @@ C 199.373397 83.38392 197.418024 88.104608 197.418024 93.026209
 C 197.418024 97.947809 199.373397 102.668497 202.853494 106.148594 
 C 206.333592 109.628692 211.054279 111.584065 215.97588 111.584065 
 z
-" clip-path="url(#p8a1217b987)" style="fill: #ffffff; stroke: #59a14f; stroke-width: 1.7; stroke-linejoin: miter"/>
+" clip-path="url(#p822c03f9e4)" style="fill: #ffffff; stroke: #59a14f; stroke-width: 1.7; stroke-linejoin: miter"/>
    </g>
    <g id="text_3">
     <!-- lab east -->
@@ -565,7 +565,7 @@ C 199.373397 238.03272 197.418024 242.753408 197.418024 247.675008
 C 197.418024 252.596609 199.373397 257.317297 202.853494 260.797394 
 C 206.333592 264.277492 211.054279 266.232864 215.97588 266.232864 
 z
-" clip-path="url(#p8a1217b987)" style="fill: #ffffff; stroke: #59a14f; stroke-width: 1.7; stroke-linejoin: miter"/>
+" clip-path="url(#p822c03f9e4)" style="fill: #ffffff; stroke: #59a14f; stroke-width: 1.7; stroke-linejoin: miter"/>
    </g>
    <g id="text_4">
     <!-- lab west -->
@@ -591,7 +591,7 @@ C 354.022197 83.38392 352.066824 88.104608 352.066824 93.026209
 C 352.066824 97.947809 354.022197 102.668497 357.502294 106.148594 
 C 360.982392 109.628692 365.703079 111.584065 370.62468 111.584065 
 z
-" clip-path="url(#p8a1217b987)" style="fill: #ffffff; stroke: #b279a2; stroke-width: 1.7; stroke-linejoin: miter"/>
+" clip-path="url(#p822c03f9e4)" style="fill: #ffffff; stroke: #b279a2; stroke-width: 1.7; stroke-linejoin: miter"/>
    </g>
    <g id="text_5">
     <!-- payer east -->
@@ -681,7 +681,7 @@ C 354.022197 238.03272 352.066824 242.753408 352.066824 247.675008
 C 352.066824 252.596609 354.022197 257.317297 357.502294 260.797394 
 C 360.982392 264.277492 365.703079 266.232864 370.62468 266.232864 
 z
-" clip-path="url(#p8a1217b987)" style="fill: #ffffff; stroke: #b279a2; stroke-width: 1.7; stroke-linejoin: miter"/>
+" clip-path="url(#p822c03f9e4)" style="fill: #ffffff; stroke: #b279a2; stroke-width: 1.7; stroke-linejoin: miter"/>
    </g>
    <g id="text_6">
     <!-- payer west -->
@@ -1330,7 +1330,7 @@ C 470.772357 83.38392 468.816984 88.104608 468.816984 93.026209
 C 468.816984 97.947809 470.772357 102.668497 474.252454 106.148594 
 C 477.732552 109.628692 482.453239 111.584065 487.37484 111.584065 
 z
-" clip-path="url(#p1846a00415)" style="fill: #4c78a8; stroke: #4c78a8; stroke-width: 3; stroke-linejoin: miter"/>
+" clip-path="url(#p404220f403)" style="fill: #4c78a8; stroke: #4c78a8; stroke-width: 3; stroke-linejoin: miter"/>
    </g>
    <g id="text_9">
     <!-- clinic east -->
@@ -1359,7 +1359,7 @@ C 470.772357 238.03272 468.816984 242.753408 468.816984 247.675008
 C 468.816984 252.596609 470.772357 257.317297 474.252454 260.797394 
 C 477.732552 264.277492 482.453239 266.232865 487.37484 266.232865 
 z
-" clip-path="url(#p1846a00415)" style="fill: #4c78a8; stroke: #4c78a8; stroke-width: 3; stroke-linejoin: miter"/>
+" clip-path="url(#p404220f403)" style="fill: #4c78a8; stroke: #4c78a8; stroke-width: 3; stroke-linejoin: miter"/>
    </g>
    <g id="text_10">
     <!-- clinic west -->
@@ -1388,7 +1388,7 @@ C 625.421157 83.38392 623.465784 88.104608 623.465784 93.026209
 C 623.465784 97.947809 625.421157 102.668497 628.901254 106.148594 
 C 632.381352 109.628692 637.102039 111.584065 642.02364 111.584065 
 z
-" clip-path="url(#p1846a00415)" style="fill: #ffffff; stroke: #59a14f; stroke-width: 1.7; stroke-linejoin: miter"/>
+" clip-path="url(#p404220f403)" style="fill: #ffffff; stroke: #59a14f; stroke-width: 1.7; stroke-linejoin: miter"/>
    </g>
    <g id="text_11">
     <!-- lab east -->
@@ -1414,7 +1414,7 @@ C 625.421157 238.03272 623.465784 242.753408 623.465784 247.675008
 C 623.465784 252.596609 625.421157 257.317297 628.901254 260.797394 
 C 632.381352 264.277492 637.102039 266.232865 642.02364 266.232865 
 z
-" clip-path="url(#p1846a00415)" style="fill: #ffffff; stroke: #59a14f; stroke-width: 1.7; stroke-linejoin: miter"/>
+" clip-path="url(#p404220f403)" style="fill: #ffffff; stroke: #59a14f; stroke-width: 1.7; stroke-linejoin: miter"/>
    </g>
    <g id="text_12">
     <!-- lab west -->
@@ -1440,7 +1440,7 @@ C 780.069957 83.38392 778.114584 88.104608 778.114584 93.026209
 C 778.114584 97.947809 780.069957 102.668497 783.550054 106.148594 
 C 787.030152 109.628692 791.750839 111.584065 796.67244 111.584065 
 z
-" clip-path="url(#p1846a00415)" style="fill: #ffffff; stroke: #b279a2; stroke-width: 1.7; stroke-linejoin: miter"/>
+" clip-path="url(#p404220f403)" style="fill: #ffffff; stroke: #b279a2; stroke-width: 1.7; stroke-linejoin: miter"/>
    </g>
    <g id="text_13">
     <!-- payer east -->
@@ -1468,7 +1468,7 @@ C 780.069957 238.03272 778.114584 242.753408 778.114584 247.675008
 C 778.114584 252.596609 780.069957 257.317297 783.550054 260.797394 
 C 787.030152 264.277492 791.750839 266.232865 796.67244 266.232865 
 z
-" clip-path="url(#p1846a00415)" style="fill: #ffffff; stroke: #b279a2; stroke-width: 1.7; stroke-linejoin: miter"/>
+" clip-path="url(#p404220f403)" style="fill: #ffffff; stroke: #b279a2; stroke-width: 1.7; stroke-linejoin: miter"/>
    </g>
    <g id="text_14">
     <!-- payer west -->
@@ -1897,7 +1897,7 @@ L 265.51851 337.420073
 L 275.51851 337.420073 
 " style="fill: none; stroke: #000000; stroke-opacity: 0; stroke-width: 1.5; stroke-linecap: square"/>
     <defs>
-     <path id="m0c58c6900f" d="M 0 4.5 
+     <path id="m703226d803" d="M 0 4.5 
 C 1.193414 4.5 2.338109 4.025852 3.181981 3.181981 
 C 4.025852 2.338109 4.5 1.193414 4.5 0 
 C 4.5 -1.193414 4.025852 -2.338109 3.181981 -3.181981 
@@ -1910,7 +1910,7 @@ z
 " style="stroke: #4c78a8"/>
     </defs>
     <g>
-     <use xlink:href="#m0c58c6900f" x="265.51851" y="337.420073" style="fill: #4c78a8; stroke: #4c78a8"/>
+     <use xlink:href="#m703226d803" x="265.51851" y="337.420073" style="fill: #4c78a8; stroke: #4c78a8"/>
     </g>
    </g>
    <g id="text_18">
@@ -1930,7 +1930,7 @@ L 340.671635 337.420073
 L 350.671635 337.420073 
 " style="fill: none; stroke: #000000; stroke-opacity: 0; stroke-width: 1.5; stroke-linecap: square"/>
     <defs>
-     <path id="m0f9c29022b" d="M 0 4.5 
+     <path id="ma056523bc4" d="M 0 4.5 
 C 1.193414 4.5 2.338109 4.025852 3.181981 3.181981 
 C 4.025852 2.338109 4.5 1.193414 4.5 0 
 C 4.5 -1.193414 4.025852 -2.338109 3.181981 -3.181981 
@@ -1943,7 +1943,7 @@ z
 " style="stroke: #59a14f"/>
     </defs>
     <g>
-     <use xlink:href="#m0f9c29022b" x="340.671635" y="337.420073" style="fill: #59a14f; stroke: #59a14f"/>
+     <use xlink:href="#ma056523bc4" x="340.671635" y="337.420073" style="fill: #59a14f; stroke: #59a14f"/>
     </g>
    </g>
    <g id="text_19">
@@ -1971,7 +1971,7 @@ L 406.720072 337.420073
 L 416.720072 337.420073 
 " style="fill: none; stroke: #000000; stroke-opacity: 0; stroke-width: 1.5; stroke-linecap: square"/>
     <defs>
-     <path id="mdce8b46c03" d="M 0 4.5 
+     <path id="ma2d0d3e5cb" d="M 0 4.5 
 C 1.193414 4.5 2.338109 4.025852 3.181981 3.181981 
 C 4.025852 2.338109 4.5 1.193414 4.5 0 
 C 4.5 -1.193414 4.025852 -2.338109 3.181981 -3.181981 
@@ -1984,7 +1984,7 @@ z
 " style="stroke: #b279a2"/>
     </defs>
     <g>
-     <use xlink:href="#mdce8b46c03" x="406.720072" y="337.420073" style="fill: #b279a2; stroke: #b279a2"/>
+     <use xlink:href="#ma2d0d3e5cb" x="406.720072" y="337.420073" style="fill: #b279a2; stroke: #b279a2"/>
     </g>
    </g>
    <g id="text_20">
@@ -2026,7 +2026,7 @@ L 482.610697 337.420073
 L 492.610697 337.420073 
 " style="fill: none; stroke: #000000; stroke-opacity: 0; stroke-width: 1.5; stroke-linecap: square"/>
     <defs>
-     <path id="mc7abc7e85c" d="M 0 4.5 
+     <path id="m15767a8ccf" d="M 0 4.5 
 C 1.193414 4.5 2.338109 4.025852 3.181981 3.181981 
 C 4.025852 2.338109 4.5 1.193414 4.5 0 
 C 4.5 -1.193414 4.025852 -2.338109 3.181981 -3.181981 
@@ -2039,7 +2039,7 @@ z
 " style="stroke: #555555; stroke-width: 2.5"/>
     </defs>
     <g>
-     <use xlink:href="#mc7abc7e85c" x="482.610697" y="337.420073" style="fill: #555555; stroke: #555555; stroke-width: 2.5"/>
+     <use xlink:href="#m15767a8ccf" x="482.610697" y="337.420073" style="fill: #555555; stroke: #555555; stroke-width: 2.5"/>
     </g>
    </g>
    <g id="text_21">
@@ -2097,10 +2097,10 @@ z
   </g>
  </g>
  <defs>
-  <clipPath id="p8a1217b987">
+  <clipPath id="p822c03f9e4">
    <rect x="7.2" y="43.538593" width="417.55176" height="262.90296"/>
   </clipPath>
-  <clipPath id="p1846a00415">
+  <clipPath id="p404220f403">
    <rect x="433.24776" y="43.538592" width="417.55176" height="262.90296"/>
   </clipPath>
  </defs>

@@ -187,11 +187,12 @@ empirical validation of the calibration.
   moments for the scale parameters in this package.
 
 The proposed contribution here is not the generic idea that fixed costs,
-knowledge, or organization costs determine firm size. It is the explicit
-separation obtained after connecting those forces to the hidden-reuse
-microfoundation: an additive Arrow–Coase internalization advantage changes
-whether firms form, while shared cost and transferable learning determine how
-large they are conditional on forming.
+knowledge, integration experience, or organization costs determine firm size.
+It is the explicit separation obtained after connecting those forces to the
+hidden-reuse microfoundation: an additive Arrow–Coase internalization
+advantage changes whether firms form, while shared cost, transferable
+learning, declining marginal integration cost, and increasing ongoing
+coordination cost determine how large they are conditional on forming.
 
 ## Platforms, customer access, and multilateral boundaries
 

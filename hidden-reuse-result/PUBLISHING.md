@@ -56,6 +56,8 @@ generic frontmatter block.
       realized “true price” of capability.
 - [ ] Distinguish integration entry from conditional firm size and state the
       homogeneous transferable-utility replica assumptions.
+- [ ] Distinguish declining marginal integration-execution cost from increasing
+      ongoing coordination cost in the firm-size model.
 - [ ] Do not turn an industry-boundary solution into a claim of a finite
       optimum.
 - [ ] Describe the network result as a single-intermediary private acquisition

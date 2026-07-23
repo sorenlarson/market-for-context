@@ -27,16 +27,49 @@ def test_one_node_has_no_cross_node_learning() -> None:
         per_node_surplus(1, primitives),
         primitives.internalization_advantage
         - primitives.shared_fixed_cost
+        - primitives.integration_cost_scale
         - primitives.organization_cost_scale,
     )
 
 
-def test_baseline_selects_a_finite_four_node_rollup() -> None:
+def test_integration_execution_cost_learns_while_coordination_burden_rises() -> None:
+    primitives = FirmSizePrimitives()
+    outcome = solve_firm_size(primitives)
+    integration_per_node = [
+        point.integration_cost_per_node for point in outcome.profile[:12]
+    ]
+    organization_per_node = [
+        point.organization_cost_per_node for point in outcome.profile[:12]
+    ]
+    assert all(
+        later < earlier
+        for earlier, later in zip(integration_per_node, integration_per_node[1:])
+    )
+    assert all(
+        later > earlier
+        for earlier, later in zip(organization_per_node, organization_per_node[1:])
+    )
+
+    total_execution = [
+        primitives.integration_cost_scale * size**primitives.integration_cost_elasticity
+        for size in range(1, 13)
+    ]
+    marginal_execution = [
+        later - earlier
+        for earlier, later in zip([0.0] + total_execution, total_execution)
+    ]
+    assert all(
+        later < earlier
+        for earlier, later in zip(marginal_execution, marginal_execution[1:])
+    )
+
+
+def test_baseline_selects_a_finite_eight_node_rollup() -> None:
     outcome = solve_firm_size(FirmSizePrimitives())
     assert outcome.regime is FirmSizeRegime.ROLLUP
-    assert outcome.equilibrium_firm_size == 4
-    assert outcome.conditional_target_size == 4
-    assert math.isclose(outcome.integration_threshold, 0.5732202253184497)
+    assert outcome.equilibrium_firm_size == 8
+    assert outcome.conditional_target_size == 8
+    assert math.isclose(outcome.integration_threshold, 0.481944414703227)
     assert outcome.per_node_surplus_at_target > 0
 
 
@@ -46,7 +79,7 @@ def test_internalization_advantage_changes_entry_but_not_conditional_size() -> N
     high = solve_firm_size(replace(base, internalization_advantage=0.80))
     assert low.regime is FirmSizeRegime.MODULAR
     assert high.regime is FirmSizeRegime.ROLLUP
-    assert low.conditional_target_size == high.conditional_target_size == 4
+    assert low.conditional_target_size == high.conditional_target_size == 8
     assert math.isclose(low.integration_threshold, high.integration_threshold)
     shifts = [
         high_point.per_node_surplus - low_point.per_node_surplus
@@ -92,8 +125,8 @@ def test_fixed_cost_and_learning_raise_target_while_organization_cost_lowers_it(
     high_fixed = solve_firm_size(replace(base, shared_fixed_cost=2.50))
     low_learning = solve_firm_size(replace(base, cross_node_learning=0.00))
     high_learning = solve_firm_size(replace(base, cross_node_learning=1.00))
-    low_cost = solve_firm_size(replace(base, organization_cost_scale=0.015))
-    high_cost = solve_firm_size(replace(base, organization_cost_scale=0.10))
+    low_cost = solve_firm_size(replace(base, organization_cost_scale=0.005))
+    high_cost = solve_firm_size(replace(base, organization_cost_scale=0.04))
     assert high_fixed.conditional_target_size >= low_fixed.conditional_target_size
     assert high_learning.conditional_target_size >= low_learning.conditional_target_size
     assert high_cost.conditional_target_size <= low_cost.conditional_target_size
@@ -105,6 +138,7 @@ def test_zero_scale_economies_can_support_standalone_integration() -> None:
             internalization_advantage=0.20,
             shared_fixed_cost=0.00,
             cross_node_learning=0.00,
+            integration_cost_scale=0.00,
             organization_cost_scale=0.05,
             organization_cost_elasticity=1.0,
         )
@@ -119,6 +153,7 @@ def test_unbounded_scale_at_the_computational_cap_is_reported() -> None:
             internalization_advantage=0.20,
             shared_fixed_cost=0.40,
             cross_node_learning=0.40,
+            integration_cost_scale=0.00,
             organization_cost_scale=0.00,
             max_firm_size=20,
         )
@@ -134,6 +169,7 @@ def test_degenerate_ties_are_exposed_and_resolved_toward_smaller_size() -> None:
             internalization_advantage=0.10,
             shared_fixed_cost=0.00,
             cross_node_learning=0.00,
+            integration_cost_scale=0.00,
             organization_cost_scale=0.00,
             max_firm_size=5,
         )
@@ -176,41 +212,41 @@ def test_default_dilution_is_zero_and_reproduces_the_documented_anchor() -> None
     baseline = solve_firm_size(default)
     explicit = solve_firm_size(replace(default, advantage_dilution_elasticity=0.0))
     assert explicit.regime is FirmSizeRegime.ROLLUP
-    assert explicit.conditional_target_size == baseline.conditional_target_size == 4
-    assert explicit.equilibrium_firm_size == baseline.equilibrium_firm_size == 4
+    assert explicit.conditional_target_size == baseline.conditional_target_size == 8
+    assert explicit.equilibrium_firm_size == baseline.equilibrium_firm_size == 8
     assert explicit.co_maximizing_sizes == baseline.co_maximizing_sizes
     assert explicit.integration_threshold == baseline.integration_threshold
-    assert math.isclose(explicit.integration_threshold, 0.5732202253184497)
+    assert math.isclose(explicit.integration_threshold, 0.481944414703227)
     assert explicit.continuous_target_size == baseline.continuous_target_size
-    assert math.isclose(explicit.continuous_target_size, 4.007, abs_tol=5e-4)
+    assert math.isclose(explicit.continuous_target_size, 7.786882, abs_tol=5e-4)
     assert explicit.per_node_surplus_at_target == baseline.per_node_surplus_at_target
     assert explicit.profile == baseline.profile
 
 
 def test_positive_dilution_makes_conditional_size_depend_on_the_advantage() -> None:
     base = FirmSizePrimitives(advantage_dilution_elasticity=0.5)
-    moderate = solve_firm_size(replace(base, internalization_advantage=1.20))
+    moderate = solve_firm_size(replace(base, internalization_advantage=1.40))
     strong = solve_firm_size(replace(base, internalization_advantage=2.00))
     assert moderate.integrates and strong.integrates
-    assert moderate.conditional_target_size == 3
-    assert strong.conditional_target_size == 2
+    assert moderate.conditional_target_size == 5
+    assert strong.conditional_target_size == 4
     assert moderate.conditional_target_size != strong.conditional_target_size
-    # The same two advantage values leave the additive target at four.
+    # The same two advantage values leave the additive target at eight.
     assert (
         solve_firm_size(
-            FirmSizePrimitives(internalization_advantage=1.20)
+            FirmSizePrimitives(internalization_advantage=1.40)
         ).conditional_target_size
         == solve_firm_size(
             FirmSizePrimitives(internalization_advantage=2.00)
         ).conditional_target_size
-        == 4
+        == 8
     )
     # Per-node surplus applies the diluted advantage A * n ** (-zeta).
-    primitives = replace(base, internalization_advantage=1.20)
-    for size in (1, 2, 3, 4):
+    primitives = replace(base, internalization_advantage=1.40)
+    for size in (1, 2, 3, 4, 5):
         assert math.isclose(
             per_node_surplus(size, primitives),
-            1.20 * size**-0.5 + scale_component_per_node(size, primitives),
+            1.40 * size**-0.5 + scale_component_per_node(size, primitives),
         )
 
 
@@ -225,6 +261,10 @@ def test_continuous_benchmark_is_restricted_to_zero_dilution() -> None:
 def test_invalid_firm_size_primitives_are_rejected() -> None:
     with pytest.raises(ValueError):
         solve_firm_size(FirmSizePrimitives(learning_saturation=0.0))
+    with pytest.raises(ValueError):
+        solve_firm_size(FirmSizePrimitives(integration_cost_elasticity=0.0))
+    with pytest.raises(ValueError):
+        solve_firm_size(FirmSizePrimitives(integration_cost_elasticity=1.1))
     with pytest.raises(ValueError):
         solve_firm_size(FirmSizePrimitives(organization_cost_elasticity=0.9))
     with pytest.raises(ValueError):
@@ -241,7 +281,9 @@ def test_separation_and_integer_optimum_hold_across_parameter_draws() -> None:
             shared_fixed_cost=float(rng.uniform(0.0, 3.0)),
             cross_node_learning=float(rng.uniform(0.0, 1.2)),
             learning_saturation=float(rng.uniform(0.5, 10.0)),
-            organization_cost_scale=float(rng.uniform(0.002, 0.15)),
+            integration_cost_scale=float(rng.uniform(0.0, 1.0)),
+            integration_cost_elasticity=float(rng.uniform(0.1, 1.0)),
+            organization_cost_scale=float(rng.uniform(0.001, 0.05)),
             organization_cost_elasticity=float(rng.uniform(1.0, 2.0)),
             max_firm_size=30,
         )
@@ -272,7 +314,9 @@ def test_monotone_size_forces_hold_across_parameter_draws() -> None:
             shared_fixed_cost=float(rng.uniform(0.1, 2.0)),
             cross_node_learning=float(rng.uniform(0.0, 0.8)),
             learning_saturation=float(rng.uniform(1.0, 8.0)),
-            organization_cost_scale=float(rng.uniform(0.01, 0.10)),
+            integration_cost_scale=float(rng.uniform(0.0, 0.8)),
+            integration_cost_elasticity=float(rng.uniform(0.2, 0.9)),
+            organization_cost_scale=float(rng.uniform(0.003, 0.04)),
             organization_cost_elasticity=float(rng.uniform(1.0, 1.8)),
             max_firm_size=30,
         )
@@ -296,7 +340,16 @@ def test_monotone_size_forces_hold_across_parameter_draws() -> None:
             solve_firm_size(
                 replace(
                     base,
-                    organization_cost_scale=base.organization_cost_scale + 0.02,
+                    integration_cost_scale=base.integration_cost_scale + 0.20,
+                )
+            ).conditional_target_size
+            >= target
+        )
+        assert (
+            solve_firm_size(
+                replace(
+                    base,
+                    organization_cost_scale=base.organization_cost_scale + 0.01,
                 )
             ).conditional_target_size
             <= target

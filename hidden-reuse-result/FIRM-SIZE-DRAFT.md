@@ -27,12 +27,13 @@ This note supplies the missing step.
 
 Hidden reuse determines whether ownership is worth considering. Firm size is a
 different calculation. A larger owner can spread one AI platform across more
-assets and transfer useful learning from one operation to another. But it also
-faces more integration work, financing burden, bureaucracy, correlated
-liability, and loss of local adaptation. The equilibrium firm owns assets up to
-the point where the first two forces no longer outweigh the last. If the
-hidden-reuse benefit is the same for every asset, it changes whether firms form
-but not how large they should be.
+assets, transfer useful learning from one operation to another, and reuse an
+integration playbook so successive acquisitions become cheaper to execute.
+But ongoing coordination, bureaucracy, correlated liability, and loss of local
+adaptation can eventually rise with scale. The equilibrium firm owns assets up
+to the point where the scale economies no longer outweigh that ongoing burden.
+If the hidden-reuse benefit is the same for every asset, it changes whether
+firms form but not how large they should be.
 
 That last sentence is the result.
 
@@ -71,6 +72,7 @@ incremental value is
 V(n)
 =nA-K
 +nL\frac{n-1}{\kappa+n-1}
+-dn^\rho
 -cn^{1+\eta}.
 \]
 
@@ -80,9 +82,11 @@ The symbols correspond to four ordinary forces:
 - \(K\): one shared AI platform, evaluation system, or operating layer has a
   fixed cost;
 - \(L\): learning at one owned asset can improve other owned assets, although
-  that benefit eventually saturates; and
-- \(cn^{1+\eta}\): organization becomes increasingly costly as the firm adds
-  operations.
+  that benefit eventually saturates;
+- \(dn^\rho\), with \(0<\rho<1\): cumulative integration-execution cost grows
+  sublinearly because later integrations reuse systems and experience; and
+- \(cn^{1+\eta}\): ongoing coordination becomes increasingly costly as the
+  firm adds operations.
 
 Potential firms compete for assets, so the relevant quantity is value per
 asset:
@@ -91,6 +95,7 @@ asset:
 g(n)
 =A-\frac Kn
 +L\frac{n-1}{\kappa+n-1}
+-dn^{\rho-1}
 -cn^\eta.
 \]
 
@@ -106,25 +111,26 @@ it does not change which point on the curve is highest.
 So:
 
 > Hidden reuse can switch ownership on. Shared costs, transferable learning,
-> and organizational burden set the scale after it is on.
+> integration experience, and ongoing coordination burden set the scale after
+> it is on.
 
 ## A worked example
 
-In the illustrative normalization, the scale terms make four assets the best
+In the illustrative normalization, the scale terms make eight assets the best
 integrated size. An integrated firm becomes viable only when the per-asset
-internalization advantage exceeds \(0.573\).
+internalization advantage exceeds \(0.482\).
 
 The earlier two-period contracting model supplies three examples:
 
 | Contracting environment | Internalization advantage | Outcome |
 |---|---:|---|
 | Strong enforcement | 0.430 | Assets remain separate |
-| Weak enforcement; reuse cannot be priced | 0.778 | Four-asset firms form |
-| Weak enforcement; much future value is verifiable | 0.657 | Four-asset firms form |
+| Weak enforcement; reuse cannot be priced | 0.778 | Eight-asset firms form |
+| Weak enforcement; much future value is verifiable | 0.657 | Eight-asset firms form |
 
 These values are theoretical outputs, not estimates of any real market. The
 important point is their structure. Better enforcement lowers the private gain
-from ownership enough to prevent integration. It does not turn the four-asset
+from ownership enough to prevent integration. It does not turn the eight-asset
 target into a two-asset target, because none of the scale terms changed.
 
 ![A phase map separating integration entry from conditional firm size](outputs/firm-size-separation-map.svg)
@@ -135,8 +141,9 @@ It crosses the black ownership boundary without changing the color within a
 given row: conditional size is unchanged.
 
 The right panel isolates the scale decision. More learning that transfers
-across assets supports larger firms. A higher cost of organizing each
-additional asset supports smaller ones.
+across assets supports larger firms. The declining-marginal-cost integration
+curve is held fixed, while greater ongoing coordination cost supports smaller
+ones.
 
 ## What this changes about the rollup thesis
 
@@ -149,10 +156,10 @@ The model makes that thesis more precise—and less automatic.
 There are now three separate claims:
 
 1. **Why own?** Market contracting fails to control or price future learning.
-2. **Why own several?** Learning and shared AI infrastructure transfer across
-   assets.
-3. **Why stop?** Coordination, financing, liability, and local heterogeneity
-   eventually overwhelm those gains.
+2. **Why own several?** Learning, shared AI infrastructure, and a reusable
+   integration capability transfer across assets.
+3. **Why stop?** Ongoing coordination, bureaucracy, liability, and local
+   heterogeneity eventually overwhelm those gains.
 
 The first claim can be true while the second is false. If the knowledge learned
 at warehouse A is useless at warehouses B through Z, hidden reuse may still
@@ -171,8 +178,11 @@ The model suggests measuring the margins separately.
   whether assets integrate.
 - A change in how well lessons transfer across sites should affect how many
   assets an integrated owner wants.
-- Higher financing costs, liability, regulation, or systems-integration burden
-  should reduce firm size even if the original hidden-reuse problem remains.
+- Reusable diligence, financing, systems, and operating playbooks should lower
+  marginal integration-execution cost and support larger firms.
+- Higher ongoing coordination costs, liability, regulation, or losses of local
+  adaptation should reduce firm size even if the original hidden-reuse problem
+  remains.
 - An acquirer claiming a data flywheel should be able to show that an outcome
   at one asset improves decisions at other assets. Merely pooling more records
   is not enough.
@@ -200,7 +210,8 @@ It then sweeps two parameter grids:
 
 - internalization advantage × transferable learning, to show the ownership
   entry boundary; and
-- organizational cost × transferable learning, to show conditional firm size.
+- ongoing coordination cost × transferable learning, to show conditional firm
+  size while holding the integration learning curve fixed.
 
 The package produces an SVG, PNG, two CSV files containing every solved grid
 cell, JSON worked examples, JSON run metadata, a single-scenario command, and
@@ -215,5 +226,5 @@ The technical statement and proof are in
 
 This model shows that hidden AI context reuse can determine whether operating
 assets move inside firms, while the equilibrium number of assets per firm is
-separately determined by shared fixed costs, cross-asset learning, and convex
-organizational costs.
+separately determined by shared fixed costs, cross-asset learning, declining
+marginal integration cost, and increasing ongoing coordination cost.

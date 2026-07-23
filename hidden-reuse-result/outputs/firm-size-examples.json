@@ -1,5 +1,5 @@
 {
-  "model_version": "0.6.0",
+  "model_version": "0.7.0",
   "result_status": "calibrated theoretical computation; not empirical evidence",
   "examples": [
     {
@@ -19,7 +19,9 @@
         "shared_fixed_cost": 1.5,
         "cross_node_learning": 0.35,
         "learning_saturation": 4.0,
-        "organization_cost_scale": 0.05,
+        "integration_cost_scale": 0.5,
+        "integration_cost_elasticity": 0.65,
+        "organization_cost_scale": 0.015,
         "organization_cost_elasticity": 1.4,
         "advantage_dilution_elasticity": 0.0,
         "max_firm_size": 60
@@ -27,11 +29,11 @@
       "firm_size_outcome": {
         "regime": "finite_rollup",
         "integrates": true,
-        "equilibrium_firm_size": 4,
-        "conditional_target_size": 4,
-        "continuous_target_size": 4.006622972123189,
-        "integration_threshold": 0.5732202253184496,
-        "per_node_surplus_at_target": 0.20476622998966432
+        "equilibrium_firm_size": 8,
+        "conditional_target_size": 8,
+        "continuous_target_size": 7.786881956774984,
+        "integration_threshold": 0.481944414703227,
+        "per_node_surplus_at_target": 0.2960420406048869
       }
     },
     {
@@ -51,7 +53,9 @@
         "shared_fixed_cost": 1.5,
         "cross_node_learning": 0.35,
         "learning_saturation": 4.0,
-        "organization_cost_scale": 0.05,
+        "integration_cost_scale": 0.5,
+        "integration_cost_elasticity": 0.65,
+        "organization_cost_scale": 0.015,
         "organization_cost_elasticity": 1.4,
         "advantage_dilution_elasticity": 0.0,
         "max_firm_size": 60
@@ -59,11 +63,11 @@
       "firm_size_outcome": {
         "regime": "finite_rollup",
         "integrates": true,
-        "equilibrium_firm_size": 4,
-        "conditional_target_size": 4,
-        "continuous_target_size": 4.006622972123189,
-        "integration_threshold": 0.5732202253184496,
-        "per_node_surplus_at_target": 0.08327977468155046
+        "equilibrium_firm_size": 8,
+        "conditional_target_size": 8,
+        "continuous_target_size": 7.786881956774984,
+        "integration_threshold": 0.481944414703227,
+        "per_node_surplus_at_target": 0.17455558529677306
       }
     },
     {
@@ -83,7 +87,9 @@
         "shared_fixed_cost": 1.5,
         "cross_node_learning": 0.35,
         "learning_saturation": 4.0,
-        "organization_cost_scale": 0.05,
+        "integration_cost_scale": 0.5,
+        "integration_cost_elasticity": 0.65,
+        "organization_cost_scale": 0.015,
         "organization_cost_elasticity": 1.4,
         "advantage_dilution_elasticity": 0.0,
         "max_firm_size": 60
@@ -92,10 +98,10 @@
         "regime": "modular_market",
         "integrates": false,
         "equilibrium_firm_size": 0,
-        "conditional_target_size": 4,
-        "continuous_target_size": 4.006622972123189,
-        "integration_threshold": 0.5732202253184496,
-        "per_node_surplus_at_target": -0.14322169016219954
+        "conditional_target_size": 8,
+        "continuous_target_size": 7.786881956774984,
+        "integration_threshold": 0.481944414703227,
+        "per_node_surplus_at_target": -0.051945879546976936
       }
     }
   ]

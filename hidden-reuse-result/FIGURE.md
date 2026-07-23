@@ -88,7 +88,10 @@ reuse. The displayed scenario holds enforcement at 0.20, integration cost at
 **Figure 3. Integration entry and conditional firm size.** A firm owning
 \(n\) homogeneous context-generating assets creates per-asset incremental
 surplus
-\(g(n)=A-K/n+L(n-1)/(\kappa+n-1)-cn^\eta\). The left panel varies the
+\(g(n)=A-K/n+L(n-1)/(\kappa+n-1)-dn^{\rho-1}-cn^\eta\). Cumulative
+integration-execution cost \(dn^\rho\) has declining marginal cost for
+\(0<\rho<1\), while ongoing coordination cost \(cn^{1+\eta}\) rises
+convexly. The left panel varies the
 per-asset internalization advantage \(A\) and transferable cross-asset learning
 \(L\). Gray cells remain modular; colored cells form integrated firms, with
 color reporting assets per firm. The black curve is the integration-entry
@@ -96,15 +99,16 @@ threshold. The two marked points feed strong- and weak-enforcement outcomes
 from the bilateral hidden-reuse model into the scale model. Along a fixed row,
 changing \(A\) crosses the entry boundary without changing conditional size.
 The right panel holds the entry decision aside and varies cross-asset learning
-and organizational-cost scale. More transferable learning supports larger
-firms; greater organization cost supports smaller firms. Parameters are
-normalized theoretical inputs, not empirical estimates.
+and ongoing coordination-cost scale while fixing the integration learning
+curve at \(d=0.50,\rho=0.65\). More transferable learning supports larger
+firms; greater ongoing coordination cost supports smaller firms. Parameters
+are normalized theoretical inputs, not empirical estimates.
 
 ### Short caption
 
 Hidden reuse changes whether assets integrate; transferable learning, shared
-fixed costs, and organizational burden determine how large the integrated firm
-becomes.
+fixed costs, integration experience, and ongoing coordination burden determine
+how large the integrated firm becomes.
 
 ### Alt text
 
@@ -114,12 +118,13 @@ cross-asset learning from zero to one vertically. A descending black boundary
 separates a gray modular region at the lower left from colored integrated-firm
 regions at the upper right. At baseline learning of 0.35, a white point labeled
 strong enforcement lies in the modular region and a black point labeled weak
-enforcement lies in a four-asset region. Within each horizontal learning band,
+enforcement lies in an eight-asset region. Within each horizontal learning band,
 raising internalization advantage changes modular entry but not the integrated
-firm's color. In the right panel, organizational-cost scale rises horizontally
-and cross-asset learning rises vertically. Firm size is largest at high
-learning and low organization cost, and declines toward the lower-right. A
-black point marks the four-asset baseline.
+firm's color. In the right panel, ongoing coordination-cost scale rises
+horizontally and cross-asset learning rises vertically. The
+declining-marginal-cost integration curve is held fixed. Firm size is largest
+at high learning and low ongoing coordination cost, and declines toward the
+lower-right. A black point marks the eight-asset baseline.
 
 ## Figure 4
 

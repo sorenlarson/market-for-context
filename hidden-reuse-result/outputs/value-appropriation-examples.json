@@ -1,5 +1,5 @@
 {
-  "model_version": "0.6.0",
+  "model_version": "0.7.0",
   "claim_status": "Calibrated theoretical examples, not empirical evidence.",
   "scenarios": {
     "learning_driven_rollup": {

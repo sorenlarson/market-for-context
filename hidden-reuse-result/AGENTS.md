@@ -37,8 +37,9 @@ result.
     replica result. Do not silently extend it to heterogeneous or non-divisible
     finite industries.
 11. Keep the size theorem's two margins separate: additive internalization
-    advantage determines entry; fixed costs, transferable learning, and convex
-    organization costs determine conditional size.
+    advantage determines entry; fixed costs, transferable learning, declining
+    marginal integration-execution cost, and increasing ongoing coordination
+    cost determine conditional size.
 12. Describe the ownership-access solution as an exact single-intermediary
     acquisition equilibrium, not a welfare optimum or a general equilibrium of
     competing platforms.

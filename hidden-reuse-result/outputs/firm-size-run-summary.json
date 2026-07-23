@@ -1,8 +1,8 @@
 {
-  "model_version": "0.6.0",
+  "model_version": "0.7.0",
   "result_status": "calibrated theoretical computation; not empirical evidence",
-  "proposed_result": "The per-node hidden-reuse advantage determines integration entry but not conditional firm size; fixed costs, transferable learning, and organization costs determine size.",
-  "per_node_surplus_formula": "g(n) = A - K/n + L(n-1)/(kappa+n-1) - c*n^eta",
+  "proposed_result": "The per-node hidden-reuse advantage determines integration entry but not conditional firm size; fixed costs, transferable learning, declining marginal integration cost, and increasing ongoing coordination costs determine size.",
+  "per_node_surplus_formula": "g(n) = A - K/n + L(n-1)/(kappa+n-1) - d*n^(rho-1) - c*n^eta",
   "grid_points_per_axis": 81,
   "advantage_range": [
     0.3,
@@ -13,26 +13,28 @@
     1.0
   ],
   "organization_cost_range": [
-    0.01,
-    0.12
+    0.003,
+    0.04
   ],
   "baseline": {
     "internalization_advantage": 0.65,
     "shared_fixed_cost": 1.5,
     "cross_node_learning": 0.35,
     "learning_saturation": 4.0,
-    "organization_cost_scale": 0.05,
+    "integration_cost_scale": 0.5,
+    "integration_cost_elasticity": 0.65,
+    "organization_cost_scale": 0.015,
     "organization_cost_elasticity": 1.4,
     "advantage_dilution_elasticity": 0.0,
     "max_firm_size": 60
   },
   "baseline_outcome": {
     "regime": "finite_rollup",
-    "equilibrium_firm_size": 4,
-    "conditional_target_size": 4,
-    "continuous_target_size": 4.006622972123189,
-    "integration_threshold": 0.5732202253184496,
-    "per_node_surplus_at_target": 0.0767797746815504
+    "equilibrium_firm_size": 8,
+    "conditional_target_size": 8,
+    "continuous_target_size": 7.786881956774984,
+    "integration_threshold": 0.481944414703227,
+    "per_node_surplus_at_target": 0.168055585296773
   },
   "bilateral_bridge_advantages": {
     "weak_enforcement_unpriced": 0.7779864553081139,
@@ -40,8 +42,8 @@
     "strong_enforcement": 0.4299985351562501
   },
   "observed_conditional_size_range": [
-    3,
-    10
+    4,
+    20
   ],
   "environment": {
     "python": "3.9.6",

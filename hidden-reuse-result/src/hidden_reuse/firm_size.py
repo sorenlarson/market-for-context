@@ -6,23 +6,35 @@ homogeneous assets should be governed by the same firm?
 
 For a firm owning ``n`` assets, incremental value relative to modular trade is
 
-    V(n) = n A n**(-zeta) - K + n L (n - 1) / (kappa + n - 1) - c n ** (1 + eta).
+    V(n) = (
+        n A n**(-zeta)
+        - K
+        + n L (n - 1) / (kappa + n - 1)
+        - d n**rho
+        - c n**(1 + eta)
+    ).
 
 ``A`` is the per-asset advantage of internalization supplied by the bilateral
 governance problem, and ``zeta >= 0`` governs how that advantage dilutes with
 firm size: the per-asset advantage at size ``n`` is ``A n**(-zeta)``.  ``K`` is
-a shared fixed AI-system cost, ``L`` is the ceiling on transferable cross-asset
-learning per asset, and the final term is the convex burden of coordination,
-finance, and liability.
+a shared fixed AI-system cost, and ``L`` is the ceiling on transferable
+cross-asset learning per asset. Integration execution cost ``d n**rho`` has
+declining marginal cost when ``0 < rho < 1``: later integrations reuse the
+acquirer's playbook, systems, diligence, and financing infrastructure. The
+final term is the convex ongoing burden of coordination, bureaucracy,
+correlated liability, and lost local adaptation.
 
 With homogeneous assets, transferable utility, and free coalition formation,
 potential firms maximize value per member.  When ``zeta = 0`` (the default)
 the advantage term ``A`` is additive across sizes: it changes whether the best
 firm creates positive surplus, but it drops out of the firm-size choice.  This
 is the model's pledgeability-transferability separation, and it holds if and
-only if the advantage is size-independent.  With ``zeta > 0`` the entry and
-size margins interact: a larger ``A`` shifts the conditional optimum toward
-smaller firms because the advantage is worth more per asset at small scale.
+only if the advantage is size-independent. Conditional size is determined by
+shared fixed costs, transferable learning, declining marginal integration
+cost, and increasing ongoing coordination cost. With ``zeta > 0`` the entry
+and size margins interact: a larger ``A`` shifts the conditional optimum
+toward smaller firms because the advantage is worth more per asset at small
+scale.
 """
 
 from dataclasses import dataclass, replace
@@ -58,9 +70,15 @@ class FirmSizePrimitives:
 
     ``internalization_advantage`` is incremental private value per asset before
     the scale-specific terms in this model. It may be negative. The remaining
-    cost and benefit parameters must be nonnegative. Restricting
-    ``organization_cost_elasticity`` to at least one makes per-asset surplus
-    concave in continuous firm size and gives a single-peaked size problem.
+    cost and benefit parameters must be nonnegative.
+
+    Total integration-execution cost is ``d n**rho``. Restricting
+    ``integration_cost_elasticity`` to ``0 < rho <= 1`` gives weakly declining
+    marginal execution cost and makes its per-asset burden weakly fall with
+    size. Total ongoing organization cost is ``c n**(1 + eta)``. Restricting
+    ``organization_cost_elasticity`` to at least one makes its per-asset burden
+    convex. Together these restrictions preserve concavity of continuous
+    per-asset surplus and give a single-peaked size problem.
 
     ``advantage_dilution_elasticity`` (zeta) makes the per-asset advantage
     size-dependent: at firm size ``n`` it is ``A n**(-zeta)``. The default
@@ -77,7 +95,9 @@ class FirmSizePrimitives:
     shared_fixed_cost: float = 1.50
     cross_node_learning: float = 0.35
     learning_saturation: float = 4.00
-    organization_cost_scale: float = 0.050
+    integration_cost_scale: float = 0.50
+    integration_cost_elasticity: float = 0.65
+    organization_cost_scale: float = 0.015
     organization_cost_elasticity: float = 1.40
     advantage_dilution_elasticity: float = 0.0
     max_firm_size: int = 60
@@ -88,6 +108,8 @@ class FirmSizePrimitives:
             "shared_fixed_cost": self.shared_fixed_cost,
             "cross_node_learning": self.cross_node_learning,
             "learning_saturation": self.learning_saturation,
+            "integration_cost_scale": self.integration_cost_scale,
+            "integration_cost_elasticity": self.integration_cost_elasticity,
             "organization_cost_scale": self.organization_cost_scale,
             "organization_cost_elasticity": self.organization_cost_elasticity,
             "advantage_dilution_elasticity": self.advantage_dilution_elasticity,
@@ -98,6 +120,7 @@ class FirmSizePrimitives:
         nonnegative = {
             "shared_fixed_cost": self.shared_fixed_cost,
             "cross_node_learning": self.cross_node_learning,
+            "integration_cost_scale": self.integration_cost_scale,
             "organization_cost_scale": self.organization_cost_scale,
             "advantage_dilution_elasticity": self.advantage_dilution_elasticity,
         }
@@ -106,6 +129,10 @@ class FirmSizePrimitives:
                 raise ValueError(f"{name} cannot be negative")
         if self.learning_saturation <= 0:
             raise ValueError("learning_saturation must be positive")
+        if not 0 < self.integration_cost_elasticity <= 1:
+            raise ValueError(
+                "integration_cost_elasticity must be greater than zero and at most one"
+            )
         if self.organization_cost_elasticity < 1:
             raise ValueError("organization_cost_elasticity must be at least one")
         if isinstance(self.max_firm_size, bool) or not isinstance(
@@ -122,6 +149,8 @@ class FirmSizePoint:
 
     size: int
     learning_fraction: float
+    integration_cost_per_node: float
+    organization_cost_per_node: float
     scale_component_per_node: float
     per_node_surplus: float
     total_surplus: float
@@ -192,6 +221,8 @@ def scale_component_per_node(size: int, primitives: FirmSizePrimitives) -> float
     return (
         -primitives.shared_fixed_cost / size
         + primitives.cross_node_learning * learning_fraction(size, primitives)
+        - primitives.integration_cost_scale
+        * size ** (primitives.integration_cost_elasticity - 1.0)
         - primitives.organization_cost_scale
         * size**primitives.organization_cost_elasticity
     )
@@ -241,6 +272,9 @@ def per_node_surplus_derivative(size: float, primitives: FirmSizePrimitives) -> 
         + primitives.cross_node_learning
         * primitives.learning_saturation
         / (denominator * denominator)
+        + primitives.integration_cost_scale
+        * (1.0 - primitives.integration_cost_elasticity)
+        * n ** (primitives.integration_cost_elasticity - 2.0)
         - primitives.organization_cost_scale
         * primitives.organization_cost_elasticity
         * n ** (primitives.organization_cost_elasticity - 1.0)
@@ -295,6 +329,14 @@ def firm_size_profile(primitives: FirmSizePrimitives) -> tuple[FirmSizePoint, ..
             FirmSizePoint(
                 size=size,
                 learning_fraction=fraction,
+                integration_cost_per_node=(
+                    primitives.integration_cost_scale
+                    * size ** (primitives.integration_cost_elasticity - 1.0)
+                ),
+                organization_cost_per_node=(
+                    primitives.organization_cost_scale
+                    * size**primitives.organization_cost_elasticity
+                ),
                 scale_component_per_node=scale_component,
                 per_node_surplus=per_node,
                 total_surplus=size * per_node,

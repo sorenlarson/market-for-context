@@ -27,7 +27,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--shared-fixed-cost", type=float, default=1.50)
     parser.add_argument("--cross-node-learning", type=float, default=0.35)
     parser.add_argument("--learning-saturation", type=float, default=4.00)
-    parser.add_argument("--organization-cost", type=float, default=0.05)
+    parser.add_argument("--integration-cost", type=float, default=0.50)
+    parser.add_argument("--integration-elasticity", type=float, default=0.65)
+    parser.add_argument("--organization-cost", type=float, default=0.015)
     parser.add_argument("--organization-elasticity", type=float, default=1.40)
     parser.add_argument("--advantage-dilution", type=float, default=0.00)
     parser.add_argument("--max-firm-size", type=int, default=60)
@@ -65,6 +67,8 @@ def main() -> None:
         shared_fixed_cost=args.shared_fixed_cost,
         cross_node_learning=args.cross_node_learning,
         learning_saturation=args.learning_saturation,
+        integration_cost_scale=args.integration_cost,
+        integration_cost_elasticity=args.integration_elasticity,
         organization_cost_scale=args.organization_cost,
         organization_cost_elasticity=args.organization_elasticity,
         advantage_dilution_elasticity=args.advantage_dilution,

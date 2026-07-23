@@ -1,5 +1,5 @@
 {
-  "model_version": "0.6.0",
+  "model_version": "0.7.0",
   "result_status": "Calibrated theoretical computation; synthetic sensitivity evidence, not empirical evidence.",
   "proposed_result": "A platform requires both learning access and value appropriation. When service prices cannot capture AI-created operating value, ownership can dominate even if learning travels perfectly; at partial boundaries, outside customer learning can feed owned operations.",
   "grid_points_per_axis": 81,

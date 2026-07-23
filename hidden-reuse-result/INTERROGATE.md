@@ -351,8 +351,11 @@ Check five things in order:
 The most revealing challenge is to vary only
 `--internalization-advantage`. It should move the market across the modular
 entry threshold without changing `conditional_target_size`. Then vary
-`--cross-node-learning` or `--organization-cost`; those parameters should
-change the size ranking itself.
+`--cross-node-learning`, `--integration-cost`, or `--organization-cost`; those
+parameters should change the size ranking itself. A higher sublinear
+integration-cost scale raises the entry threshold but can increase conditional
+size because larger firms spread execution capability more effectively;
+ongoing organization cost reduces size.
 
 Do not call `equilibrium_firm_size = 0` an optimal zero-sized firm. It means the
 best integrated coalition cannot beat the normalized modular alternative. Do

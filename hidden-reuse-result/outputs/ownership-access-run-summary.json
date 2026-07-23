@@ -1,5 +1,5 @@
 {
-  "model_version": "0.6.0",
+  "model_version": "0.7.0",
   "result_status": "Calibrated theoretical computation and synthetic robustness exercise; not empirical evidence about current AI markets.",
   "solver": "exact enumeration of all 2^6 ownership subsets",
   "grid_points_per_axis": 61,

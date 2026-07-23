@@ -517,19 +517,22 @@ form freely. For a firm of size \(n\), surplus per asset is
 \[
 g(n)=A-\frac Kn
 +L\frac{n-1}{\kappa+n-1}
+-dn^{\rho-1}
 -cn^\eta.
 \]
 
 The bilateral game supplies the private internalization advantage \(A\). The
 remaining terms describe shared fixed cost, transferable cross-asset learning,
-learning saturation, and convex organization cost. Because \(A\) is additive,
-it changes whether the best integrated firm has positive value but not which
-size maximizes value per asset. That separation is a characterization, not a
-free result: it holds if and only if the advantage is size-independent. The
-solver exposes an optional dilution elasticity under which the per-asset
-advantage becomes \(An^{-\zeta}\); any \(\zeta>0\) makes the entry and size
-margins interact, and [FIRM-SIZE-RESULT.md](FIRM-SIZE-RESULT.md) reports a
-worked non-additive example.
+learning saturation, declining marginal integration-execution cost
+\(dn^\rho\) for \(0<\rho<1\), and increasing ongoing coordination cost.
+Because \(A\) is additive, it changes whether the best integrated firm has
+positive value but not which size maximizes value per asset. That separation
+is a characterization, not a free result: it holds if and only if the
+advantage is size-independent. The solver exposes an optional dilution
+elasticity under which the per-asset advantage becomes \(An^{-\zeta}\); any
+\(\zeta>0\) makes the entry and size margins interact, and
+[FIRM-SIZE-RESULT.md](FIRM-SIZE-RESULT.md) reports a worked non-additive
+example.
 
 The full environment, equilibrium definition, proposition, proof, bridge, and
 limitations are in [FIRM-SIZE-RESULT.md](FIRM-SIZE-RESULT.md). The source of

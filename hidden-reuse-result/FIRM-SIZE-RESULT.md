@@ -12,9 +12,10 @@ This extension supplies that missing margin. Its main result is a separation:
 > When the private benefit of solving hidden reuse is additive across otherwise
 > homogeneous assets, it determines whether integrated firms form but not their
 > equilibrium size. Conditional size is determined by shared fixed costs,
-> transferable learning across assets, and the costs of organizing them
-> together. The additivity is load-bearing: the separation holds if and only
-> if the per-asset advantage is size-independent.
+> transferable learning across assets, declining marginal integration cost,
+> and increasing ongoing coordination cost. The additivity is load-bearing:
+> the separation holds if and only if the per-asset advantage is
+> size-independent.
 
 Additivity is a substantive assumption for this mechanism, not a free
 normalization. A firm that owns more context-generating assets could plausibly
@@ -45,6 +46,7 @@ surplus is
 V(n)
 =nA-K
 +nL\frac{n-1}{\kappa+n-1}
+-dn^\rho
 -cn^{1+\eta}.
 \]
 
@@ -56,8 +58,11 @@ The primitives are:
 - \(L\ge0\): the ceiling on useful learning transferred to each node from the
   firm's other nodes;
 - \(\kappa>0\): the scale over which cross-node learning saturates;
-- \(c\ge0\): the scale of coordination, financing, bureaucracy, and liability
-  costs; and
+- \(d\ge0\): the scale of cumulative integration-execution cost;
+- \(0<\rho\le1\): its elasticity with respect to the number integrated, with
+  \(\rho<1\) giving declining marginal integration cost;
+- \(c\ge0\): the scale of ongoing coordination, bureaucracy, correlated
+  liability, and loss-of-local-adaptation costs; and
 - \(\eta\ge1\): the convexity of that organizational burden.
 
 The cross-node term is zero for a one-node firm, increases with \(n\), and
@@ -65,9 +70,14 @@ approaches \(L\) per node. It captures a bounded version of the Cybernetic
 Rollup idea: experience at one owned operation can improve decisions elsewhere,
 but the transferable lesson pool eventually saturates.
 
-The organizational term is deliberately broad. It includes the cost of
-integrating systems, supervising more heterogeneous operations, financing
-acquisitions, carrying correlated liability, and losing local adaptation.
+The two cost terms separate forces that the earlier version conflated.
+Integration execution can become cheaper at the margin as an acquirer reuses
+its playbook, systems, diligence, and financing infrastructure:
+\(D(n)=dn^\rho\) has marginal cost \(d\rho n^{\rho-1}\), which falls when
+\(\rho<1\). Ongoing coordination can nevertheless become harder as the owned
+system grows: \(C(n)=cn^{1+\eta}\) has rising marginal and per-node burden.
+The model therefore permits early integration economies and a later stopping
+force rather than assuming every successive integration is harder.
 
 Surplus per node is
 
@@ -75,6 +85,7 @@ Surplus per node is
 g(n;A)=\frac{V(n)}{n}
 =A-\frac Kn
 +L\frac{n-1}{\kappa+n-1}
+-dn^{\rho-1}
 -cn^\eta.
 \]
 
@@ -83,6 +94,7 @@ Write
 \[
 h(n)=-\frac Kn
 +L\frac{n-1}{\kappa+n-1}
+-dn^{\rho-1}
 -cn^\eta,
 \]
 
@@ -205,31 +217,32 @@ does not imply that the smaller tied size is uniquely selected.
 ### 3.1 A worked non-additive example
 
 Set \(\zeta=0.5\) and keep every scale primitive at the anchor values of
-Section 6 (\(K=1.50\), \(L=0.35\), \(\kappa=4\), \(c=0.05\), \(\eta=1.4\),
-\(N=60\)). Per-node surplus is \(g(n)=An^{-1/2}+h(n)\), and entry now occurs
-if and only if \(A\) exceeds the generalized threshold
+Section 6 (\(K=1.50\), \(L=0.35\), \(\kappa=4\), \(d=0.50\), \(\rho=0.65\),
+\(c=0.015\), \(\eta=1.4\), \(N=60\)). Per-node surplus is
+\(g(n)=An^{-1/2}+h(n)\), and entry now occurs if and only if \(A\) exceeds the
+generalized threshold
 
 \[
 A^*(\zeta)
 =\min_{n}\bigl[-h(n)\,n^{\zeta}\bigr]
-=1.0671,
+=1.2353,
 \]
 
 which the solver reports in place of the additive threshold. The table shows
 computed per-node surplus at small sizes for three advantage levels
 (`solve_firm_size.py --advantage-dilution 0.5`):
 
-| \(A\) | \(g(1)\) | \(g(2)\) | \(g(3)\) | \(g(4)\) | \(n^*\) at \(\zeta=0.5\) | \(n^*\) at \(\zeta=0\) |
-|---:|---:|---:|---:|---:|---:|---:|
-| 1.20 | \(-0.3500\) | \(+0.0366\) | \(+0.0767\) | \(+0.0268\) | 3 | 4 |
-| 2.00 | \(+0.4500\) | \(+0.6023\) | \(+0.5386\) | \(+0.4268\) | 2 | 4 |
-| 3.00 | \(+1.4500\) | \(+1.3094\) | \(+1.1159\) | \(+0.9268\) | 1 | 4 |
+| \(A\) | \(g(1)\) | \(g(2)\) | \(g(3)\) | \(g(4)\) | \(g(5)\) | \(n^*\) at \(\zeta=0.5\) | \(n^*\) at \(\zeta=0\) |
+|---:|---:|---:|---:|---:|---:|---:|---:|
+| 1.40 | \(-0.6150\) | \(-0.1219\) | \(+0.0147\) | \(+0.0627\) | \(+0.0737\) | 5 | 8 |
+| 2.00 | \(-0.0150\) | \(+0.3023\) | \(+0.3611\) | \(+0.3627\) | \(+0.3420\) | 4 | 8 |
+| 3.00 | \(+0.9850\) | \(+1.0094\) | \(+0.9385\) | \(+0.8627\) | \(+0.7892\) | 2 | 8 |
 
-Under additivity the same three advantage levels all select four-node firms.
-With dilution, raising \(A\) from 1.20 to 2.00 moves the conditional argmax
-from three nodes to two, and at 3.00 the equilibrium is standalone
-integration: the advantage is worth most per asset at small scale, so a
-larger wedge buys entry and *shrinks* the conditional firm at the same time.
+Under additivity the same three advantage levels all select eight-node firms.
+With dilution, raising \(A\) from 1.40 to 2.00 moves the conditional argmax
+from five nodes to four, and at 3.00 it moves to two. The advantage is worth
+most per asset at small scale, so a larger wedge buys entry and *shrinks* the
+conditional firm at the same time.
 Any shock that operates through \(A\) — enforcement, verifiability,
 pledgeability — then moves both margins, which is precisely what the additive
 baseline rules out.
@@ -256,20 +269,23 @@ Treating \(n\) as continuous, an interior target satisfies
 \frac{\partial g}{\partial n}
 =\frac K{n^2}
 +\frac{L\kappa}{(\kappa+n-1)^2}
++d(1-\rho)n^{\rho-2}
 -c\eta n^{\eta-1}
 =0.
 \]
 
 The first two terms are the marginal advantages of spreading the fixed cost
-and transferring another unit of learning. The final term is the marginal
-organizational burden.
+and transferring another unit of learning. The third is the per-node scale
+advantage created by declining marginal integration-execution cost. The final
+term is the marginal ongoing coordination burden.
 
-For \(\eta\ge1\),
+For \(0<\rho\le1\) and \(\eta\ge1\),
 
 \[
 \frac{\partial^2 g}{\partial n^2}
 =-\frac{2K}{n^3}
 -\frac{2L\kappa}{(\kappa+n-1)^3}
+-d(1-\rho)(2-\rho)n^{\rho-3}
 -c\eta(\eta-1)n^{\eta-2}
 \le0.
 \]
@@ -286,7 +302,13 @@ The model implies:
 - a larger shared fixed cost \(K\) weakly raises conditional size because its
   per-node burden falls faster in larger firms;
 - more transferable learning \(L\) weakly raises conditional size;
-- a larger organizational-cost scale \(c\) weakly reduces conditional size;
+- a larger integration-execution scale \(d\) raises the entry threshold but
+  weakly raises conditional size when \(\rho<1\), because larger firms spread
+  the sublinear execution burden more effectively;
+- faster integration learning (a lower \(\rho\)) strengthens that scale
+  economy, although integer targets can remain unchanged over ranges;
+- a larger ongoing coordination-cost scale \(c\) weakly reduces conditional
+  size;
 - slower learning realization (larger \(\kappa\)) raises the integration
   threshold, although its effect on the selected size can be ambiguous; and
 - if the target is \(N\) and the derivative remains positive there, the
@@ -295,7 +317,8 @@ The model implies:
 
 The entry threshold moves differently:
 
-- stronger fixed and organizational costs raise \(A^*\);
+- stronger fixed, integration-execution, and ongoing coordination costs raise
+  \(A^*\);
 - more transferable learning lowers \(A^*\); and
 - better enforcement or capability pledgeability can lower the bilateral
   value fed into \(A\), moving the market back below the threshold.
@@ -334,14 +357,15 @@ The displayed normalization uses
 
 \[
 K=1.50,\quad L=0.35,\quad \kappa=4,
-\quad c=0.05,\quad \eta=1.4,\quad N=60.
+\quad d=0.50,\quad \rho=0.65,
+\quad c=0.015,\quad \eta=1.4,\quad N=60.
 \]
 
-The conditional discrete target is four nodes, the continuous target is
-\(4.007\), and the entry threshold is
+The conditional discrete target is eight nodes, the continuous target is
+\(7.787\), and the entry threshold is
 
 \[
-A^*=0.5732.
+A^*=0.4819.
 \]
 
 The bilateral bridge produces:
@@ -349,54 +373,50 @@ The bilateral bridge produces:
 | Bilateral environment | Derived \(A\) | Scale outcome |
 |---|---:|---|
 | Strong enforcement, no hidden reuse | 0.4300 | Modular market |
-| Weak enforcement, unpriced reuse | 0.7780 | Four-node rollups |
-| Weak enforcement, 60% verifiable value | 0.6565 | Four-node rollups |
+| Weak enforcement, unpriced reuse | 0.7780 | Eight-node rollups |
+| Weak enforcement, 60% verifiable value | 0.6565 | Eight-node rollups |
 
 These are calibrated theoretical comparisons, not measured magnitudes. Their
 purpose is to demonstrate the separation: enforcement and pledgeability move
 the market across the ownership boundary while the scale primitives hold the
-conditional target at four.
+conditional target at eight.
 
-### 6.1 The four-node anchor is a normalization
+### 6.1 The eight-node anchor is a normalization
 
 The scale primitives deserve a blunter statement than "displayed
-normalization." \(K\), \(c\), and \(\eta\) are free parameters of this
-extension. Nothing connects them to the bilateral integration cost
-\(F=0.70\) in MODEL.md or to any measured organizational cost; they were
-chosen so that the conditional target lands on a small, readable number. The
-four-node rollup is therefore an anchor for exposition, not a prediction
-about acquisition counts, and only the comparative statics of Section 4 carry
-across parameter choices.
+normalization." \(K\), \(d\), \(\rho\), \(c\), and \(\eta\) are free
+parameters of this extension. Nothing connects them to the bilateral
+integration cost \(F=0.70\) in MODEL.md or to measured acquisition and
+coordination costs. The eight-node rollup is therefore an anchor for
+exposition, not a prediction about acquisition counts, and only the
+comparative statics of Section 4 carry across parameter choices.
 
 The table reports the conditional target \(n^*\) over a modest grid around
-the anchor, holding the other primitives fixed (\(\zeta=0\), so \(n^*\) is
-independent of \(A\); the anchor cell is bold):
+the anchor, holding \(K=1.50\), \(L=0.35\), \(\kappa=4\), \(\rho=0.65\), and
+\(\eta=1.4\) fixed. The anchor cell is bold:
 
-| \(\eta\) | \(K\) | \(c=0.025\) | \(c=0.050\) | \(c=0.100\) |
-|---:|---:|---:|---:|---:|
-| 1.2 | 0.75 | 6 | 4 | 3 |
-| 1.2 | 1.50 | 7 | 5 | 4 |
-| 1.2 | 3.00 | 9 | 6 | 5 |
-| 1.4 | 0.75 | 4 | 3 | 2 |
-| 1.4 | 1.50 | 6 | **4** | 3 |
-| 1.4 | 3.00 | 7 | 5 | 4 |
-| 1.7 | 0.75 | 3 | 3 | 2 |
-| 1.7 | 1.50 | 4 | 3 | 2 |
-| 1.7 | 3.00 | 5 | 4 | 3 |
+| Integration-cost scale \(d\) | \(c=0.005\) | \(c=0.015\) | \(c=0.030\) |
+|---:|---:|---:|---:|
+| 0.00 | 11 | 7 | 5 |
+| 0.25 | 12 | 7 | 5 |
+| 0.50 | 13 | **8** | 6 |
+| 1.00 | 15 | 9 | 6 |
 
-Halving or doubling \(K\) and \(c\) and shifting \(\eta\) by a few tenths
-moves the target anywhere from two to nine nodes, always in the directions
-the comparative statics predict: up in \(K\), down in \(c\) and \(\eta\). The
-robust content is those monotone forces and the entry-threshold logic, not
-the number four.
+The directions differ because the terms describe different objects. A larger
+\(d\) makes integration harder to enter but, conditional on entry, favors
+larger firms because total execution cost is sublinear. A larger \(c\) makes
+ongoing coordination more expensive and reduces conditional size. The robust
+content is that distinction and the entry-threshold logic, not the number
+eight.
 
 ![Firm-boundary and firm-size separation map](outputs/firm-size-separation-map.svg)
 
 The left panel varies \(A\) and \(L\). Gray cells remain modular; colored cells
 form integrated firms, with color denoting assets per firm. For a given row,
 moving \(A\) crosses the black entry boundary but does not change the color.
-The right panel removes the entry decision and shows how learning and
-organizational cost change conditional size.
+The right panel removes the entry decision and shows how learning and ongoing
+coordination cost change conditional size while holding the
+declining-marginal-cost integration learning curve fixed.
 
 ## 7. What the result adds to the prior essays
 
@@ -408,9 +428,10 @@ changing future bargaining power.
 This extension makes the rollup prediction conditional:
 
 - hidden reuse can explain **why ownership begins**;
-- shared systems and cross-node learning explain **why ownership extends across
-  multiple assets**; and
-- coordination, finance, and liability explain **where it stops**.
+- shared systems, cross-node learning, and reusable integration capabilities
+  explain **why ownership extends across multiple assets**; and
+- ongoing coordination, bureaucracy, correlated liability, and local
+  adaptation explain **where it stops**.
 
 The negative result matters as much as the positive one. If learning at one
 site does not improve decisions elsewhere and shared fixed costs are small,
@@ -427,16 +448,19 @@ The model suggests testing different margins separately.
    not change if these shocks only alter additive \(A\).
 2. **Transfer tests.** Acquirers should become larger where an operational
    improvement learned at one node transfers strongly to other owned nodes.
-3. **Organization tests.** Liability, local regulation, financing friction,
-   and integration complexity should reduce acquired-node counts even when
+3. **Integration learning tests.** Repeated acquirers with reusable diligence,
+   financing, systems, and operating playbooks should exhibit falling
+   marginal execution costs and, conditional on entering, larger target sizes.
+4. **Organization tests.** Liability, local regulation, managerial complexity,
+   and losses of local adaptation should reduce acquired-node counts even when
    hidden-reuse concerns remain severe.
-4. **Parallel-shift test.** In estimated per-node value curves, a pure change in
+5. **Parallel-shift test.** In estimated per-node value curves, a pure change in
    the hidden-reuse wedge should shift all candidate sizes vertically. If it
    changes the slope, then the wedge itself has scale economies and the
    baseline separation fails.
-5. **Stopping rule.** The next acquisition should cease to be attractive when
-   its fixed-cost and learning contribution no longer offsets its marginal
-   organizational burden and purchase cost.
+6. **Stopping rule.** The next acquisition should cease to be attractive when
+   its fixed-cost, learning, and integration-experience contribution no longer
+   offsets its marginal ongoing coordination burden and purchase cost.
 
 A clean empirical rejection would be a setting in which enforcement changes
 conditional firm size substantially even after controlling for shared costs

@@ -1,5 +1,5 @@
 {
-  "model_version": "0.6.0",
+  "model_version": "0.7.0",
   "result_status": "calibrated theoretical computation; not empirical evidence",
   "grid_points_per_axis": 61,
   "disclosure_grid_size": 201,

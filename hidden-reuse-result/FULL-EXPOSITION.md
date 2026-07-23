@@ -97,7 +97,8 @@ problem and $h(n)$ contains the scale forces. Consequently,
 
 Changing $A$ can move the economy across the integration threshold, but it
 cannot change the preferred size conditional on integration. Shared fixed
-costs, transferable cross-asset learning, and organizational costs determine
+costs, transferable cross-asset learning, declining marginal
+integration-execution cost, and increasing ongoing coordination cost determine
 that size. Thus an information-contracting reason for ownership is not, by
 itself, a theory of concentration.
 
@@ -440,25 +441,32 @@ Call each clinic, factory, laboratory, warehouse, or similar operation a
 feedback from real decisions. Let $A$ be the per-asset **internalization
 advantage**: the private gain from owning that asset rather than using its best
 independent AI contract. The hidden-reuse model can supply $A$, but scale
-requires three additional forces:
+requires four additional forces:
 
 - a shared AI platform or evaluation system has a fixed cost $K$;
 - learning at one owned asset may improve other owned assets, with maximum
-  strength $L$ and saturation rate $\kappa$; and
-- financing, integration, liability, and bureaucracy have cost scale $c$ and
-  become increasingly burdensome at rate $\eta$ as the firm grows.
+  strength $L$ and saturation rate $\kappa$;
+- cumulative integration-execution cost has scale $d$ and elasticity
+  $0<\rho<1$, so successive integrations become cheaper as the acquirer reuses
+  its playbook, systems, diligence, and financing infrastructure; and
+- ongoing coordination, bureaucracy, correlated liability, and loss of local
+  adaptation have cost scale $c$ and become increasingly burdensome at rate
+  $\eta$ as the firm grows.
 
 For a firm owning $n$ otherwise similar assets, incremental value is
 
 \[
-V(n)=nA-K+nL\frac{n-1}{\kappa+n-1}-cn^{1+\eta}.
+V(n)=nA-K+nL\frac{n-1}{\kappa+n-1}-dn^\rho-cn^{1+\eta}.
 \]
 
-The learning term grows and then saturates; the organization term is convex.
-When potential owners compete for assets, the relevant value per asset is
+The integration-execution term grows sublinearly, so its marginal and
+per-asset burden fall with experience. The ongoing coordination term is
+convex. When potential owners compete for assets, the relevant value per asset
+is
 
 \[
-g(n)=A-\frac Kn+L\frac{n-1}{\kappa+n-1}-cn^\eta.
+g(n)=A-\frac Kn+L\frac{n-1}{\kappa+n-1}
+-dn^{\rho-1}-cn^\eta.
 \]
 
 An integrated firm chooses the integer size that maximizes $g(n)$, provided
@@ -478,14 +486,15 @@ entry while shrinking the firm.
 Within the additive case, the model separates two margins:
 
 > Hidden reuse determines whether integrated firms form. Shared fixed costs,
-> transferable cross-asset learning, and convex organization costs determine
-> their size after they form.
+> transferable cross-asset learning, declining marginal integration cost, and
+> increasing ongoing coordination cost determine their size after they form.
 
-In the illustrative calibration, the scale terms make four assets the best
+In the illustrative calibration, the scale terms make eight assets the best
 integrated size. Strong enforcement generates an internalization advantage of
 0.430, too little for integration. Weak enforcement with unpriced reuse raises
-it to 0.778, so four-asset firms form. The contracting shock changes entry from
-no integrated firm to a four-asset firm; it does not itself select four.
+it to 0.778, so eight-asset firms form. The contracting shock changes entry
+from no integrated firm to an eight-asset firm; it does not itself select
+eight.
 
 ![A phase map separating integration entry from conditional firm size](outputs/firm-size-separation-map.svg)
 
@@ -493,7 +502,8 @@ no integrated firm to a four-asset firm; it does not itself select four.
 the internalization advantage and transferable learning. Moving horizontally
 can cross the black integration boundary without changing firm size within a
 row. The right panel isolates scale: stronger cross-asset learning supports
-larger firms, while greater organization cost supports smaller ones.
+larger firms, while greater ongoing coordination cost supports smaller ones.
+The declining-marginal-cost integration curve is held fixed in both panels.
 
 This is also a negative result for simple concentration stories. An Arrowian
 problem can create many small integrated operators if learning at one asset is
